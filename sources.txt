@@ -1,0 +1,3 @@
+https://huggingface.co/learn/cookbook/rag_evaluation
+
+https://huggingface.co/papers/2312.10003

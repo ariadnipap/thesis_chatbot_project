@@ -1,0 +1,345 @@
+{
+    "qa_pairs": [
+      {
+        "question": "How does the Brond Retrains Flow handle failed monitoring jobs, and how can failures be diagnosed?",
+        "answer": "The Brond Retrains Flow logs failures in the `jobstatus` table of the monitoring database. To diagnose failures, administrators can use MySQL queries to list failed monitoring messages related to 'BROND_RETRAINS'. Additionally, logs stored at `/shared/abc/brond/DataParser/scripts/log` can be searched for keywords like 'error', 'fail', or 'exception' to pinpoint the issue."
+      },
+      {
+        "question": "What are the main steps of the CSI-Redis Flow, and how is Redis used in the process?",
+        "answer": "CSI-Redis Flow extracts and aggregates data from HDFS using Spark jobs, then exports it to Redis for real-time analytics. The key steps are: (1) Fetch data from HDFS, (2) Aggregate metrics using Spark, (3) Export data to `/user/rediscsi/docx-data/csi/parquet/`, (4) Archive and transfer data to Redis, and (5) Load data into Redis via the `102.CSI_Redis_Load_Data.sh` script."
+      },
+      {
+        "question": "How does the DWHFixed Flow handle full and delta data processing workflows?",
+        "answer": "The DWHFixed Flow has a full workflow that runs at 15:30 and 18:30 UTC and a delta workflow that runs every two hours. The full workflow extracts complete data from Oracle source tables and loads them into Hive-Impala, whereas the delta workflow identifies and processes incremental data based on changes recorded in the `SAS_VA_VIEW.V_DW_CONTROL_TABLE`."
+      },
+      {
+        "question": "What are the primary logs and monitoring tools used for debugging failures in the IPVPN-SM Replacement process?",
+        "answer": "Logs for the IPVPN-SM Replacement process are stored at `/shared/abc/ip_vpn/sm-replacement/log` and `/shared/abc/ip_vpn/sm-app/deployment/logs/`. Monitoring is available via MySQL queries on the `jobstatus` table and through a Grafana dashboard at `https://unc1.bigdata.abc.gr:3000/d/HiuaKlU4z/ipvpn-sm-replacement-monitoring`."
+      },
+      {
+        "question": "What API endpoints are available in the Monitoring Application, and how are they used?",
+        "answer": "The Monitoring Application provides endpoints such as `/monitoring/app/status` to check if the service is running, `/monitoring/app/lb/check` to verify the load balancer, and `/monitoring/app/lb/enable` or `/monitoring/app/lb/disable` to manage traffic routing."
+      },
+      {
+        "question": "How does the def_NETWORK_MAP Flow synchronize data between Oracle and Big Data systems?",
+        "answer": "The def_NETWORK_MAP Flow exports network data from an Oracle database, moves it to HDFS, and loads it into Hive tables. Synchronization is managed by an Oozie workflow that runs every 5 minutes, ensuring that network-related changes are reflected in the Big Data system."
+      },
+      {
+        "question": "What is the function of the HAProxy Load Balancer in the IPVPN-SM process?",
+        "answer": "The HAProxy Load Balancer (`un-vip:13001`) distributes API requests across multiple application servers, ensuring high availability and failover protection for the IPVPN-SM system."
+      },
+      {
+        "question": "How does the Piraeus Cisco VDSL2 App transform SNMP data before storage?",
+        "answer": "The app first converts SNMP output into CSV format, merges files with the same timestamp, and then transfers the processed data to an SFTP server and an HDFS directory."
+      },
+      {
+        "question": "How does the CSI-Redis Flow leverage Spark for data aggregation?",
+        "answer": "Spark jobs, such as `AggregateRdCells` and `AggregateCsiPrimary`, are executed to compute key metrics before the data is exported to Redis for further analysis."
+      },
+      {
+        "question": "What security mechanisms are used for data transfers in the Brond ADSL/VDSL Stats Flow?",
+        "answer": "Data is transferred securely using SFTP with password authentication and SSH key-based authentication for HDFS transfers."
+      },
+      {
+        "question": "What are the main dependencies required for the Energy-Efficiency Pollaploi Flow to function properly?",
+        "answer": "Dependencies include SSH access to the utility node (`un2.bigdata.abc.gr`), proper Oozie coordinator configuration, and an active SFTP connection for retrieving `.zip` files."
+      },
+      {
+        "question": "What are the key error scenarios in the Radius Flow and how are they handled?",
+        "answer": "The Radius Flow encounters errors such as missing SFTP files, Trustcenter SFTP failures, and data insertion failures. These are handled through automated alerts, log analysis, and manual retries. The monitoring system tracks failed executions using MySQL queries, while failed file transfers can be reattempted via the Trustcenter SFTP server."
+      },
+      {
+        "question": "How does the Reference Data Flow manage historical snapshots of reference data?",
+        "answer": "The Reference Data Flow runs a two-step process: first, the 210_refData_Load.sh script reads and loads new reference data into Hive LOAD tables. Then, the 220_refData_Daily_Snapshot.sh script extracts the latest snapshot from these tables and stores it separately for historical tracking. The process is scheduled daily at 00:05 UTC."
+      },
+      {
+        "question": "How does the TrustCenter Flow handle data extraction for multiple applications?",
+        "answer": "The TrustCenter Flow extracts data from BigStreamer for various use cases, including Location Mobility, Router Analytics, Application Data Usage Insights, and Customer Satisfaction Index. The extracted data is compressed and transferred to an exchange directory for further processing by TrustCenter."
+      },
+      {
+        "question": "How does the Syzefxis Flow ensure SLA compliance for network operations?",
+        "answer": "The Syzefxis Flow collects raw performance data every 5 minutes, processes SLA metrics through scheduled transformations, and categorizes KPIs into separate tables. The system runs daily and monthly KPI calculations using Oozie workflows to ensure compliance with SLA agreements."
+      },
+      {
+        "question": "What role does the Move Kudu to Impala flow play in the TeMIP system?",
+        "answer": "The Move Kudu to Impala flow is responsible for transferring alarm data from Kudu to Impala for extended storage. It runs daily at 06:00 local time and ensures that historical alarms are retained for six months."
+      },
+      {
+        "question": "How does the Prometheus Flow handle failed executions?",
+        "answer": "If the Prometheus Flow encounters a failure, alerts are generated via email, and logs can be checked in Hue. Failed partitions can be dropped and reloaded in Impala, and the import workflow can be manually rerun via Oozie."
+      },
+      {
+        "question": "How can you diagnose and resolve missing logs in BigStreamer when using rsyslog?",
+        "answer": "To diagnose missing logs in BigStreamer, first SSH into the `un2` server as root and check the `/etc/rsyslog.conf` file to verify the correct log transfer configurations. Next, inspect `/etc/logrotate.conf` to check if logs are being rotated too frequently, causing loss. If necessary, increase logging verbosity by modifying `/etc/rsyslog.d/*.conf` and restarting the rsyslog service with `systemctl restart rsyslog`."
+      },
+      {
+        "question": "How can you force a re-export of missing CSI_fix files for specific dates?",
+        "answer": "If CSI_fix files were empty due to missing partitions, first rerun the `Coord_Cube_Spark_Indicators` workflow in Hue to regenerate missing data. Then, execute `/shared/abc/export_sai_csi/export_csi_fix.sh <date>` sequentially for each missing date. Verify successful exports by checking `/shared/abc/export_sai_csi/logging/CSI_fix_reconciliation.log`."
+      },
+      {
+        "question": "What steps should be taken to diagnose and fix server CPU issues causing cluster failures?",
+        "answer": "Begin by checking iDRAC logs (`Overview-->Server-->Logs`). Export lifecycle logs (`Overview-->Server-->Troubleshooting-->Support Assist`). If hardware issues are suspected, update BIOS and iDRAC firmware using CLI-based updates. Run `ipmitool mc getsysinfo system_fw_version` to verify firmware versions. If the issue persists, open a Dell support case and provide TSR logs."
+      },
+      {
+        "question": "How can you verify if Osix SIP ingestion has stalled due to a topology failure?",
+        "answer": "First, SSH into `unosix1`, switch to `osix`, and authenticate via Kerberos (`kinit -kt osix.keytab osix`). Check if the topology is down using `yarn application -list | grep OSIX-SIP-NORM`. If it is not running, resubmit it with `./submit_sip_norm.sh`. Verify successful ingestion by executing `SELECT count(*), par_dt FROM osix.sip WHERE par_dt > '<date>'` in Impala."
+      },
+      {
+        "question": "How can you backfill missing `radius.radacct_hist` data from SFTP when ingestion fails?",
+        "answer": "Identify missing data using HDFS:\n```bash\nhdfs dfs -ls /ez/warehouse/radius.db/radacct_orig_files/ | grep '20201220'\n```\nThen, fetch missing files from SFTP:\n```bash\nsftp prdts@79.128.178.35\nget radacct_2020-12-20_04-30.csv.bz2\n```\nMove the retrieved files to the correct location and update ingestion settings:\n```bash\nmv radacct_2020-12-20_04-30.csv.bz2 /shared/radius_repo/cdrs/\n```\nManually trigger the ingestion process:\n```bash\n/shared/abc/radius/bin/000_radius_ops.sh\n```"
+      },
+      {
+        "question": "What steps are needed to test the integration of NNMi services with `nnmprd01`?",
+        "answer": "1. Establish SSH connectivity:\n```bash\nssh custompoller@nnmprd01\n```\n2. If password is required, set up passwordless authentication:\n```bash\nssh-copy-id custompoller@nnmprd01\n```\n3. Execute the IPVPN Custompoller service:\n```bash\n/home/custompoller/ipvpn/run/java -Xms1024m -Xmx4096m -DlogFilename=/home/custompoller/ipvpn/log/ipvpn -cp bigstreamer-snmp-tools.jar com.xyz.bigstreamer.snmp.tools.wrapper.SNMPWrapperRunner\n```\n4. Check log output for successful execution:\n```bash\nless /home/custompoller/ipvpn/log/ipvpn-2021-04-21.log\n```"
+      },
+      {
+        "question": "How do you diagnose and recover missing NNMi custompoller data for IPVPN?",
+        "answer": "Check scheduled jobs:\n```bash\ncrontab -l | grep ipvpn\n```\nManually execute the SNMP collection process:\n```bash\n/home/custompoller/ipvpn/run/java -Xms1024m -Xmx4096m -cp bigstreamer-snmp-tools.jar com.xyz.bigstreamer.snmp.tools.wrapper.SNMPWrapperRunner\n```\nEnsure that output files are correctly written:\n```bash\nls -l /home/custompoller/ipvpn/out/\n```"
+      },
+      {
+        "question": "How do you resolve missing `CSI_MOBILE` data in `sai.sub_aggr_csi_it`?",
+        "answer": "If `CSI_MOBILE` data is missing:\n1. Check log files for failed aggregation:\n```bash\nless /shared/abc/export_sai_csi/log/sai_csi.cron.<date>.log\n```\n2. Verify table row count:\n```sql\nSELECT count(*), par_dt FROM sai.sub_aggr_csi_it WHERE par_dt >= '20210xxx' GROUP BY par_dt;\n```\n3. If data is missing, manually reprocess:\n```bash\n/shared/abc/csi/bin/csi_weekly_load.sh.manual 2\n```"
+      },
+      {
+        "question": "How can you manually reload missing data for `brond.an_rollout_data_hist`?",
+        "answer": "If `brond.an_rollout_data_hist` stops loading:\n1. Check last successful loads:\n```sql\nSELECT par_dt, count(*) FROM brond.an_rollout_data_hist GROUP BY par_dt ORDER BY par_dt DESC LIMIT 10;\n```\n2. Inspect logs for errors:\n```bash\nless /shared/abc/brond/log/brond_rollout_cron.*\n```\n3. If missing data is found, rerun:\n```bash\n/shared/abc/brond/bin/000_brond_rollout_post.sh 20211007\n```"
+      },
+      {
+        "question": "How can you reprocess missing data in `huawei_tv.rel_play_tv_hist` due to empty files being received?",
+        "answer": "When `huawei_tv.rel_play_tv_hist` data is missing, first verify missing partitions in Impala:\n```sql\nSELECT count(*), par_dt FROM huawei_tv.rel_play_tv_hist WHERE par_dt BETWEEN '20210831' AND '20210901' GROUP BY par_dt ORDER BY par_dt;\n```\nIf a partition is missing, check the SFTP source:\n```bash\nsftp bigdata@172.28.128.150:/export\nls -l 20210901\n```\nIf files are empty:\n```bash\n/shared/abc/huawei_tv/bin/huawei_tv_load.sh 20210831\n```"
+      },
+      {
+        "question": "What steps should be taken if `prometheus.dwh22_last` is empty, affecting `prometheus.prom_total_subscrs`?",
+        "answer": "If `prometheus.dwh22_last` is empty, it affects `prometheus.prom_total_subscrs`. Steps to resolve:\n1. Check the latest logs:\n```bash\nless /shared/abc/prometheus/log/Cron_Prometheus_Load.date_of_issue.log\n```\n2. If the job failed, rerun it:\n```bash\n/shared/abc/prometheus/bin/Cron_Prometheus_Load.sh\n```\n3. Verify data in Impala:\n```sql\nSELECT count(*), par_dt FROM prometheus.dwh22_last WHERE par_dt >= '<issue_date>' GROUP BY par_dt;\n```"
+      },
+      {
+        "question": "How do you resolve missing `CSI_MOBILE` data in `sai.sub_aggr_csi_it`?",
+        "answer": "If `CSI_MOBILE` data is missing:\n1. Check log files for failed aggregation:\n```bash\nless /shared/abc/export_sai_csi/log/sai_csi.cron.<date>.log\n```\n2. Verify table row count:\n```sql\nSELECT count(*), par_dt FROM sai.sub_aggr_csi_it WHERE par_dt >= '20210xxx' GROUP BY par_dt;\n```\n3. If data is missing, manually reprocess:\n```bash\n/shared/abc/csi/bin/csi_weekly_load.sh.manual 2\n```"
+      },
+      {
+        "question": "How do you resolve an issue where `refdata.rd_cells` is not loading the latest data from `refdata.rd_cells_load`?",
+        "answer": "1. Verify the latest partitions in both tables:\n```sql\nSELECT max(par_dt) FROM refdata.rd_cells_load;\nSELECT max(refdate) FROM refdata.rd_cells;\n```\n2. If `rd_cells` is behind `rd_cells_load`, check the execution logs:\n```bash\nls -ltr /shared/abc/refdata/log/\n```\n3. The root cause is a synchronization issue where `220_refData_Daily_Snapshot.sh` runs before `210_refData_Load.sh` completes. Fix it by adding:\n```sql\nSET SYNC_DDL=1;\n```\nto the relevant scripts.\n4. Restart the Cloudera coordinator and re-run the daily snapshot script:\n```bash\n/shared/abc/refdata/bin/220_refData_Daily_Snapshot.sh\n```"
+      },
+      {
+        "question": "What actions should be taken to resolve CDSW jobs failing with `Engine exited with status 34`?",
+        "answer": "1. Identify failing pods:\n```bash\nkubectl get pods -w -A\n```\n2. Check for network plugin failures:\n```bash\nkubectl get events -n default-user-XXX\n```\n3. Restart Cloudera Docker service:\n```bash\n/opt/cloudera/cm-agent/bin/supervisorctl restart 145071-cdsw-CDSW_DOCKER\n```"
+      },
+      {
+        "question": "How do you troubleshoot Cloudera Data Science Workbench (CDSW) jobs failing due to `dial unix /run/cloudera/data-science-workbench/port-forwarder/port-forwarder.sock: connect: connection refused`?",
+        "answer": "1. Check SparkPortForwarder logs:\n```bash\nkubectl logs spark-port-forwarder-thrr9 -n <namespace>\n```\n2. Identify failing requests:\n```bash\ncdsw status | grep wrkcdsw1.bigdata.abc.gr\n```\n3. Restart Cloudera services:\n```bash\nCloudera Manager -> CDSW -> Restart `Docker Daemon Worker` on `wrkcdsw1`\n```"
+      },
+      {
+        "question": "How do you disable Nagios notifications permanently?",
+        "answer": "1. Edit Nagios configuration:\n```bash\nvi /etc/nagios/nagios.cfg\n```\n2. Set `enable_notifications=0` and restart Nagios:\n```bash\nsystemctl restart nagios\n```"
+      },
+      {
+        "question": "How do you investigate missing email notifications from Nagios?",
+        "answer": "1. Check Nagios logs:\n```bash\nless /var/log/nagios/nagios.log\n```\n2. Verify email configuration:\n```bash\nvi /etc/nagios/nagios.cfg\n```\n3. If notifications should be disabled:\n```bash\nsystemctl restart nagios\n```"
+      },
+      {
+        "question": "How do you fix an Oozie workflow that fails to trigger due to incorrect user permissions?",
+        "answer": "1. Verify the `mtuser` account has correct permissions:\n```bash\nls -ltr /home/mtuser/.ssh\n```\n2. Check the Oozie workflow status in Hue:\n```bash\nOozie Editor -> Search for mtuser workflows\n```"
+      },
+      {
+        "question": "How do you fix OpenLDAP replication after a password change?",
+        "answer": "To fix OpenLDAP replication:\n1. Backup LDAP configuration:\n   ```bash\n   slapcat -n 0 -l config.ldif\n   slapcat -n 2 -l data.ldif\n   ```\n2. Modify replication settings:\n   ```bash\n   ldapmodify -H ldaps://kerb1.bigdata.abc.gr -D \"cn=config\" -W -f replication_config.ldif\n   ldapmodify -H ldaps://kerb2.bigdata.abc.gr -D \"cn=config\" -W -f replication_config.ldif\n   ```\n3. Verify replication:\n   ```bash\n   ldapsearch -H ldaps://kerb2.bigdata.abc.gr -D \"cn=Manager,dc=bigdata,dc=abc,dc=gr\" -W -b \"ou=People,dc=bigdata,dc=abc,dc=gr\"  'uid=testuser'\n   ```"
+      },
+      {
+        "question": "How do you verify if SSL certificates for the Groupnet domain are imported?",
+        "answer": "To verify SSL certificates:\n1. SSH into the target server:\n   ```bash\n   ssh root@un5\n   ```\n2. Run the OpenSSL command:\n   ```bash\n   openssl s_client -connect PVDCAHR01.groupnet.gr:636\n   ```\n3. If the certificate is missing, import it using SaltStack:\n   ```bash\n   salt-call state.apply admin:etc/salt/salt/tls/certificate_authority/import_ca.sls\n   ```"
+      },
+      {
+        "question": "How do you back up the SpagoBI database before making changes?",
+        "answer": "To back up the SpagoBI MySQL database:\n1. SSH into the database server:\n   ```bash\n   ssh root@db01\n   ```\n2. Run the following command to create a backup:\n   ```bash\n   mysqldump -u root -p spagobi --single-transaction > /tmp/spagobi.sql\n   ```"
+      },
+      {
+        "question": "How do you update the HAProxy configuration to allow Groupnet AD access?",
+        "answer": "To update HAProxy:\n1. Edit the configuration file:\n   ```bash\n   vi /etc/haproxy/haproxy.cfg\n   ```\n2. Add the following lines:\n   ```bash\n   listen def-ad-ldaps\n       bind *:863 ssl crt /opt/security/haproxy/node.pem\n       mode tcp\n       balance source\n       server def_ad1 PVDCAHR01.groupnet.gr:636 ssl check ca-file /etc/ssl/certs/ca-bundle.crt\n   ```\n3. Validate and reload HAProxy:\n   ```bash\n   haproxy -f /etc/haproxy/haproxy.cfg -c\n   systemctl reload haproxy\n   ```"
+      },
+      {
+        "question": "How do you change bind users' passwords in R-Studio Connect?",
+        "answer": "To update the bind user password:\n1. SSH into `unrstudio1.bigdata.abc.gr`:\n   ```bash\n   ssh root@unrstudio1\n   ```\n2. Edit the configuration file:\n   ```bash\n   vi /etc/rstudio-connect/rstudio-connect.gcfg\n   ```\n3. Update the `BindPassword` field with the new password.\n4. Restart the service:\n   ```bash\n   systemctl restart rstudio-connect\n   ```\n5. Verify LDAP authentication:\n   ```bash\n   systemctl status rstudio-connect\n   ```"
+      },
+      {
+        "question": "How do you delete a user in R-Studio Connect?",
+        "answer": "To delete a user:\n1. Stop R-Studio Connect:\n   ```bash\n   systemctl stop rstudio-connect\n   ```\n2. List users and find the GUID of the user:\n   ```bash\n   /opt/rstudio-connect/bin/usermanager list --users | grep -i <username>\n   ```\n3. Delete the user:\n   ```bash\n   /opt/rstudio-connect/bin/usermanager delete --users --user-guid <GUID>\n   ```\n4. Start R-Studio Connect:\n   ```bash\n   systemctl start rstudio-connect\n   ```"
+      },
+      {
+        "question": "How do you merge duplicate user accounts in R-Studio Connect?",
+        "answer": "To merge duplicate users:\n1. Stop R-Studio Connect:\n   ```bash\n   systemctl stop rstudio-connect\n   ```\n2. Find user IDs:\n   ```bash\n   /opt/rstudio-connect/bin/usermanager list --users | grep -i <username>\n   ```\n3. Transfer ownership:\n   ```bash\n   /opt/rstudio-connect/bin/usermanager transfer -source-user-id <old_id> -target-user-id <new_id>\n   ```\n4. Start R-Studio Connect:\n   ```bash\n   systemctl start rstudio-connect\n   ```"
+      },
+      {
+        "question": "What are the critical failure points in the `Prod_IBANK_IngestStream` Spark Streaming pipeline, and how can they be resolved?",
+        "answer": "To troubleshoot failures in the `Prod_IBANK_IngestStream` Spark Streaming pipeline, follow these steps:\n\n1. **Check YARN logs for errors**:\n   ```bash\n   yarn logs -applicationId <application_id> | tail -n 50\n   ```\n   Look for errors related to resource allocation, memory limits, or connectivity.\n\n2. **Check Kafka topic ingestion status**:\n   - Verify if the Kafka topic has active producers:\n   ```bash\n   kafka-topics --describe --bootstrap-server pr1node01.mno.gr:9092 --topic prod-trlog-ibank-ingest-stream\n   ```\n   If the topic has no active partitions, restart Kafka producers.\n\n3. **Verify Kudu and HBase health**:\n   - Check Kudu table availability:\n   ```bash\n   kudu table scan kudu://pr1node01.mno.gr:7051/prod_trlog_ibank.service_audit_stream\n   ```\n   - Check HBase region status:\n   ```bash\n   echo 'status' | hbase shell\n   ```\n   If regions are in transition, restart the HBase Master:\n   ```bash\n   sudo systemctl restart hbase-master\n   ```\n\n4. **Restart the Spark job manually if necessary**:\n   ```bash\n   /opt/ingestion/PRODREST/ibank/spark/submit/submitmnoSparkTopology_stream_cluster_mno_STABLE.sh\n   ```\n   - Verify that a new application is running in YARN:\n   ```bash\n   yarn application -list | grep IBANK_IngestStream\n   ```\n\n5. **Check logs for excessive batch processing delay**:\n   ```bash\n   grep 'batch delay' /var/log/ingestion/PRODREST/ibank/log/ibank_stream.log\n   ```\n   If processing time exceeds expected thresholds, check for skewed data causing executor imbalance.\n\n6. **If Spark jobs keep failing due to out-of-memory errors, increase executor memory**:\n   - Modify `submitmnoSparkTopology_stream_cluster_mno_STABLE.sh` to adjust:\n   ```bash\n   --executor-memory 4G\n   --driver-memory 2G\n   ```\n   - Restart the job and monitor memory usage.\n\nIf issues persist, escalate to the Big Data engineering team for further debugging."
+      },
+      {
+        "question": "How can you check if a user’s group assignments are correctly synchronized across multiple nodes?",
+        "answer": "Use the following command:\n```bash\nid E70529 | grep -v \"CMS Way4Manager PROD RDS DevTOOLS\"\n```\nIf the output is empty or incorrect, synchronize across nodes:\n```bash\ndcli -c 'dr1node03, dr1node05, dr1node06, dr1node07, dr1node08, dr1node09, dr1node10' 'mv /var/lib/sss/db/* /tmp; systemctl restart sssd'\n```\nThen re-check the group assignment."
+      },
+      {
+        "question": "A Spark job is failing due to an OOM error in a batch process. What is a common approach to rerun the job in smaller parts?",
+        "answer": "Split the job into smaller time ranges and execute them separately:\n```bash\n/opt/ingestion/PRODREST/ibank/spark/submit/submitmnoSparkTopology_batch_cluster_mno_STABLE.sh \"YYYY-MM-DD 00:00:00\" \"YYYY-MM-DD 12:00:00\"\n/opt/ingestion/PRODREST/ibank/spark/submit/submitmnoSparkTopology_batch_cluster_mno_STABLE.sh \"YYYY-MM-DD 12:00:00\" \"YYYY-MM-DD 18:00:00\"\n/opt/ingestion/PRODREST/ibank/spark/submit/submitmnoSparkTopology_batch_cluster_mno_STABLE.sh \"YYYY-MM-DD 18:00:00\" \"YYYY-MM-DD 23:59:59\"\n```"
+      },
+      {
+        "question": "What command can you use to check the failed batch job logs in YARN?",
+        "answer": "Log in to `dr1edge01`, open Firefox, and check YARN UI for `PRODREST`. Sort by End Date and inspect the logs."
+      },
+      {
+        "question": "How would you identify an issue with user group synchronization?",
+        "answer": "Run:\n```bash\nid <username> | grep <group_id>\n```\nIf the group name is missing, refresh SSSD cache:\n```bash\nsss_cache -E\nid <username>\n```"
+      },
+      {
+        "question": "How do you verify that the IBank_Ingestion job succeeded after rerunning it?",
+        "answer": "Check Grafana for no failed batch jobs and query PostgreSQL monitoring database for successful execution logs."
+      },
+      {
+        "question": "How can you troubleshoot a failed job in Grafana related to the EXPORT step of DWH_IBank?",
+        "answer": "1. Login to `https://dr1edge01.mno.gr:3000` and check `Monitoring/Monitoring PR/DR` for failed Datawarehouse flows. 2. Check logs using `less /var/log/datawarehouse-ibank/PRODUSER/sched_extract.log`. 3. Identify if `Impala Insert` is still running, potentially blocked by another query. 4. Use Cloudera Manager (`Clusters > Impala > Queries`) to check for resource-intensive queries. 5. If `COMPUTE STATS` on `prod_trlog_ibank.service_audit` is hogging resources, consider disabling it."
+      },
+      {
+        "question": "What does Cloudera's critical alarm for HiveServer2 Pause Duration indicate?",
+        "answer": "The alarm typically indicates that the Java Heap Space is exhausted, leading to long garbage collection (GC) pauses. Logs can be checked using `grep GC /var/log/hive/hadoop-cmf-hive-HIVESERVER2-dr1node04.mno-gr.log.out`. If OutOfMemory errors occur, restarting HiveServer2 may be a temporary workaround."
+      },
+      {
+        "question": "How can you confirm if a failed job was caused by a long-running Impala query?",
+        "answer": "Check `less /var/log/datawarehouse-ibank/PRODUSER/sched_extract.log` to see if `Impala Insert` was still running. Then, use `Clusters > Impala > Queries` to check for resource-heavy queries."
+      },
+      {
+        "question": "How can you check and restart a failed Sqoop job?",
+        "answer": "1. Use `less /var/log/datawarehouse-ibank/PRODUSER/sched_extract.log` to locate the issue. 2. If Sqoop Export is stuck, restart it manually. 3. Check if there is an underlying issue with the `Impala Insert` phase."
+      },
+      {
+        "question": "What is the significance of Java Heap Space errors in HiveServer2 logs?",
+        "answer": "They indicate memory exhaustion, leading to OutOfMemory exceptions. Affected services should be restarted, and memory allocation should be adjusted."
+      },
+      {
+        "question": "How can Garbage Collection (GC) pauses affect Cloudera services, and how do you troubleshoot them?",
+        "answer": "Long GC pauses can freeze applications. Use `grep GC /var/log/hive/hadoop-cmf-hive-HIVESERVER2-dr1node04.mno-gr.log.out` to analyze logs. Restarting services may help."
+      },
+      {
+        "question": "How can you determine if an OutOfMemory error was caused by an inefficient query?",
+        "answer": "Use `grep Java /var/log/hive/hadoop-cmf-hive-HIVESERVER2-dr1node04.mno-gr.log.out` to find errors and correlate them with running queries."
+      },
+      {
+        "question": "How do you verify if a specific Hive query has caused a system crash?",
+        "answer": "Check failed queries in `Cluster -> Yarn -> Applications` and compare them to logs from `HiveServer2`."
+      },
+      {
+        "question": "How can you manually authenticate a Kerberos user using a keytab file in a RHEL environment?",
+        "answer": "You can authenticate a Kerberos user manually using the `kinit` command. For example:\n\n```bash\nkinit DEVUSER@BANK.CENTRAL.mno.GR -kt /way4/DEVUSER.keytab\n```\nIf successful, running `klist` should show a valid ticket cache."
+      },
+      {
+        "question": "What change should be made in `/etc/krb5.conf` to ensure Kerberos ticket caching works correctly?",
+        "answer": "Modify the `default_ccache_name` in `/etc/krb5.conf` under `[libdefaults]`:\n\n```conf\ndefault_ccache_name = FILE:/tmp/krb5cc_%{uid}\n```\n\nAdditionally, remove `sssd-kcm` if installed:\n\n```bash\nyum remove sssd-kcm\n```"
+      },
+      {
+        "question": "What steps should be taken if a 'Thrift SASL frame is too long' error occurs when creating a Kudu table?",
+        "answer": "If you encounter a 'Thrift SASL frame is too long' error (e.g., 338.01M/100.00M), follow these steps:\n      1. Login to Cloudera Manager at the DR site.\n      2. Go to Kudu > Instances > Click on Master > Select Tab Configuration.\n      3. Search for 'safety value' and add the following flag in 'Master Advanced Configuration Snippet (Safety Valve for gflagfile)':\n         ```bash\n         --hive_metastore_max_message_size_bytes=858993459\n         ```\n      4. Apply this setting on all three Kudu masters.\n      5. Restart the three Kudu master nodes (one at a time)."
+      },
+      {
+        "question": "How can you shut down specific ingestion streams before restarting Kudu tablets?",
+        "answer": "Before restarting Kudu tablets, ensure that ingestion streams are shut down properly using the following commands:\n      ```bash\n      hdfs dfs -put SHUTDOWN /user/PRODREST/service/PROD_IBank_Ingest/topology_shutdown_marker/\n      hdfs dfs -put SHUTDOWN /user/PRODREST/service/PROD_IBank_Ingest_Visible/topology_shutdown_marker/\n      hdfs dfs -put SHUTDOWN /user/PRODREST/service/PROD_Online_Ingest/topology_shutdown_marker/\n      ```"
+      },
+    {
+        "question": "A Spark Streaming job is experiencing delays in processing messages from Kafka. What steps should be taken to diagnose and resolve this issue?",
+        "answer": "To diagnose and resolve Spark Streaming job delays:\n1. Check the YARN Resource Manager UI to see if the job is still running.\n2. Inspect the application logs on the cluster:\n   ```bash\n   yarn logs -applicationId <application_id>\n   ```\n3. Look for any errors related to Kafka message consumption.\n4. Ensure that Kafka topics are receiving messages by running:\n   ```bash\n   kafka-console-consumer --bootstrap-server <kafka_broker> --topic <topic_name> --from-beginning\n   ```\n5. Restart the Spark Streaming job if needed."
+    },
+    {
+        "question": "What Impala query would you run to check if a table exists in a specific database?",
+        "answer": "To check if a table exists in a specific database using Impala, run:\n   ```sql\n   USE <database_name>;\n   SHOW TABLES LIKE '<table_name>';\n   ```"
+    },
+    {
+        "question": "What configuration change should be applied to Kudu to increase the Hive Metastore message size limit?",
+        "answer": "Modify the 'Master Advanced Configuration Snippet' in Cloudera Manager and add:\n   ```bash\n   --hive_metastore_max_message_size_bytes=858993459\n   ```\nThen restart the Kudu master nodes."
+    },
+    {
+        "question": "How can you verify if a Kafka topic is correctly mirrored between sites?",
+        "answer": "Run the following command to consume messages from the mirrored topic:\n   ```bash\n   kafka-console-consumer --bootstrap-server <mirror_broker> --topic <topic_name> --from-beginning\n   ```\nCompare this output with the primary Kafka topic."
+    },
+    {
+        "question": "How can you manually force the deletion of old Kudu table partitions?",
+        "answer": "Use the Impala query:\n   ```sql\n   ALTER TABLE <table_name> DROP PARTITION (par_dt <= 'YYYYMMDD') PURGE;\n   ```"
+    },
+    {
+        "question": "How can you restart a failed Oozie job from the last failed step?",
+        "answer": "Login to the Oozie UI, navigate to the failed job, and select 'Rerun' from the last failed action. Alternatively, use the command:\n   ```bash\n   oozie job -oozie http://<oozie-server>:11000/oozie -rerun <job_id> -action <failed_action_name>\n   ```"
+    },
+    {
+        "question": "How do you restart a failed Grafana batch job for DWH_IBank?",
+        "answer": "First, check the logs to identify the issue. If the error is related to duplicate keys, rerun the extract and export scripts with the `-f` option:\n   ```bash\n   /opt/ingestion/PRODUSER/datawarehouse-ibank/extract_details/sched_extract_details.sh -t manDate -f\n   /opt/ingestion/PRODUSER/datawarehouse-ibank/extract_details/sched_export_details.sh -t manDate -f\n   ```"
+    },
+    {
+        "question": "How can you check if a Kerberos ticket is correctly obtained?",
+        "answer": "Run the following command:\n   ```bash\n   klist\n   ```\nA valid ticket cache should display the principal name and expiration details."
+    },
+    {
+        "question": "How can you verify that a Kerberos ticket cache is using `FILE` storage instead of `KCM`?",
+        "answer": "Run `klist` and check the output. If it says `KCM:1500`, modify `/etc/krb5.conf` to use:\n   ```conf\n   default_ccache_name = FILE:/tmp/krb5cc_%{uid}\n   ```"
+    },
+    {
+        "question": "What error indicated the need to reconfigure Kerberos authentication for Way4Streams?",
+        "answer": "The error `/way4/DEVUSER.keytab does not contain any keys for DEVUSER@BANK.CENTRAL.mno.GR` indicated an issue with the keytab encryption."
+    },
+    {
+        "question": "How can you verify if a failed Online_Ingestion MergeBatch job has successfully completed after rerunning it?",
+        "answer": "To verify if the rerun was successful:\n1. Check the log file:\n   ```bash\n   tail -f /var/log/ingestion/PRODREST/online/log/cronExecutor_onlineBatch_full.log\n   ```\n2. Ensure that the job runs for a few hours and completes without errors.\n3. Run a query to check if data has been properly ingested:\n   ```bash\n   impala-shell -k --ssl -i ${HOSTNAME/01/} -q \"select count(*) from prod_trlog_online.service_audit where par_dt='YYYYMMDD';\"\n   ```"
+    },
+    {
+        "question": "Why does the IBank_Ingestion MergeBatch job run significantly longer under heavy load, and how can execution time be optimized?",
+        "answer": "The IBank_Ingestion MergeBatch job runs longer under heavy load due to the large volume of data being processed and memory-intensive operations. To optimize execution time:\n1. Increase the Spark partition coalescing value in the script:\n   ```bash\n   vi /opt/ingestion/PRODREST/online/spark/submit/submitmnoSparkTopology_batch_cluster_mno_STABLE.sh\n   ```\n   Change `coalesce` from `6` to `12`.\n2. Run the process in screen mode to prevent session loss.\n3. Monitor YARN Resource Manager UI to identify resource bottlenecks.\n4. If required, allocate additional resources or optimize queries to reduce load."
+    },
+      {
+        "question": "How can you benchmark HBase read and write performance using YCSB?",
+        "answer": "1. Install YCSB and configure it for HBase:\n   ```bash\n   git clone https://github.com/brianfrankcooper/YCSB.git\n   cd YCSB\n   mvn -pl site.ycsb:hbase-binding -am clean package\n   ```\n2. Load test data:\n   ```bash\n   ./bin/ycsb load hbase10 -P workloads/workloada -p table=usertable\n   ```\n3. Run a benchmark test:\n   ```bash\n   ./bin/ycsb run hbase10 -P workloads/workloada -p table=usertable\n   ```\n4. Analyze results and tune HBase configurations accordingly."
+      },
+      {
+        "question": "What command is used to deploy a new Wildfly application?",
+        "answer": "1. Copy the `.war` file to the deployment directory:\n   ```bash\n   cp myapp.war /opt/wildfly/standalone/deployments/\n   ```\n2. Restart Wildfly:\n   ```bash\n   sudo systemctl restart wildfly\n   ```\n3. Verify deployment status using the management CLI:\n   ```bash\n   /opt/wildfly/bin/jboss-cli.sh --connect --command='deployment-info'\n   ```"
+      },
+      {
+        "question": "How do you change the default heap size of Wildfly?",
+        "answer": "Edit `standalone.conf`:\n   ```bash\n   export JAVA_OPTS=\"-Xms2G -Xmx4G\"\n   ```\nRestart Wildfly:\n   ```bash\n   sudo systemctl restart wildfly\n   ```"
+      },
+      {
+        "question": "How do you force a ZooKeeper leader election manually?",
+        "answer": "1. Identify the current leader:\n   ```bash\n   echo stat | nc localhost 2181\n   ```\n2. Stop the leader node:\n   ```bash\n   systemctl stop zookeeper\n   ```\n3. Observe leader re-election by running:\n   ```bash\n   echo stat | nc localhost 2181\n   ```"
+      },
+      {
+        "question": "How can you enable ACLs in both YARN and Spark to control access to Spark logs?",
+        "answer": "To enable ACLs:\n\n1. **In YARN:**\n   - Navigate to YARN → Configuration.\n   - Search for 'ACL For Viewing A Job'.\n   - Add extra groups to allow viewing MapReduce jobs, e.g., `hue WBDADMIN,WBDOPDEV,WBDOPPRO,WBDOPQA`.\n   - Enable 'Job ACL JobHistory Server Default Group'.\n\n2. **In Spark:**\n   - Navigate to Spark → Configuration.\n   - Search for 'Spark Client Advanced Configuration Snippet'.\n   - Enable Spark ACLs with:\n     ```bash\n     spark.acls.enable=true\n     ```\n   - Set admin groups:\n     ```bash\n     spark.admins.acls.groups=WBDADMIN\n     ```\n   - Give permissions to the Spark History Server:\n     ```bash\n     spark.history.ui.admin.acls.groups=WBDADMIN\n     ```\n   - Define UI view access:\n     ```bash\n     spark.ui.view.acls.groups=WBDOPDEV,WBDOPPRO,WBDOPQA\n     ```"
+    },
+    {
+        "question": "How can you manually fail over a WildFly instance?",
+        "answer": "1. Stop the active WildFly instance:\n   ```bash\n   systemctl stop wildfly\n   ```\n2. Update the DNS records or load balancer to point to the secondary WildFly server.\n3. Start the standby WildFly instance:\n   ```bash\n   systemctl start wildfly\n   ```\n4. Verify logs to ensure a successful failover:\n   ```bash\n   tail -f /var/log/wildfly/server.log\n   ```"
+    },
+    {
+        "question": "How can you configure a new repository in Nexus?",
+        "answer": "1. Log in to Nexus.\n2. Navigate to 'Repositories' and click 'Create repository'.\n3. Choose the repository type (e.g., 'maven2-hosted').\n4. Configure storage and cleanup policies.\n5. Save and validate the configuration."
+    },
+    {
+        "question": "How do you benchmark HBase write performance?",
+        "answer": "Use the `hbase` command-line tool:\n   ```bash\n   hbase pe --table testTable --rows=100000 --nomapred sequentialWrite 10\n   ```"
+    },
+    {
+        "question": "How can you configure a failover for Apache?",
+        "answer": "Use a secondary Apache server and enable Keepalived."
+    },
+    {
+        "question": "What command is used to manually decrypt a NaVencrypt-protected disk?",
+        "answer": "Use `navdecrypt`:\n   ```bash\n   navdecrypt --decrypt /dev/sdb1\n   ```"
+    },
+    {
+        "question": "How can you verify that MySQL replication is caught up?",
+        "answer": "Run:\n   ```bash\n   SHOW SLAVE STATUS\\G;\n   ```\n   Ensure `Seconds_Behind_Master` is 0."
+    },
+    {
+        "question": "How do you upgrade YARN configurations for better ACL handling?",
+        "answer": "Modify the 'ACL For Viewing A Job' and 'Job ACL JobHistory Server Default Group' in YARN configuration."
+    },
+    {
+        "question": "How do you restart MirrorMaker manually?",
+        "answer": "Run:\n   ```bash\n   systemctl restart mirrormaker\n   ```"
+    }
+    ]
+  }
+  

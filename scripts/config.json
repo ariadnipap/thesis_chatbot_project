@@ -1,0 +1,22 @@
+{
+    "paths": {
+        "faiss_index": "data/faiss_index_chunked_1000_200/",
+        "llama_model": "/home/ariadnipap/Llama-3.3-70B-Instruct-Q4_K_M.gguf"
+    },
+    "model_parameters": {
+        "n_gpu_layers": 81,
+        "temperature": 0.1,
+        "max_tokens": 1536,
+        "n_ctx": 6500,
+        "top_k": 25,
+        "top_p": 0.7,
+        "repeat_penalty": 1.1,
+        "flash_attention": true,
+        "verbose": true
+    },
+    "retrieval_settings": {
+        "max_chars": 12000,
+        "k": 10,
+        "threshold": -8.0
+    }
+}

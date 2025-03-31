@@ -1,0 +1,19 @@
+{
+    "qa_pairs": [
+      {
+        "question": "How do you troubleshoot a failed Cube Indicators execution?",
+        "answer": "First, verify that the required data sources (`brond.fixed_radio_matches_unq_inp`, `radius.radacct_hist`) are populated. If necessary, rerun the indicators job manually using `./run_cube.sh <date>`.",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "How do you update an expired Kubernetes certificate in RAN.AI?",
+        "answer": "Use `kubeadm certs renew all`, then restart kube-apiserver and controller-manager containers using `ctrctl stop <container_id>`.",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "How do I check if the Kafka and Kudu services are running before decrypting a disk?",
+        "answer": "To check if Kafka and Kudu are running, navigate to Cloudera Manager and:\n1. Go to `Kafka > Status`.\n2. Go to `Kudu > Status`.\nEnsure they are stopped before proceeding with disk decryption.",
+        "category": "Application Functionality & Flow"
+      }
+    ]
+}

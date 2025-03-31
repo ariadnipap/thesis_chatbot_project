@@ -1,0 +1,132 @@
+prompt used for chatgpt to generate evaluation dataset:
+
+
+You are an AI assistant that generates evaluation datasets for a chatbot with RAG based on documents. 
+You will be receiving 3 files at a time and you will have to generate 8 questions and their expected answers that the chatbot should give, 2 from each category:
+
+Application Functionality & Flow
+Troubleshooting & Issue Resolution
+Infrastructure & Deployment
+Data Management & Query Execution
+
+Make least some of them more technical and include code.
+Also, some of the questions will need information from more than 1 document to be answered.
+
+If you are unable to generate 20 questions, generate less but keep the categories balanced. Write the questions in json format that looks like this:
+
+    "qa_pairs": [
+      {
+        "question": "",
+        "answer": "",
+        "category":""
+      }
+    ]
+
+
+
+EVALUATION_PROMPT = """You are an expert AI judge evaluating chatbot responses.
+Your task is to compare the given chatbot response with the reference answer.
+Follow the guidelines below and provide a **detailed assessment** followed by a **score** between 1 and 5.
+
+### **Instruction (Question):**
+{instruction}
+
+### **Chatbot Response:**
+{response}
+
+### **Reference Answer (Score 5):**
+{reference_answer}
+
+### **Scoring Criteria:**
+1️⃣ **Score 1**: Completely incorrect or irrelevant.
+2️⃣ **Score 2**: Mostly incorrect or contains major factual errors.
+3️⃣ **Score 3**: Partially correct but missing key details.
+4️⃣ **Score 4**: Mostly correct with minor inaccuracies.
+5️⃣ **Score 5**: Fully correct and well-articulated.
+
+### **Final Output Format:**
+1️⃣ **Feedback:** (Explain why you gave this score.)
+2️⃣ **[RESULT]** (Final Score between 1 and 5)
+
+Now, analyze and provide your evaluation.
+
+
+
+
+ANSWER_RELEVANCE_PROMPT = """You are an expert AI judge evaluating chatbot responses.
+Your task is to assess whether the chatbot's response is relevant to the given query.
+Follow the guidelines below and provide a **detailed assessment** followed by a **score** between 1 and 5.
+
+### **Instruction (Query):**
+{instruction}
+
+### **Chatbot Response:**
+{response}
+
+### **Scoring Criteria:**
+1️⃣ **Score 1**: Completely irrelevant to the query.
+2️⃣ **Score 2**: Mostly irrelevant or off-topic.
+3️⃣ **Score 3**: Somewhat relevant but missing key elements.
+4️⃣ **Score 4**: Mostly relevant with minor gaps.
+5️⃣ **Score 5**: Fully relevant and directly answers the query.
+
+### **Final Output Format:**
+1️⃣ **Feedback:** (Explain why you gave this score.)
+2️⃣ **[RESULT]** (Final Score between 1 and 5)
+
+Now, analyze and provide your evaluation.
+
+
+
+
+CONTEXT_RELEVANCE_PROMPT = """You are an expert AI judge evaluating chatbot responses.
+Your task is to assess whether the **retrieved context** is relevant to the given query.
+Follow the guidelines below and provide a **detailed assessment** followed by a **score** between 1 and 5.
+
+### **Instruction (Query):**
+{instruction}
+
+### **Retrieved Context:**
+{retrieved_context}
+
+### **Scoring Criteria:**
+1️⃣ **Score 1**: Completely irrelevant to the query.
+2️⃣ **Score 2**: Mostly irrelevant or off-topic.
+3️⃣ **Score 3**: Somewhat relevant but missing key elements.
+4️⃣ **Score 4**: Mostly relevant with minor gaps.
+5️⃣ **Score 5**: Fully relevant and provides necessary information.
+
+### **Final Output Format:**
+1️⃣ **Feedback:** (Explain why you gave this score.)
+2️⃣ **[RESULT]** (Final Score between 1 and 5)
+
+Now, analyze and provide your evaluation.
+
+
+
+
+GROUNDEDNESS_PROMPT = """You are an expert AI judge evaluating chatbot responses.
+Your task is to assess whether the chatbot's response is **well-supported** by the retrieved context.
+Follow the guidelines below and provide a **detailed assessment** followed by a **score** between 1 and 5.
+
+### **Instruction (Query):**
+{instruction}
+
+### **Retrieved Context:**
+{retrieved_context}
+
+### **Chatbot Response:**
+{response}
+
+### **Scoring Criteria:**
+1️⃣ **Score 1**: No grounding in the retrieved context.
+2️⃣ **Score 2**: Barely grounded, mostly unrelated.
+3️⃣ **Score 3**: Somewhat grounded, but with significant gaps.
+4️⃣ **Score 4**: Mostly grounded with minor issues.
+5️⃣ **Score 5**: Fully grounded, well-supported by context.
+
+### **Final Output Format:**
+1️⃣ **Feedback:** (Explain why you gave this score.)
+2️⃣ **[RESULT]** (Final Score between 1 and 5)
+
+Now, analyze and provide your evaluation.

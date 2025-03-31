@@ -1,0 +1,85 @@
+## General Categories
+
+- hardware
+- network
+- os
+- security
+- user_issue
+- out_of_support
+- not_available
+- duplicate
+- operations
+
+## Components
+
+- cloudera_mgmt
+- cdh
+- kafka
+- kudu
+- impala
+- hive
+- hbase
+- hdfs
+- yarn
+- sqoop
+- hue
+- cdsw
+- halo
+- streamsets
+- spark
+- elk
+- rstudioconnect
+- ad
+- wildfly
+- mysql
+- spagobi
+- oozie
+
+## Applications & Flows
+
+- cdef_bs_ipvpn
+- cdef_bs_sai
+- cdef_bs_brond
+- cdef_bs_energy_efficiency
+- cdef_bs_aums
+- cdef_bs_open_weather_map
+- cdef_bs_radius
+- cdef_bs_axtract
+- cdef_bs_tma
+- cdef_bs_geolocation
+- cdef_bs_osix
+- cdef_bs_cube
+- cdef_bs_syzefxis
+- cdef_bs_oneticket
+- cdef_bs_huawei_tv
+- cdef_bs_refdata
+- cdef_bs_ekl
+- cdef_bs_test_ekl
+- cdef_bs_customapps
+- cdef_bs_anonymization
+- cdef_bs_retention
+- cdef_bs_loc_mob
+- cdef_bs_wfm
+- cdef_bs_dwhfixed
+- cdef_bs_eea
+- cdef_bs_ookla
+- cdef_bs_prometheus
+- cdef_bs_techacthist
+- cdef_bs_agama
+- cdef_bs_tdatamodel
+- cdef_bs_demo
+- cdef_bs_csi
+- cdef_bs_RA_Dsessions
+- cdef_bs_temip
+- mno_bd_ibank_rest
+- mno_bd_ibank_spark
+- mno_bd_ibank_spark_visible
+- mno_bd_ibank_dwh
+- mno_bd_ibank_merge_batch
+- mno_bd_online_rest
+- mno_bd_online_spark
+- mno_bd_online_merge_batch
+- mno_bd_replication
+- stu_smarts
+- smart_policing
+- vwx

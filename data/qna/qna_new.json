@@ -1,0 +1,965 @@
+{
+    "qa_pairs": [
+      {
+        "question": "What are the main KPI categories computed by the IPVPN-SM replacement process?",
+        "answer": "The three major KPI categories computed by the IPVPN-SM replacement process are Components (CPU, Memory), Interfaces (IF), and SLA (Availability, Quality of Service).",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "How often does the IPVPN-SM replacement process run its ETL pipeline?",
+        "answer": "The IPVPN-SM replacement process runs every 5 minutes as part of the IPVPN-SLA cron job.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "What is the purpose of the Monitoring application in the BigStreamer platform?",
+        "answer": "The Monitoring application is used to monitor all streaming and batch jobs through HTTP calls, storing job statuses in the `monitoring` database and sending performance metrics to Graphite.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "What is the role of the `pollaploi.sh` script in the Energy-Efficiency Pollaploi workflow?",
+        "answer": "The `pollaploi.sh` script is executed via SSH within an Oozie Workflow to move and process energy efficiency data files from an SFTP directory into an Impala table.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "How is the `Piraeus Cisco VDSL2` application scheduled and executed?",
+        "answer": "The application is executed within a Kubernetes pod and is scheduled to run every 5 minutes using a Cron job.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "How can you check if the IPVPN-SM application is running?",
+        "answer": "You can check the IPVPN-SM application status using the following curl command:\n```\ncurl --location --request GET 'un-vip:13001/ipvpn-sm/app/status'\n```",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "What steps should be taken if an `AppEmptyQueryException` occurs in the IPVPN-SM application?",
+        "answer": "If an `AppEmptyQueryException` occurs, check the Impala tables for missing data, ensure the data pipeline is running correctly, and manually add missing metrics if needed.",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "How do you restart the Monitoring application in case it stops unexpectedly?",
+        "answer": "To restart the Monitoring application, use:\n```\ndocker start monitoring-app-{version}\n```",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "What should you check if no data is being loaded into the `pollaploi` Impala table?",
+        "answer": "Check if the SFTP transfer completed successfully, verify the file processing logic in `pollaploi.sh`, and ensure the Impala `LOAD DATA INPATH` command executed correctly.",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "What logs should you check if the Piraeus Cisco VDSL2 application fails to transform SNMP files?",
+        "answer": "Check the logs using `kubectl logs` for stdout messages and verify the transformation process in `/app/conf/application.yaml` under `vdsl2.dataDir`.",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "Which components form the infrastructure of the IPVPN-SM replacement process?",
+        "answer": "The infrastructure consists of the IPVPN-SM application, Impala data sources, Kerberos authentication, HAProxy load balancer, and the external SQM server.",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How is authentication to Impala handled in the IPVPN-SM application?",
+        "answer": "Authentication is done using Kerberos with configuration files including `/etc/krb5.conf`, `/shared/abc/ip_vpn/sm-app/deployment/config/jaas.conf`, and the keytab file.",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "Where are the deployment configuration files for the Monitoring application located?",
+        "answer": "The deployment configuration files are stored in `/opt/monitoring_app/monitoring_config`.",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "What are the main Hive tables used in the `dwhfixed` workflow?",
+        "answer": "The main Hive tables include `dwhfixed.v_box_dim_hist`, `dwhfixed.v_fixed_cable_dim_hist`, `dwhfixed.v_kv_dim_hist`, and others listed in the workflow.",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "Which database and table does the Energy-Efficiency Pollaploi workflow load data into?",
+        "answer": "The workflow loads data into the `energy_efficiency` database and the `pollaploi` table.",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How can you execute an Impala query to check the number of records in `bigcust.nnmcp_ipvpn_slametrics_hist`?",
+        "answer": "Run the following command in Impala:\n```\nSELECT COUNT(*) FROM bigcust.nnmcp_ipvpn_slametrics_hist;\n```",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "What is the command to check failed executions in the Monitoring database for IPVPN-SM?",
+        "answer": "Run the following MySQL query:\n```\nSELECT * FROM jobstatus WHERE application='IPVPN-SM' AND status='FAILED' AND system_ts >= NOW() - INTERVAL 1 DAY;\n```",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How do you manually trigger the Piraeus Cisco VDSL2 application?",
+        "answer": "You can manually trigger the application by running:\n```\nkubectl exec -it <pod_name> -- /app/run_vdsl2.sh\n```",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How can you verify the number of records in the `pollaploi` table using Impala?",
+        "answer": "Run the following command:\n```\nSELECT COUNT(*) FROM energy_efficiency.pollaploi;\n```",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "Which command is used to check Oracle table statistics before performing data exports in the `dwhfixed` workflow?",
+        "answer": "Run the following command in Impala:\n```\nSHOW TABLE STATS dwhfixed.v_box_dim_hist;\n```",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "What is the function of the Main Application in the TeMIP Flow?",
+        "answer": "The Main Application in the TeMIP Flow is a Java application hosted on a Wildfly server. It receives TeMIP alarms and stores them into Apache Kudu for near real-time CRUD operations. The stored data is later moved to Apache Impala for extended retention of six months.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "How does the Initialization/Synchronization flow in TeMIP work?",
+        "answer": "The Initialization/Synchronization Flow in TeMIP is managed by the Oozie Coordinator `TeMIP_Synchronization_CO`. It establishes a connection between the Wildfly Server running the TeMIP application and the TeMIP Server. This coordinator must be run manually after every restart or deployment of the Wildfly Server.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "What is the purpose of the Alert Mail Flow in TeMIP?",
+        "answer": "The Alert Mail Flow in TeMIP is an Oozie Coordinator (`TeMIP_Alert_Mail_CO`) that runs every hour to check whether alarms are being received from the TeMIP Server. If no alarms are received in the last hour, it sends an email notification to engineers.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "How does the Syzefxis Flow transfer raw files to BigStreamer nodes?",
+        "answer": "Raw files produced by the SNMP Custom Poller application are collected via passwordless SFTP by user `intra`. The files are then concatenated and uploaded to an HDFS directory for further processing.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "What are the steps involved in the Move Kudu to Impala Flow in TeMIP?",
+        "answer": "The Move Kudu to Impala Flow consists of an Oozie Coordinator (`TeMIP_kudu_2_Impala_CO`) that runs daily at 06:00. It moves terminated alarms from `temip.temip_kudu_terminated_alarms` to `temip.temip_impala_terminated_alarms` and historic events from `temip.temip_kudu_historic_events` to `temip.temip_impala_historic_events`.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "What should I check if the TeMIP Main Application is not receiving alarms?",
+        "answer": "First, check the application logs using `temip-tailog` for any error messages. Then, verify that the TeMIP Server is up using `ping 999.999.999.999`. If necessary, contact a TeMIP admin to investigate any server-side issues.",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "How do you troubleshoot missing SMS records in the Traffica Flow?",
+        "answer": "First, check if the Traffica application is running using `curl -X GET 'http://unc2.bigdata.abc.gr:11482/traffica/app/info/check'`. Then, examine the logs for errors using `grep -i -e error -e exception /shared/abc/traffica/logs/traffica-sms.log`. If necessary, manually rename unprocessed files by adding the `.LOADED` suffix.",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "What should you do if the Syzefxis Flow fails to load data into Impala?",
+        "answer": "Check the logs located at `/home/users/syzefxis/DataTransformation/log/syzefxis-YYYY-MM-DD.log`. If no errors are found, verify if the `nnmnps.nnmcp_qametrics_hist` table is receiving new data from the Spark job.",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "How do you manually rerun a failed location mobility export?",
+        "answer": "You can manually execute the script using the `--max-files` flag to catch up on missed exports. For example, to export six missing files, run:\n```bash\n/shared/abc/location_mobility/run/renew/export_lm_lte_v2_mon.sh --max-files 6\n```",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "How can you restart the Traffica Flow after resolving an issue?",
+        "answer": "After identifying and resolving the root cause, enable normal operation by running:\n```bash\ncurl -X PUT 'http://unc2.bigdata.abc.gr:11483/traffica/app/operations/lifecycle/enable'\n```",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "How is the TeMIP application deployed?",
+        "answer": "The TeMIP application is deployed on a Wildfly server located at `/opt/wf_cdef_temip/standalone/deployments`. The deployment is automated, and a `.war.deployed` file is created automatically when a new war file is placed.",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How do you install a certificate authority using SaltStack?",
+        "answer": "Move the given certificate to `/etc/salt/salt/tls/internal_certificate/root_certificate/`, rename it if necessary, and install it using SaltStack with:\n```bash\nsalt 'node_name' state.apply tls.internal_certificate.install_root_certificate_os\n```",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How do you deploy a new WAR file for the Permanent Anonymization & Retention UI?",
+        "answer": "Backup the old WAR file, place the new WAR file in `/opt/trustcenter/wf_cdef_trc/standalone/deployments/`, and verify deployment by checking `trust-status`.",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "What are the necessary steps to start the Syzefxis Data Transformation job?",
+        "answer": "The Syzefxis Data Transformation job is triggered daily at 06:30 by the master script located at `/shared/abc/nnmnps/bin/001_CP_nnmnps_Metrics.sh`.",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How do you check the status of the Oozie job moving TeMIP alarms from Kudu to Impala?",
+        "answer": "Login to Hue and check for an Oozie job with the name `oozie:launcher:T=shell:W=temip_kudu_to_impala:A=shell-661a:*`. If errors are found, rerun the failed execution.",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How do you query the number of rows in the `nnmnps.nnmcp_qametrics_hist` table?",
+        "answer": "Use the following Impala query:\n```sql\nSELECT COUNT(*) FROM nnmnps.nnmcp_qametrics_hist;\n```",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How do you check failed Location Mobility exports?",
+        "answer": "Run:\n```bash\ncat /shared/abc/location_mobility/logging/LM_*_reconciliation.log\n```",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How do you manually move Kudu alarms to Impala in TeMIP?",
+        "answer": "Run the script manually using:\n```bash\nhdfs:/user/temip/temip_kudu_to_impala.sh\n```",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How do you verify the number of exported Location Mobility records?",
+        "answer": "Check the reconciliation log:\n```bash\ncat /shared/abc/location_mobility/logging/LM_05_voiceInOut_reconciliation.log\n```",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How do you check the last exported Traffica record?",
+        "answer": "Run the following query in Impala:\n```sql\nSELECT MAX(event_time) FROM sai.sms_raw;\n```",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How does the Cube Indicators Pipeline process data?",
+        "answer": "The Cube Indicators Pipeline runs the `Coord_Cube_Spark_Indicators` coordinator, which processes data with a two-day delay. It populates the `brond.cube_indicators` table using data from various dependent tables like `brond.fixed_radio_matches_unq_inp`, `radius.radacct_hist`, and `brond.brond_retrains_hist`.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "What is the purpose of the Streamsets Java Heap Space configuration?",
+        "answer": "The Java Heap Space configuration in Streamsets ensures proper memory allocation by setting `-Xmx32768m -Xms32768m` in Cloudera Manager. This prevents memory allocation issues when running data processing pipelines.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "How is a Kubernetes user created for the RAN.AI environment?",
+        "answer": "To create a Kubernetes user for RAN.AI, define a service account in `service_account.yml` and a role binding in `role_binding.yml`. Apply them using `kubectl apply -f service_account.yml && kubectl apply -f role_binding.yml`. Then, generate a kubeconfig using `kubectl view-serviceaccount-kubeconfig`.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "How can a Kerberos keytab file be created for user authentication?",
+        "answer": "Log in to the `kerb1` node, use `kadmin.local`, check if the principal exists, and create it if necessary using `addprinc <username>@CNE.abc.GR`. Generate the keytab file using `ktadd -k /tmp/<username>.keytab -norandkey <username>@CNE.abc.GR` and move it to the appropriate directory.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "How does the anonymization process work in data retention?",
+        "answer": "The anonymization process runs the script `100.Anonymize_Data_Main.sh`, logs execution status, and checks for errors. The retention process verifies script success using `grep \"Script Status\" /shared/abc/cdo/log/203.Retention_Dynamic_Drop_DDL.202012.log`.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "What should you do if an error occurs during anonymization in data retention?",
+        "answer": "Check the anonymization log with `egrep '(:ERROR|with errors)' /shared/abc/cdo/log/Anonymize/*<RunID>*.log | less`. If errors exist, investigate the retention script logs and retry execution.",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "How do you troubleshoot a failed Cube Indicators execution?",
+        "answer": "First, verify that the required data sources (`brond.fixed_radio_matches_unq_inp`, `radius.radacct_hist`) are populated. If necessary, rerun the indicators job manually using `./run_cube.sh <date>`.",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "How can you resolve duplicate entries in the Energy Efficiency dataset?",
+        "answer": "Run the following Impala queries:\n```bash\nCREATE TABLE energy_efficiency.cell LIKE energy_efficiency.cell;\nINSERT INTO TABLE energy_efficiency.cell_bak PARTITION (par_dt) SELECT * FROM energy_efficiency.cell;\nINSERT OVERWRITE TABLE energy_efficiency.cell PARTITION (par_dt) SELECT DISTINCT * FROM energy_efficiency.cell WHERE par_dt BETWEEN '20211210' AND '20211215';\nDROP TABLE energy_efficiency.cell;\n```",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "What should you check if OpenLDAP replication is broken?",
+        "answer": "First, verify if the replication issue is due to a password change by checking the `Manager` credentials. If needed, update the credentials in the replication configuration file and apply changes using `ldapmodify`.",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "How do you reset a GROUPNET bind user password?",
+        "answer": "Log in to the admin portal at `https://cne.def.gr/auth/admin`, navigate to User Federation > GROUPNET, request a password update, and update the `Bind Credential` field.",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "How is Streamsets deployed and restarted after configuration changes?",
+        "answer": "After modifying configuration settings, restart Streamsets using Cloudera Manager: `cluster -> Streamsets -> Restart`. Then, verify the process using `ps -ef | grep -i streamsets`.",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "What are the steps to deploy a new Kubernetes user environment?",
+        "answer": "Install `kubectl`, create a service account and role binding using YAML definitions, and apply them using `kubectl apply`. Then, generate a kubeconfig and retrieve the authentication token.",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How do you configure OpenLDAP replication between kerb1 and kerb2?",
+        "answer": "Modify the replication configuration file to set up `olcSyncrepl` on both nodes. Apply changes using `ldapmodify -H ldaps://kerb1.bigdata.abc.gr -D \"cn=config\" -W -f replication_config.ldif`.",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How do you set up a new Kerberos keytab for authentication?",
+        "answer": "Create a keytab using `ktadd -k /tmp/<username>.keytab -norandkey <username>@CNE.abc.GR`, then move it to `/home/users/skokkoris/` and set ownership using `chown skokkoris. /home/users/skokkoris/<username>.keytab`.",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How do you increase Java heap memory allocation for Streamsets?",
+        "answer": "Modify Java options in Cloudera Manager:\n```bash\ncluster -> Streamsets -> Configuration -> Java options: `-Xmx32768m -Xms32768m -server -XX:-OmitStackTraceInFastThrow`\n```",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How do you execute Cube Indicators processing via terminal?",
+        "answer": "Login to `un1.bigdata.abc.gr`, remove the old script, fetch the new script from HDFS, modify `run_cube.sh` with the correct execution date, and execute `./run_cube.sh`.",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How do you query Cube Indicators data in Impala?",
+        "answer": "Run the following SQL query:\n```sql\nSELECT COUNT(*) FROM brond.cube_indicators WHERE par_date = '20230101';\n```",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How do you check for duplicate records in the Energy Efficiency dataset?",
+        "answer": "Run the following Impala queries:\n```bash\nSELECT COUNT(*), par_dt FROM energy_efficiency.cell WHERE par_dt > '202111201' GROUP BY par_dt ORDER BY par_dt DESC;\nSELECT COUNT(*) FROM (SELECT DISTINCT * FROM energy_efficiency.cell WHERE par_dt='20211210') a;\n```",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How do you fetch and update the Streamsets configuration in Cloudera Manager?",
+        "answer": "Go to `cluster -> Streamsets -> Configuration`, modify the necessary Java heap memory settings, and restart Streamsets to apply the new configuration.",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How do you verify OpenLDAP replication status between kerb1 and kerb2?",
+        "answer": "Use the following command to check if the `testuser` entry exists on kerb2:\n```bash\nldapsearch -H ldaps://kerb2.bigdata.abc.gr -D \"cn=Manager,dc=bigdata,dc=abc,dc=gr\" -W -b \"ou=People,dc=bigdata,dc=abc,dc=gr\" 'uid=testuser'\n```",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How do you open a support ticket with Dell for BigStreamer issues?",
+        "answer": "To open a ticket with Dell:\n1. SSH into the affected node.\n2. Use `ipmitool lan print | grep -i 'IP Address'` to find the Management IP.\n3. Connect via VNC, open Firefox, and enter the IP.\n4. Retrieve the Service Tag from 'Server > Overview > Server Information'.\n5. Call Dell support at 2108129800 with the Service Tag.\n6. Follow Dell’s instructions to collect TSR logs from IDRAC.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "How does Viavi Kafka connectivity work within BigStreamer?",
+        "answer": "Viavi Kafka connectivity is established via HAProxy on a single node (Incelligent). This ensures traffic isolation to prevent network congestion. The connection involves internal DNS resolution mapping to Kafka broker IPs using VLAN 300.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "How is IDM replication managed across nodes?",
+        "answer": "IDM (FreeIPA) replication uses GSSAPI authentication via Kerberos and LDAP service principal names (SPNs). The replication is push-based, ensuring both nodes remain synchronized.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "How do you renew Kubernetes certificates for RAN.AI?",
+        "answer": "Login to `kubemaster1` and check expiration with `kubeadm certs check-expiration`. Backup Kubernetes configuration, renew certs using `kubeadm certs renew all`, and restart kube-apiserver, kube-controller-manager, and kube-scheduler to apply changes.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "How do you change the OpenLDAP Manager password?",
+        "answer": "Generate a new password using `slappasswd -h {SSHA}`. Store the output and create `changepwconfig.ldif` and `changepwmanager.ldif` files with the new password. Apply changes using `ldapmodify -H ldapi:// -Y EXTERNAL -f changepwmanager.ldif`.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "How do you resolve AppEmptyQueryException alerts in BigStreamer?",
+        "answer": "Check `bigcust.perf_interfacemetrics_ipvpn_hist` for missing data. If data is absent, verify the SFTP transfer log for missing files. If necessary, rerun data ingestion scripts.",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "How do you resolve Nagios 'ssh_exchange_identification: Connection closed by remdef host' errors?",
+        "answer": "Modify `/usr/local/nagios/etc/objects/commands.cfg`, changing SSH options to `-E 8 -o StrictHostKeyChecking=no`. Restart Nagios using `service nagios restart`.",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "What are the steps to debug IDM replication failures?",
+        "answer": "Check replication status with `ipa-replica-manage list -v`. If failures exist, force sync using `ipa-replica-manage force-sync --from idm2.bigdata.abc.gr`.",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "How do you fix Viavi Kafka HAProxy connection issues?",
+        "answer": "Check HAProxy logs using `systemctl status haproxy`. If needed, restart with `systemctl restart haproxy`. Verify connectivity with `nc -zv <broker-ip> 9093`.",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "How do you update an expired Kubernetes certificate in RAN.AI?",
+        "answer": "Use `kubeadm certs renew all`, then restart kube-apiserver and controller-manager containers using `ctrctl stop <container_id>`.",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "What are the prerequisites for changing the domain in RCPE?",
+        "answer": "Ensure SSL certificates are imported, update `/etc/hosts`, perform an LDAP search for user validation, and confirm an active user exists in the new domain before proceeding.",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How do you integrate SpagoBI with the new Groupnet domain?",
+        "answer": "Modify `/usr/lib/spagobi/webapps/SpagoBIProject/WEB-INF/conf/webapp/ldap_authorizations.xml` to update LDAP settings and restart SpagoBI using `docker restart <container-id>`.",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How do you change the domain in RStudio Connect?",
+        "answer": "Backup the current configuration, update `/etc/rstudio-connect/rstudio-connect.gcfg` with new LDAP settings, and restart the service with `systemctl restart rstudio-connect`.",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How do you check the status of OpenLDAP replication?",
+        "answer": "Run `ldapsearch -H ldaps://kerb1.bigdata.abc.gr -D \"cn=Manager,dc=bigdata,dc=abc,dc=gr\" -W -b \"ou=People,dc=bigdata,dc=abc,dc=gr\"` to verify if replication has taken effect.",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How do you configure Viavi Kafka connectivity with BigStreamer?",
+        "answer": "Modify `haproxy.cfg` to include new brokers, restart HAProxy, and update DNS records in the cluster to map internal hostnames to Viavi Kafka brokers.",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How do you check AppEmptyQueryException errors in IPVPN-SM?",
+        "answer": "Run `tail -f /shared/abc/ip_vpn/interfaces_flow/Dataparser/scripts/log/nnm_interface_metrics.cron.<date>.log` to check for missing files.",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How do you manually sync IDM replication?",
+        "answer": "Run `ipa-replica-manage force-sync --from idm2.bigdata.abc.gr` to push changes immediately.",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How do you list all Kafka topics available in Viavi Kafka?",
+        "answer": "Use the command:\n```bash\nkafka-topics.sh --list --bootstrap-server <broker-ip>:9093\n```",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How do you update user domains in the SpagoBI database?",
+        "answer": "Run the following SQL query:\n```sql\nUPDATE SBI_USER SET USER_ID = REPLACE(USER_ID,'@central-domain','@groupnet') WHERE USER_ID LIKE '%@central-domain%';\n```",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How do you verify an LDAP search in RStudio after domain migration?",
+        "answer": "Run:\n```bash\nldapsearch -H ldaps://PVDCAHR01.groupnet.gr -D \"<Bind User sAMAccountName>\" -W -b \"dc=groupnet,dc=gr\" '(sAMAccountName=...)'\n```",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How can I check for missing logs in the abc BigStreamer syslog?",
+        "answer": "To check for missing logs in the abc BigStreamer syslog, SSH into un2 as root and inspect the rsyslog configuration using:\n```bash\ncat /etc/rsyslog.conf | more\n```\nThen, check the servers where messages are transferred by examining log rotation settings with:\n```bash\ncat /etc/logrotate.conf | more\n```",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "How can I prevent root SSH login on all servers?",
+        "answer": "To disable root SSH login on all servers, modify the SSH configuration. First, check the current configuration:\n```bash\nsalt '*' cmd.run 'grep \"^PermitRootLogin\" /etc/ssh/sshd_config'\n```\nThen, modify the configuration to disallow root login:\n```bash\nsed -i -e 's/^PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config\n```\nApply the changes using:\n```bash\nsalt '*' cmd.script salt://disable_root_login.sh\nsalt '*' cmd.run 'service sshd reload'\n```",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "What steps should I follow to resolve missing CPU_LOAD and MEMORY_USAGE files in BigStreamer?",
+        "answer": "1. SSH into `un2.bigdata.abc.gr` as `ipvpn`.\n2. Check logs for export errors:\n```bash\ncd /shared/abc/ip_vpn/log/\nless initiate_export_components.cron.<date>.log\n```\n3. Inspect Impala queries:\n```bash\nless compute_cpu_kpis.<date>.log\nless compute_memory_kpis.<date>.log\n```\n4. Verify input metrics:\n```bash\nSELECT count(*) FROM bigcust.nnm_ipvpn_componentmetrics_hist WHERE min_5='<timestamp>' AND par_dt='<date>';\n```\n5. Restart Flume Agent:\n```bash\ntail -f /var/log/flume-ng/flume-cmf-flume5-AGENT-un2.bigdata.abc.gr.log\n```",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "How do I resolve Impala stale metadata issues?",
+        "answer": "If an Impala query fails due to stale metadata, try refreshing the affected table:\n```sql\nREFRESH osix.sip;\n```\nFor partition-specific issues, refresh the specific partition:\n```sql\nREFRESH osix.sip PARTITION (par_dt='20201123', par_hr='08', par_method='REGISTER');\n```",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "How do I update the BIOS and Lifecycle Controller on a Dell PowerEdge C6320?",
+        "answer": "1. Download the latest iDRAC and BIOS firmware in `.bin` format.\n2. Transfer them to `/tmp/` on the server.\n3. Grant execution permission:\n```bash\nchmod +x BIOS_CCTDP_LN64_2.13.0.BIN\nchmod +x iDRAC-with-Lifecycle-Controller_Firmware_5HN4R_LN64_2.81.81.81_A00.BIN\n```\n4. Execute updates:\n```bash\n./iDRAC-with-Lifecycle-Controller_Firmware_5HN4R_LN64_2.81.81.81_A00.BIN\n./BIOS_CCTDP_LN64_2.13.0.BIN\n```\n5. Reboot the system to complete the updates.",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How do I create a Dell support ticket for a hardware issue?",
+        "answer": "1. Retrieve the service tag from iDRAC (`Overview → Server → Logs`).\n2. Export lifecycle logs (`Overview → Server → Troubleshooting → Support Assist → Export Collection`).\n3. Open a case on Dell Support with the service tag.\n4. Send the exported TSR zip file to Dell.\n5. Follow Dell’s instructions for BIOS and Lifecycle Controller updates if needed.",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How do I manually re-export RA_Dsession and RA_Dtraffic files in abc BigStreamer?",
+        "answer": "If data has already been exported but is missing, manually trigger an export for a specific date:\n```bash\ncd /shared/abc/location_mobility/run\n./export_ra_bs_01.sh -t 20201115\n./export_ra_bs_02.sh -t 20201115\n```",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How can I check if data has been inserted into the osix.sip table?",
+        "answer": "Use Impala to check if data exists for a specific date:\n```sql\nSELECT count(*), par_dt FROM osix.sip WHERE par_dt > '20201124' GROUP BY par_dt;\n```\nIf no data is found, restart the topology:\n```bash\nssh unosix1\nsudo -iu osix\n./submit_sip_norm.sh\n```",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How can I check if a missing CSI_fix file was caused by missing data in the brond.dsl_stats_week_xdsl_hist table?",
+        "answer": "To check for missing data in the brond.dsl_stats_week_xdsl_hist table, run the following query in Impala:\n```sql\nSELECT count(*), par_dt FROM brond.dsl_stats_week_xdsl_hist WHERE par_dt >= 'YYYYMMDD' GROUP BY 2 ORDER BY 2;\n```\nIf the count is zero for the missing date, investigate the coordinator job that populates this table (`coord_brond_load_dsl_daily_stats`) and ensure its source tables (`brond.brond_vdsl_stats_week` and `brond.brond_adsl_stats_week`) contain data.",
+        "category": "Data Management & Query Execution"
+    },
+    {
+        "question": "What steps should be taken to reprocess missing radius.radacct_hist records if ingestion failed?",
+        "answer": "1. Verify that the original files exist in `radius.radacct_orig_files`:\n```bash\nhdfs dfs -ls /ez/warehouse/radius.db/radacct_orig_files/\n```\n2. Copy the missing files to the load table:\n```bash\nhdfs dfs -cp /ez/warehouse/radius.db/radacct_orig_files/RAD___radacct_YYYY-MM-DD_HH-MM.csv.utc /ez/warehouse/radius.db/radacct_load/\n```\n3. Re-run the radius processing script:\n```bash\n/shared/abc/radius/bin/000_radius_ops.sh >> /shared/abc/radius/log/000_radius_ops.YYYYMMDD.log.manual 2>&1\n```",
+        "category": "Troubleshooting & Issue Resolution"
+    },
+    {
+        "question": "How do I free up CPU and memory resources in a CDSW cluster that is stuck due to resource exhaustion?",
+        "answer": "If CDSW jobs are stuck in 'Scheduling' due to insufficient CPU, memory, or GPU, delete all pending pods:\n```bash\nkubectl get pods | grep Pending | awk '{print $1}' | xargs kubectl delete pod --grace-period=0 --force\nkubectl get pods | grep 'Init:0/1' | awk '{print $1}' | xargs kubectl delete pod --grace-period=0 --force\n```\nMonitor compute and memory resource usage to prevent future scheduling issues.",
+        "category": "Infrastructure & Deployment"
+    },
+    {
+        "question": "What should be done if primary data for a specific date is missing in the agama schema?",
+        "answer": "1. SSH into `un2` using your LDAP account.\n2. Run:\n```bash\ncrontab -l | grep agama\n```\n3. Check logs to confirm the data is missing.\n4. Verify if the necessary files exist on the SFTP server.\n5. Modify the script `/shared/abc/agama/bin/table.sh` to use a static date for `dt_sftp` and `dt`.\n6. Execute the script manually.\n7. Validate data with:\n```sql\nSELECT count(*), par_dt FROM agama.table WHERE par_dt >= 'YYYYMMDD' GROUP BY 2;\n```",
+        "category": "Data Management & Query Execution"
+    },
+    {
+        "question": "How do I verify SSH connectivity between a custompoller user and nnmprd01 before running IP-VPN services?",
+        "answer": "To verify SSH connectivity:\n```bash\nssh custompoller@nnmprd01\n```\nIf prompted for a password, execute:\n```bash\nssh-copy-id custompoller@nnmprd01\n```\nThen, test again with:\n```bash\nssh custompoller@nnmprd01\n```\nOnce SSH is passwordless, proceed with running IP-VPN services.",
+        "category": "Application Functionality & Flow"
+    },
+    {
+        "question": "What action should be taken if an IP-VPN Java application fails due to a missing directory error?",
+        "answer": "If an IP-VPN Java process fails with `java.io.IOException: No such file or directory`, check directory existence:\n```bash\nls -l /opt/OV/_CUSTOM_POLLER/ipvpn\n```\nIf missing, request the system administrator to create the directory. As a temporary workaround, create a new directory in the user home and modify the Java process execution command:\n```bash\nmkdir /home/custompoller/ipvpn/out2\njava -Xms1024m -Xmx4096m -Ddirectorytomove=/home/custompoller/ipvpn/out2/\n```",
+        "category": "Troubleshooting & Issue Resolution"
+    },
+    {
+        "question": "How do I run a test Oozie workflow execution for nms_node reference data without affecting production?",
+        "answer": "1. Create a test table in Impala:\n```sql\nCREATE TABLE nnmnps.nms_node_test LIKE nnmnps.nms_node;\n```\n2. Retrieve the necessary parameters from an existing workflow run in Hue.\n3. Submit the workflow in Hue but override the `tablename` parameter to use `nms_node_test` instead of `nms_node`.\n4. Verify the results in the test table before using it in production.",
+        "category": "Application Functionality & Flow"
+    },
+    {
+        "question": "What firewall and iptables modifications are needed to redirect database connections from nnmdis01 to nnmprd01?",
+        "answer": "To redirect connections to a different database server, update iptables rules:\n```bash\n-A PREROUTING -i bond0.300 -p tcp -m tcp --dport 6535 -j DNAT --to-destination 172.24.104.100:5432\n-A OUTPUT -d 10.255.240.13/32 -p tcp -m tcp --dport 6535 -j DNAT --to-destination 172.24.104.100:5432\nservice iptables reload\n```",
+        "category": "Infrastructure & Deployment"
+    },
+    {
+        "question": "How can I reload missing data into the `radius.radarchive_hist` table?",
+        "answer": "To reload missing data into the `radius.radarchive_hist` table, follow these steps:\n1. Refresh the table using Impala:\n   ```sql\n   refresh radius.radarchive_hist;\n   select count(*), par_dt from radius.radarchive_hist where par_dt = 'YYYYMMDD' group by par_dt;\n   ```\n2. If the issue persists, check the crontab to confirm the scheduled scripts are running.\n3. Verify if the required file exists in the SFTP server:\n   ```bash\n   sftp intra@<sftp-server-ip>\n   ls -l radarchive_YYYYMMDD.csv.bz2\n   ```\n4. If missing, retrieve and extract it:\n   ```bash\n   get radarchive_YYYYMMDD.csv.bz2\n   bzip2 -d radarchive_YYYYMMDD.csv.bz2\n   ```\n5. Load the missing data by executing:\n   ```bash\n   /shared/abc/radius/DataParser/scripts/radius.pl -l -d -D -o\n   /shared/abc/radius/bin/000_radius_ops.sh\n   ```",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "What steps should I follow to resolve missing statistics warnings in `sai.voice_quality_hist`?",
+        "answer": "To resolve missing statistics warnings in `sai.voice_quality_hist`:\n1. Check the current table statistics using Impala:\n   ```sql\n   show table stats sai.voice_quality_hist;\n   ```\n2. If statistics are missing, recompute them:\n   ```sql\n   compute stats sai.voice_quality_hist;\n   ```\n3. If errors persist, refresh the table:\n   ```sql\n   refresh sai.voice_quality_hist;\n   ```\n4. If the warning continues, verify data flow and logs for potential loading issues.",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "How do I renew an expired RStudio Connect license?",
+        "answer": "To renew an expired RStudio Connect license:\n1. SSH into the RStudio server:\n   ```bash\n   ssh unrstudio1\n   ```\n2. Ensure the system time is correct:\n   ```bash\n   sudo timedatectl\n   sudo hwclock -w\n   ```\n3. Deactivate the existing license:\n   ```bash\n   /opt/rstudio-connect/bin/license-manager deactivate\n   ```\n4. Activate the new license:\n   ```bash\n   /opt/rstudio-connect/bin/license-manager activate <product-key>\n   ```\n5. Restart RStudio Connect:\n   ```bash\n   systemctl restart rstudio-connect\n   ```\n6. Verify the activation:\n   ```bash\n   /opt/rstudio-connect/bin/license-manager verify\n   ```",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "What changes are required to fix the `brond.an_rollout_data_hist` table loading issue?",
+        "answer": "The issue occurs due to a script error in `000_brond_rollout_post.sh`. Modify the script as follows:\n1. Change the query in `000_brond_rollout_post.sh`:\n   ```sql\n   from:\n   ( select eett,dslam, colid,colvalue from brond.brond_rollout_data_hist where par_dt='YYYYMMDD' ) d on c.colid=d.colid\n   to:\n   ( select eett,dslam, colid colid1,colvalue from brond.brond_rollout_data_hist where par_dt='YYYYMMDD' ) d on c.colid=d.colid1\n   ```\n2. Reload missing data using:\n   ```bash\n   /shared/abc/brond/bin/000_brond_rollout_post.sh YYYYMMDD\n   ```",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How do I check the number of entries in `sai.voice_quality_hist` over the last 7 days?",
+        "answer": "Use the following SQL query in Impala to check the number of entries in `sai.voice_quality_hist` over the last 7 days:\n```sql\nselect par_dt, count(*) from sai.voice_quality_hist group by par_dt order by par_dt;\n```",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How can I check for missing partitions in the `huawei_tv.rel_play_tv_hist` table?",
+        "answer": "To check for missing partitions in the `huawei_tv.rel_play_tv_hist` table:\n1. Open the Impala Editor in Hue.\n2. Run the following SQL query:\n   ```sql\n   select count(*), par_dt from huawei_tv.rel_play_tv_hist where par_dt between 'YYYYMMDD_START' and 'YYYYMMDD_END' group by par_dt order by par_dt;\n   ```\n3. Identify any missing partitions and reload the necessary data.",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "What is the procedure for reloading missing data into the `prometheus.dwh22_last` table?",
+        "answer": "To reload missing data into the `prometheus.dwh22_last` table:\n1. SSH into `un2`:\n   ```bash\n   ssh un2\n   ```\n2. Run the Prometheus load script:\n   ```bash\n   /shared/abc/prometheus/bin/Cron_Prometheus_Load.sh >> /shared/abc/prometheus/log/Cron_Prometheus_Load.`date '+%Y%m%d'`.log 2>&1\n   ```\n3. Verify data load by running:\n   ```sql\n   select count(*), par_dt from prometheus.dwh22_last where par_dt >= 'YYYYMMDD' group by par_dt;\n   ```",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How do I check if `brond.brond_retrains_hist` is missing data for a specific date?",
+        "answer": "To check if `brond.brond_retrains_hist` is missing data for a specific date:\n1. Run the following SQL query in Impala:\n   ```sql\n   select count(*), par_dt from brond.brond_retrains_hist where par_dt >= 'YYYYMMDD' group by par_dt order by par_dt;\n   ```\n2. If data is missing, check the logs:\n   ```bash\n   cat /shared/abc/brond/log/000_brond_retrains_ops.*\n   ```\n3. If files are missing, request re-upload from abc.",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How can I troubleshoot a failed Kubernetes pod in Cloudera CDSW?",
+        "answer": "To troubleshoot a failed pod in Cloudera CDSW, use the following steps:\n1. Connect to `mncdsw1` as root and check for failing pods:\n   ```bash\n   kubectl get pods -w -A\n   ```\n2. Once you identify a failed pod, describe it:\n   ```bash\n   kubectl describe pod -n default-user-XXX XXXXXXXX\n   ```\n3. Check the logs for the weave pods:\n   ```bash\n   kubectl logs -n kube-system weave-net-XXXXX\n   ```\nIf the weave pod is not responding, restart the Docker daemon to restart all containers:\n   ```bash\n   /opt/cloudera/cm-agent/bin/supervisorctl restart 145071-cdsw-CDSW_DOCKER\n   ```\n(Source: X20220722-IM1923742.md)",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "What should I do if Cloudera Manager stops sending automatic alert emails?",
+        "answer": "If Cloudera Manager stops sending alerts, follow these steps:\n1. SSH to `un5` (Alert Publisher Node) and check the following logs for errors:\n   ```bash\n   less /var/log/messages\n   less /var/log/mail.err\n   less /var/log/mail.info\n   less /var/log/cloudera-scm-alertpublisher\n   ```\n2. Count the number of alerts generated in logs:\n   ```bash\n   for i in {01..05}; do echo 2022-09-$i; cat mgmt-cmf-mgmt-ALERTPUBLISHER-un5.bigdata.abc.gr.log.out | grep 'Cloudera Alert' | wc -l; done\n   ```\n3. Restart the Alert Publisher via Cloudera Manager if needed.\n(Source: X20220901-IM1957832.md)",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "How can I resolve an RStudio user authentication issue after resetting a password?",
+        "answer": "If an RStudio user's applications fail to run after a password reset, check the LDAP authentication:\n1. SSH to `unrstudio1` and verify the `t1-svc-cnebind` account:\n   ```bash\n   ldapsearch -H ldaps://PVDCAHR01.groupnet.gr -D 't1-svc-cnebind' -W -b 'dc=groupnet,dc=gr' '(sAMAccountName=t1-svc-cnebind)'\n   ```\n2. If the password is expired, update it in `/etc/rstudio-connect/rstudio-connect.gcfg`.\n(Source: X20220909-IM1962926.md)",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How do I resolve a Cloudera CDSW startup failure due to persistent storage issues?",
+        "answer": "If CDSW fails to start due to persistent storage issues, check the disk I/O usage:\n1. In Cloudera Manager, check if disk I/O is at 100%.\n2. Identify the affected storage volume:\n   ```bash\n   lsblk | grep cdsw-var\n   ```\n3. Check Kubernetes persistent volumes:\n   ```bash\n   kubectl get pv\n   ```\n4. If the issue persists, restart the CDSW services via Cloudera Manager.\n(Source: X20230130-IM2073052.md)",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How can I verify if Fraport branch metrics are being recorded in BigStreamer?",
+        "answer": "To check if branch metrics are being recorded for Fraport in BigStreamer, execute the following:\n1. Connect to Impala:\n   ```bash\n   impala-shell -i un-vip.bigdata.abc.gr -k --ssl\n   ```\n2. Query the `bigcust.nnmcp_ipvpn_slametrics_hist` table:\n   ```sql\n   select distinct qa_probe_name from bigcust.nnmcp_ipvpn_slametrics_hist where par_dt='20230202' and customer = 'fraport';\n   ```\n3. If the expected probes are missing, check `custompoller` logs to verify data extraction.\n(Source: X20230205-IM2076207.md)",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How do I check which Cloudera CDSW system pods are failing?",
+        "answer": "To identify which Cloudera CDSW system pods are failing, use:\n```bash\nless /var/log/cdsw/cdsw_health.log\n```\nLook for errors related to control plane pods:\n```bash\n2023-01-29 05:50:53,868 ERROR cdsw.status:Pods not ready in cluster kube-system ['component/kube-controller-manager', 'component/kube-scheduler'].\n```\nIf CDSW is down, restart it via Cloudera Manager.\n(Source: X20230130-IM2073052.md)",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "What are the steps to restart the Cloudera CDSW system?",
+        "answer": "To restart Cloudera CDSW:\n1. Navigate to Cloudera Manager -> CDSW -> Restart.\n2. Monitor the restart process:\n   ```bash\n   cdsw status\n   ```\n3. If errors persist, investigate logs:\n   ```bash\n   less /var/log/cdsw/cdsw_health.log\n   ```\n(Source: X20230130-IM2073052.md)",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "How do I manually verify the registration of new measurement points in BigStreamer?",
+        "answer": "To manually verify if new measurement points are registered in BigStreamer:\n1. Query the `bigcust.nnmcp_ipvpn_slametrics_hist` table:\n   ```sql\n   select distinct qa_probe_name from bigcust.nnmcp_ipvpn_slametrics_hist where par_dt='20230202' and customer = 'fraport';\n   ```\n2. Compare with the list of expected probes.\n3. If missing, check `custompoller` logs for extraction issues.\n(Source: X20230205-IM2076207.md)",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "How can I check if the mn3 node is online and responsive?",
+        "answer": "You can check if the mn3 node is online by running:\n\n```bash\nping mn3\n```\nIf there is no response, attempt to SSH into mn3 from the admin server and check the Cloudera Manager interface for its status.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "What is the correct way to restart the mn3 node if it becomes unresponsive?",
+        "answer": "To restart the mn3 node, access its iDRAC interface at `https://10.255.242.85/`, navigate to `Server -> Power Cycle System (cold boot)`, and confirm the reboot.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "Why was the HDFS failover controller role down, and how was it fixed?",
+        "answer": "The HDFS failover controller role was down due to a timeout in its connection to ZooKeeper. The issue was resolved by enabling the failover controller’s automatic restart in Cloudera Manager: `HDFS -> Failover Controller -> Automatically Restart Processes`.",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "How was the issue of the refdata.rd_cells table not being updated resolved?",
+        "answer": "The issue was due to synchronization problems where the update script ran before the refresh script. The solution was to add the parameter `set SYNC_DDL=1` to the necessary scripts to prevent synchronization issues.",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "How can I check the status of Cloudera Data Science Workbench (CDSW) if it is unavailable?",
+        "answer": "You can check the CDSW status using:\n\n```bash\ncdsw status\nkubectl get pods -A\n```\nIf pods are not running, check Cloudera Manager for resource usage on CDSW hosts.",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "What steps should be taken when CDSW nodes are overloaded and causing downtime?",
+        "answer": "When CDSW nodes are overloaded, review system resources on the nodes (`mncdsw1, wrkcdsw1-wrkcdsw6`). If resources are maxed out, optimize workloads or scale up infrastructure. Logs can be checked via Cloudera Manager.",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How can missing partitions be manually inserted into the aums.archive_metadata table?",
+        "answer": "If the aums.archive_metadata table has missing partitions, follow these steps:\n1. Check existing partitions in Impala:\n   ```sql\n   select count(*) from aums.archive_metadata where par_dt = 'YYYYMMDD';\n   ```\n2. Restart the Streamsets pipeline handling AUMS metadata.\n3. Refresh the table with `refresh aums.archive_metadata` and verify partitions are created.",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How do I check and restart the Location Mobility Files export process if it stops working?",
+        "answer": "The Location Mobility Files are updated by running:\n\n```bash\nssh -o 'StrictHostKeyChecking no' -i ./id_rsa mtuser@un-vip.bigdata.abc.gr 'script'\n```\nIf files are not exporting, ensure the `mtuser` user has the necessary permissions and check `Hue Server` -> `Oozie Editor` to confirm workflow status.",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How can I troubleshoot a failing Airflow scheduler pod in the ranai-geo namespace?",
+        "answer": "First, check the pod status with `kubectl get pods -n ranai-geo` to confirm if it is in a CrashLoopBackOff state. Then, describe the pod to get detailed information on errors using `kubectl describe pod airflow-scheduler-0 -n ranai-geo`. If there are persistent volume claim (PVC) issues, inspect Longhorn storage for stuck PVCs and delete them using `kubectl delete pvc <pvc-name> -n ranai-geo`. Finally, restart the pod to apply changes.",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "What steps should be taken if Impala & Hue queries fail due to a SASL authentication error?",
+        "answer": "The error is usually caused by an expired Kerberos ticket. Check crontab entries for Hue using `crontab -l | grep hue` to identify the Kerberos renewal job. If the referenced directory does not exist, find the latest Kerberos ticket cache directory using `ll -ltra /var/run/cloudera-scm-agent/process/` and update crontab accordingly. Then, manually renew the ticket with `sudo -u hue /usr/bin/kinit -k -t /var/run/cloudera-scm-agent/process/<latest-dir>/hue.keytab -c /var/run/hue/hue_krb5_ccache hue/un2.bigdata.abc.gr@BIGDATA.abc.GR`. Finally, test query execution in Hue by running `show databases;`.",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How can Cloudera Manager memory leak issues be mitigated for idm2.bigdata.abc.gr?",
+        "answer": "The memory leak issue in Cloudera Manager is associated with the Cloudera Manager Agent process (`cmf-agent`). To troubleshoot, log in to the affected node and check memory usage with `ps aux --sort -rss`. If `cmf-agent` is consuming excessive memory, verify if the node is stuck downloading parcels. If so, remove the host from the cluster using Cloudera Manager (`Hosts > All Hosts > Actions > Remove from Cluster`). Finally, restart the agent with `systemctl restart cloudera-scm-agent` to stabilize memory usage.",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "What is the correct way to restart Cloudera Data Science Workbench (CDSW) services when jobs fail due to Spark port forwarder issues?",
+        "answer": "First, check logs for SparkPortForwarder using `kubectl logs spark-port-forwarder-<pod-name> -n <namespace>`. If errors like 'connection refused' appear, try deleting the failing pod using `kubectl delete pod <pod-name> -n <namespace>`. If it remains in a 'Terminating' state, restart the Docker Daemon Worker from Cloudera Manager (`Cloudera Manager -> CDSW -> Docker Daemon Worker -> Restart`) and restart the CDSW application (`Cloudera Manager -> CDSW -> Application Role -> Restart`). Verify that SparkPortForwarder is operational by checking logs with `kubectl logs <spark-forwarder-pod> -n <namespace>` and confirming successful port forwarding entries.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "How can I stop a Wildfly instance for Internet Banking?",
+        "answer": "To stop a Wildfly instance for Internet Banking, use the following command:\n```bash\nsupervisorctl stop wildfly-prodrestib\n```\nThis will stop the `prodrestib` instance. If you are working with `prodreston` (for Online flow), replace `prodrestib` with `prodreston`.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "What is the function of a load balancer in the Wildfly setup?",
+        "answer": "The load balancer (NetScaler) manages SSL offloading and routes traffic to Wildfly instances based on predefined rules. For example, requests that start with `/trlogibank` are routed to `prodrestib`, while other requests are directed to `prodrestibmetrics`.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "How do I check if the Kafka and Kudu services are running before decrypting a disk?",
+        "answer": "To check if Kafka and Kudu are running, navigate to Cloudera Manager and:\n1. Go to `Kafka > Status`.\n2. Go to `Kudu > Status`.\nEnsure they are stopped before proceeding with disk decryption.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "What is the purpose of the `ztab` file in the navencrypt disk decryption process?",
+        "answer": "The `ztab` file lists encrypted mount points. When decrypting a disk, check the file using:\n```bash\ncat /etc/navencrypt/ztab | grep /data/1\n```\nIf the entry exists, it should be commented out before proceeding.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "How can I verify if a Wildfly application is running properly?",
+        "answer": "You can check if a Wildfly application is running by accessing its health check endpoint:\n- Internet Banking: `/trlogibank/app`\n- Online Services: `/trlogonline/app`\nAlternatively, check logs:\n```bash\ntail -f /var/log/wildfly/prodrestib/server.log\n```",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "What should I do if Kafka does not restart after disk decryption?",
+        "answer": "Ensure that the disk decryption process was completed successfully. If Kafka fails to start, try restarting manually from Cloudera Manager. If the issue persists, check logs under:\n```bash\n/var/log/kafka/server.log\n```",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "How can I troubleshoot a failed Wildfly deployment?",
+        "answer": "Check the Wildfly application logs using:\n```bash\ntail -f /var/log/wildfly/prodrestib/server.log\n```\nIf the issue is related to configuration, verify `standalone.xml` and check for missing dependencies in the deployments folder:\n```bash\nls -lh /opt/wildfly/default/prodrestib/standalone/deployments/\n```",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "Why is my decrypted disk not mounting after following the procedure?",
+        "answer": "Ensure the fstab entry for the disk is uncommented:\n```bash\ncat /etc/fstab | grep '/data/1'\n```\nThen, try manually mounting:\n```bash\nmount -a\n```\nIf the issue persists, check system logs:\n```bash\ndmesg | tail -50\n```",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "What steps should I take if Wildfly is not responding to health check requests?",
+        "answer": "1. Check if the service is running:\n```bash\nsupervisorctl status wildfly-prodrestib\n```\n2. Check if the port is open:\n```bash\nnetstat -tulnp | grep 8080\n```\n3. Restart the instance if necessary:\n```bash\nsupervisorctl restart wildfly-prodrestib\n```",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "How do I verify if my load balancer is correctly routing traffic to Wildfly instances?",
+        "answer": "Check the NetScaler logs and use curl to verify responses:\n```bash\ncurl -I https://prodrestibank.mno.gr/trlogibank/app\n```\nA successful response should return `HTTP 200 OK`.",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "How do I upgrade Java on a server running Wildfly?",
+        "answer": "1. Stop Wildfly:\n```bash\nsupervisorctl stop wildfly-prodrestib\n```\n2. Install the new Java version:\n```bash\nsudo yum install java-11-openjdk\n```\n3. Update the JAVA_HOME variable:\n```bash\nexport JAVA_HOME=/usr/lib/jvm/java-11-openjdk\n```\n4. Restart Wildfly:\n```bash\nsupervisorctl start wildfly-prodrestib\n```",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How can I configure HBase quotas?",
+        "answer": "Use the HBase shell:\n```bash\nhbase shell\nset_quota 'table_name', 'THROTTLE', 'WRITE', 100MB\n```",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "What are the steps to perform a Wildfly failover?",
+        "answer": "1. Ensure the secondary site is ready.\n2. Update the load balancer to redirect traffic.\n3. Restart Wildfly instances on the backup site:\n```bash\nsupervisorctl start wildfly-prodreston\n```",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How do I check available HBase disk quotas?",
+        "answer": "Run the following command in HBase shell:\n```bash\nlist_quotas\n```",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How do I benchmark HBase performance?",
+        "answer": "Use the built-in HBase performance testing tool:\n```bash\nhbase org.apache.hadoop.hbase.PerformanceEvaluation sequentialWrite 10\n```",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How can I list all encrypted mount points before disk decryption?",
+        "answer": "Run the command:\n```bash\ncat /etc/navencrypt/ztab\n```",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How do I retrieve logs from a Mirrormaker Kafka setup?",
+        "answer": "Use the command:\n```bash\ntail -f /var/log/kafka/mirrormaker.log\n```",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How do I check HBase table quotas?",
+        "answer": "Use the following HBase shell command:\n```bash\nlist_quotas\n```",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How do I monitor Wildfly access logs?",
+        "answer": "To check access logs for `prodrestib`, run:\n```bash\ntail -f /var/log/wildfly/prodrestib/access.log\n```",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How do I check HBase replication status?",
+        "answer": "Use the following command:\n```bash\nhbase shell\nstatus 'replication'\n```",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How can I add a new repository in Nexus?",
+        "answer": "To add a new repository in Nexus, follow these steps:\n1. Login to an edge node using SSH:\n   ```bash\n   ssh -X xedge0x\n   ```\n2. Open Firefox and navigate to `https://999.999.999.999:8081/`.\n3. Login with Nexus credentials.\n4. Click on the gear icon, then go to **Repositories** and select **Create repository**.\n5. Choose **yum (proxy)** and configure the repository with values such as `Name`, `Remdef storage`, and `Clean up policies`.\n6. Click **Create repository**.\n7. Add the repository configuration on the node:\n   ```bash\n   vi /etc/yum.repos.d/name_of_repo.repo\n   ```\n8. Check and add the new repository using:\n   ```bash\n   yum clean all\n   yum check-update > /tmp/test-repo.txt\n   yum repolist\n   ```",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "How do I update the OS on an edge node?",
+        "answer": "To update the OS on an edge node:\n1. SSH into the edge node:\n   ```bash\n   ssh Exxxx@XXXedgeXX\n   sudo -i\n   ```\n2. Clean YUM cache and check for updates:\n   ```bash\n   yum clean all\n   yum check-update\n   ```\n3. Apply updates and reboot:\n   ```bash\n   yum update\n   systemctl reboot\n   ```\n4. Verify the OS version:\n   ```bash\n   cat /etc/oracle-release\n   ```",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How do I fix a broken MySQL replication?",
+        "answer": "To repair MySQL replication:\n1. Check the replication status on the slave:\n   ```bash\n   mysql -u root -p\n   SHOW SLAVE STATUS\\G;\n   ```\n2. If `Slave_IO_Running` or `Slave_SQL_Running` is `No`, stop the slave:\n   ```bash\n   STOP SLAVE;\n   ```\n3. Restore from the latest MySQL dump backup:\n   ```bash\n   cd /backup\n   tar -zxvf backup.tar.gz mysql_backup.sql.gz\n   gunzip mysql_backup.sql.gz\n   mysql -uroot -p < mysql_backup.sql\n   ```\n4. Restart the slave and verify:\n   ```bash\n   START SLAVE;\n   SHOW SLAVE STATUS\\G;\n   ```\n5. Ensure `Seconds_Behind_Master` is 0.",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "How can I enable ACLs for Spark and YARN?",
+        "answer": "To enable ACLs for Spark and YARN:\n1. **YARN Configuration:**\n   - Go to YARN → Configuration → Search for `ACL For Viewing A Job`.\n   - Add the groups allowed to view map-reduce jobs (e.g., `hue WBDADMIN,WBDOPDEV,WBDOPPRO,WBDOPQA`).\n   - Enable `JobHistory Server Default Group`.\n2. **Spark Configuration:**\n   - Go to Spark → Configuration → Search for `Spark Client Advanced Configuration Snippet`.\n   - Add the following lines:\n     ```\n     spark.acls.enable=true\n     spark.admins.acls.groups=WBDADMIN\n     spark.history.ui.admin.acls.groups=WBDADMIN\n     spark.ui.view.acls.groups=WBDOPDEV,WBDOPPRO,WBDOPQA\n     ```",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "What steps should be followed to upgrade PostgreSQL?",
+        "answer": "To upgrade PostgreSQL:\n1. Put the edge node on standby:\n   ```bash\n   ssh Exxxx@XXXedgeXX\n   sudo -i\n   ```\n2. Stop the running PostgreSQL service:\n   ```bash\n   sudo -iu postgres\n   systemctl stop postgresql-9.5.service\n   ```\n3. Backup data:\n   ```bash\n   pg_dumpall > edgeXX_postgres_backup\n   ```\n4. Download PostgreSQL 14 RPMs and create the repository:\n   ```bash\n   createrepo .\n   ```\n5. Update PostgreSQL:\n   ```bash\n   yum install --disablerepo=* --enablerepo=postgres14 postgresql14 postgresql14-server\n   ```\n6. Initialize and start the new PostgreSQL version:\n   ```bash\n   /usr/pgsql-14/bin/postgresql-14-setup initdb\n   systemctl enable --now postgresql-14\n   ```\n7. Restore the database backup:\n   ```bash\n   psql -f edgeXX_postgres_backup postgres\n   ```",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How do I modify SSL settings in Apache, Nginx, and HAProxy?",
+        "answer": "To modify SSL settings:\n1. **Apache (httpd)**:\n   - Backup existing config files:\n     ```bash\n     cp -ap /etc/httpd/conf.d/ssl.conf /etc/httpd/conf.d/ssl.conf.bak\n     ```\n   - Modify `/etc/httpd/conf.d/ssl.conf`:\n     ```\n     SSLProtocol +TLSv1.2\n     ```\n   - Restart Apache:\n     ```bash\n     systemctl restart httpd\n     ```\n2. **Nginx:**\n   - Backup and modify `/etc/nginx/nginx.conf`:\n     ```\n     ssl_protocols TLSv1.2;\n     ```\n   - Restart Nginx:\n     ```bash\n     systemctl restart nginx\n     ```\n3. **HAProxy:**\n   - Modify `/etc/haproxy/haproxy.cfg`:\n     ```\n     bind 999.999.999.999:25002 ssl crt no-sslv3 /opt/haproxy/security/x509/node.haproxy.pem\n     ```\n   - Restart HAProxy:\n     ```bash\n     systemctl restart haproxy\n     ```",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "How can I enable access control lists (ACLs) for Yarn and Spark?",
+        "answer": "To enable ACLs for YARN and Spark:\n1. Modify the **YARN ACL Configuration**:\n   - Navigate to YARN → Configuration → Search for `ACL For Viewing A Job`.\n   - Add extra groups for map-reduce job viewing:\n     ```\n     hue WBDADMIN,WBDOPDEV,WBDOPPRO,WBDOPQA\n     ```\n   - Enable `JobHistory Server Default Group`.\n2. Modify **Spark ACL Configuration**:\n   - Search for `Spark Client Advanced Configuration Snippet`.\n   - Enable Spark ACLs:\n     ```\n     spark.acls.enable=true\n     ```\n   - Configure admin groups:\n     ```\n     spark.admins.acls.groups=WBDADMIN\n     ```\n   - Grant access to Spark History Server:\n     ```\n     spark.history.ui.admin.acls.groups=WBDADMIN\n     ```",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "What is the process for setting up a new MySQL replication?",
+        "answer": "To set up MySQL replication:\n1. Configure MySQL master:\n   ```bash\n   mysql -u root -p\n   CHANGE MASTER TO MASTER_HOST='master_host', MASTER_USER='replication_user', MASTER_PASSWORD='password';\n   START SLAVE;\n   ```\n2. Check slave status:\n   ```bash\n   SHOW SLAVE STATUS\\G;\n   ```\n3. If replication fails, restart it:\n   ```bash\n   STOP SLAVE;\n   RESET SLAVE;\n   START SLAVE;\n   ```",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "What is the purpose of the IBank Migration Historical JOB, and how can I verify if it has been executed successfully?",
+        "answer": "The IBank Migration Historical JOB is responsible for transferring historical data related to IBank from one system to another. To verify its execution, run the following query:\n```sql\nSELECT * FROM prod_trlog_ibank.monitor_sched_jobs WHERE par_dt=20210429;\n```\nIf the job has run successfully, you will see an entry in the results. Additionally, you can check Grafana for job status and logs at `/var/log/ingestion/PRODREST/ibank/log/ibank_visible_trn_hbase_daily_upsert.log`.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "What steps should be taken if a user cannot execute queries in Hue or impala-shell despite having the necessary permissions?",
+        "answer": "First, check the user's group information:\n```bash\nid E70529 | grep 871556062\n```\nIf the group name is missing, clear the cache and restart `sssd` across nodes:\n```bash\ndcli -c dr1node03, dr1node05, dr1node06, dr1node07,dr1node08,dr1node09,dr1node10 'mv /var/lib/sss/db/* /tmp;systemctl restart sssd'\n```\nThen, verify again using:\n```bash\nid E70529 | grep -v 'CMS Way4Manager PROD RDS DevTOOLS'\n```",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "How can I troubleshoot an HDFS block count alarm in Cloudera Manager?",
+        "answer": "1. Login to Cloudera Manager and check the alarm.\n2. Open the Namenode UI at `https://dr1node02.mno.gr:50470` and navigate to the `Datanodes` tab.\n3. Identify which datanodes have the highest block count.\n4. Check the table `prod_trlog_ibank.service_audit_old` for excessive partitions:\n   ```bash\n   hdfs dfs -ls /mno_data/hive/warehouse/prod_trlog_ibank.db/service_audit_old\n   ```\n5. If retention is not in place, consider dropping old partitions to free up space:\n   ```sql\n   ALTER TABLE service_audit_old DROP IF EXISTS PARTITION(par_dt<=20200715) PURGE;\n   ```\n6. Monitor Grafana and Cloudera Manager while performing these actions.",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How can I optimize a failing IBank MergeBatch job due to memory issues?",
+        "answer": "The IBank MergeBatch job can fail due to large data volumes causing out-of-memory (OOM) errors. To resolve:\n1. Modify Spark job parameters:\n   ```bash\n   vi /opt/ingestion/PRODREST/ibank/spark/submit/submitmnoSparkTopology_batch_cluster_mno_STABLE.sh\n   ```\n   - Update `--spark.sql.shuffle.partitions=16` to `--spark.sql.shuffle.partitions=96`.\n   - Update `-coalesce=$NUMBER_OF_EXECUTORS` to `-coalesce=96`.\n2. Restart the job in smaller chunks:\n   ```bash\n   /opt/ingestion/PRODREST/ibank/spark/submit/submitmnoSparkTopology_batch_cluster_mno_STABLE.sh '2022-02-28 00:00:00' '2022-02-28 12:00:00'\n   /opt/ingestion/PRODREST/ibank/spark/submit/submitmnoSparkTopology_batch_cluster_mno_STABLE.sh '2022-02-28 12:00:00' '2022-02-28 18:00:00'\n   ```",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How do I recover Cloudera Navigator if metadata is not being retrieved?",
+        "answer": "To recover Cloudera Navigator:\n1. Login to Cloudera Navigator UI (`https://xxxx:7187`).\n2. Check if you have permissions under the Analytics tab.\n3. SSH into `pr1edge01` and `pr1node03`, then inspect logs:\n   ```bash\n   less /var/log/cloudera-scm-navigator/\n   ```\n4. If metadata corruption is found, purge and restore it:\n   ```bash\n   sudo tar -cpzf /backup/navms_data_backup-$(date +%Y%m%d-%H%M).gz /path/to/navms/storage\n   sudo mv /path/to/navms/storage /root/navms_bkp\n   ```\n5. Update the Navigator metadata database:\n   ```sql\n   mysql -uroot -p\n   USE navigator_metadata;\n   CREATE TABLE date_temp_nav_upgrade_ordinal AS SELECT * FROM NAV_UPGRADE_ORDINAL;\n   DELETE FROM NAV_UPGRADE_ORDINAL;\n   INSERT INTO NAV_UPGRADE_ORDINAL VALUES(-1, -1);\n   ```\n6. Restart Navigator Metadata Server from Cloudera Manager UI.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "How can I determine if an Impala batch job failed due to long row key lengths in HBase?",
+        "answer": "If an Impala batch job fails due to long row keys, inspect the logs for the following error:\n   ```bash\n   WARNING: java.lang.IllegalArgumentException: Row length 34XXX is > 32767\n   ```\nTo identify problematic rows, modify the query:\n   ```sql\n   SELECT * FROM your_table WHERE length(concat(default.hbase_salt_md5hex(client_username,4,TRUE), chr(0), hex(CAST(CAST(u_timestamp AS DOUBLE) * 1000000 AS bigint)), chr(0), a.id)) > 32767;\n   ```\nIf results appear, modify the job script to exclude these rows.",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "What should be done before manually deleting old partitions from an HDFS table?",
+        "answer": "Before deleting old partitions:\n1. Check the current number of partitions:\n   ```sql\n   SHOW PARTITIONS prod_trlog_ibank.service_audit_old;\n   ```\n2. Identify the oldest partition dates.\n3. Ensure no active queries are running on those partitions.\n4. Notify monitoring teams about possible alerts.\n5. Delete partitions in controlled batches:\n   ```sql\n   ALTER TABLE service_audit_old DROP IF EXISTS PARTITION(par_dt<=20200715) PURGE;\n   ```\n6. Monitor Cloudera Manager for any unexpected issues.",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How can I check if an IBank_Migration Historical Sqoop_Import job has successfully executed?",
+        "answer": "To verify the execution of the IBank_Migration Historical Sqoop_Import job, run:\n   ```sql\n   SELECT * FROM prod_trlog_ibank.monitor_sched_jobs WHERE job_name='IBank_Migration Historical Sqoop_Import' AND par_dt='20210429';\n   ```\nA successful execution will have a `SUCCESS` status with timestamps indicating start and completion times.",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How can I restart a failed Spark streaming topology in the BigStreamer environment?",
+        "answer": "To restart a failed Spark streaming topology in the BigStreamer environment, login to `dr1edge01`, then execute the following command: \n```bash\n/opt/ingestion/PRODREST/online/spark/submit/submitmnoSparkTopology_stream_cluster_mno_STABLE.sh\n```\nThis will resubmit the topology, and you should verify the status via Grafana and Cloudera Manager to ensure there are no ongoing failures.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "What are the common reasons for an HBase region server to restart unexpectedly?",
+        "answer": "Common reasons for an HBase region server restart include:\n1. **Out-Of-Memory (OOM) errors**: When memory allocation exceeds available resources, the server restarts.\n2. **Table misconfiguration**: High per-region workload leading to uneven distribution among RegionServers.\n3. **Metadata inconsistencies**: If metadata for deleted tables still exists, it can cause issues.\nTo resolve, analyze logs at `/var/log/hbase/hbase-cmf-hbase-REGIONSERVER-dr1node01.mno.gr.log.out`, and if needed, remove stale metadata with `hbase hbck2 extraRegionsInMeta <TABLE_NAME> --fix`.",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "How can I safely restart HiveServer2 after an Out-Of-Memory error?",
+        "answer": "If HiveServer2 crashes due to an Out-Of-Memory error, follow these steps:\n1. Check memory usage and pause duration from Cloudera Manager: \n```bash\ncluster -> Hive -> HiveServer2 -> Charts\n```\n2. Identify failing jobs that caused memory exhaustion:\n```bash\ngrep Java /var/log/hive/hadoop-cmf-hive-HIVESERVER2-dr1node04.mno-gr.log.out\n```\n3. Restart the HiveServer2 service:\n```bash\nsudo service hive-server2 restart\n```\n4. Verify that the service is running smoothly by monitoring resource usage and garbage collection warnings.",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How can I manually update a failed job’s status in Impala to allow the script to re-run?",
+        "answer": "If a script fails because a previous job is stuck in 'RUNNING' status, update it in Impala as follows:\n1. Login to `dr1edge01` and change to the appropriate user: \n```bash\nsudo su - PRODUSER\n```\n2. Open Impala shell:\n```bash\nimpala-shell -k -i dr1edge01.mno.gr --ssl\n```\n3. Run the update query:\n```sql\nUPSERT INTO prod_trlog_ibank_analytical.dwh_monitoring \n(details_type, procedure_par_dt, status, start_time, end_time, description) \nVALUES ('TIME_DEPOSIT', 'EXTRACT', '20221003', 'SUCCESS', '2022-10-04', '08:32-42.000', '2022-10-04', '08-39:21.000');\n```\nAfter this, the script should be able to proceed.",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How can I check which HBase regions are causing performance bottlenecks?",
+        "answer": "To analyze HBase region bottlenecks, execute the following queries:\n```sql\nselect delete_rate_across_hregions WHERE category = HTABLE and htabIeName RLIKE 'PROD*';\nselect get_rate_across_hregions WHERE category = HTABLE and htabIeName RLIKE 'PROD*';\nselect increment_rate_across_hregions + append_rate_across_hregions + mutate_rate_across_hregions WHERE category = HTABLE and htabIeName RLIKE 'PROD*';\n```\nCheck the workload per region and ensure that it is evenly distributed to avoid overloading specific RegionServers.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "Why did the EXPORT job for the Data Warehouse fail with Code: 6?",
+        "answer": "The EXPORT job failure with Code: 6 indicates that the control script timed out while monitoring the EXTRACT script. The failure might be caused by another Impala query consuming all available resources. To diagnose:\n1. Check logs: \n```bash\nless /var/log/datawarehouse-ibank/PRODUSER/sched_extract.log\n```\n2. Identify resource-intensive queries from Cloudera Manager:\n```bash\nClusters > Impala > Queries\n```\n3. Look for compute-intensive queries such as `COMPUTE STATS` running on large tables.\nIf this is the case, rerun the failed job and consider disabling statistics computation for non-essential tables.",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "What should I do if an HBase table has been deleted but metadata remains?",
+        "answer": "If an HBase table has been deleted but metadata remains, follow these steps:\n1. Identify extra regions in meta:\n```bash\nhbase hbck -j hbase-hbck2-1.2.0.jar extraRegionsInMeta PROD_BANK:TAX_FREE_20220404 --fix\n```\n2. Verify that the table does not appear in `hbase:meta`:\n```bash\nhbase shell\nscan 'hbase:meta',{FILTER=>\"PrefixFilter('PROD_BANK:TAX_FREE_20220404')\"}\n```\n3. Remove the table from HDFS:\n```bash\nhdfs dfs -rm -r hdfs://DRBDA-ns/hbase/data/PROD_BANK/TAX_FREE_20220404\nhdfs dfs -ls hdfs://DRBDA-ns/hbase/data/PROD_BANK/\n```\n4. Restart HBase and check health:\n```bash\nhbase hbck\n```",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How can I determine which Hive queries caused an Out-Of-Memory crash?",
+        "answer": "To identify which Hive queries caused an Out-Of-Memory crash, follow these steps:\n1. Search HiveServer2 logs for Java Heap Space errors:\n```bash\ngrep Java /var/log/hive/hadoop-cmf-hive-HIVESERVER2-dr1node04.mno-gr.log.out\n```\n2. Identify corresponding YARN applications that failed:\n```bash\nCluster -> Yarn -> Applications -> Filter: \"application_type = MAPREDUCE\"\n```\n3. List all failed queries:\n```bash\n14:19 application_1665578283516_50081 user:E30825\n14:25 application_1665578283516_50084 user:E30825\n...\n```\n4. If multiple queries overloaded the system, consider increasing Java Heap Space or optimizing query execution strategies.",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "What is the root cause of the 'Spark Waiting Batches' alert in Grafana, and how can it be mitigated?",
+        "answer": "The 'Spark Waiting Batches' alert occurs due to user queries/jobs occupying production resources, preventing MySQL from processing authorization requests. This leads to Spark topologies being unable to process data. The recommended mitigation is to disable the Impala Daemon and YARN Node Manager on dr1node03.mno.gr and pr1node03.mno.gr to free up resources for MySQL, ensuring smooth authorization processing and reducing CPU load on critical nodes.",
+        "category": "Application Functionality & Flow"
+    },
+    {
+        "question": "How can we resolve a 'Batch Job Failed' error in Grafana for the DWH_IBank application?",
+        "answer": "The failure is due to duplicate keys in the srcib.MandateDetails table. The resolution involves running the extract script with the `-f` flag to truncate the table before inserting new records:\n```bash\n/opt/ingestion/PRODUSER/datawarehouse-ibank/extract_details/sched_extract_details.sh -t manDate -f\n```\nAfter extraction, the export script must also be executed with the `-f` flag:\n```bash\n/opt/ingestion/PRODUSER/datawarehouse-ibank/extract_details/sched_export_details.sh -t manDate -f\n```\nThis ensures that the extracted records are properly inserted and exported.",
+        "category": "Application Functionality & Flow"
+    },
+    {
+        "question": "How was the Impala daemon health issue on PR nodes resolved?",
+        "answer": "The issue was identified through Cloudera logs, showing that an `Upsert to HBase` query had stopped being processed, causing Impala to stop handling other queries. The resolution steps included:\n1. Canceling the query from Cloudera UI.\n2. Restarting the Impala daemon role on pr1node01 and pr1node04.\n3. Removing `set num_nodes = 1` from the script `/opt/ingestion/PRODREST/common/scripts/ibank_visible_trn_hbase_daily_upsert_STABLE.sh`.\n4. Disabling HBase quotas for `PROD_IBANK` before re-running the script.\nThe script ran successfully after these changes.",
+        "category": "Troubleshooting & Issue Resolution"
+    },
+    {
+        "question": "What caused the Spark History Server on dr1node03 to exit unexpectedly, and how was it resolved?",
+        "answer": "The Spark History Server on dr1node03 exited due to an `OutOfMemoryError`. The investigation showed that the Java heap size for the server was set to 512MB, whereas the PR Site had it set to 2GB. The resolution involved increasing the Java heap size to 2GB and restarting the History Server, which resolved the issue without any further disruptions.",
+        "category": "Troubleshooting & Issue Resolution"
+    },
+    {
+        "question": "How can we fix Kerberos authentication errors when installing Way4Streams on RHEL 8?",
+        "answer": "The Kerberos authentication issue was due to the ticket cache configuration and a deprecated encryption type in the keytab. The resolution involved:\n1. Changing the `krb5.conf` configuration to use a file-based cache:\n```conf\ndefault_ccache_name = FILE:/tmp/krb5cc_%{uid}\n```\n2. Removing `sssd-kcm` to prevent conflicts:\n```bash\nyum remove sssd-kcm\n```\n3. Enabling weak encryption support by adding:\n```conf\nallow_weak_crypto = true\n```\nAfter making these changes, Kerberos authentication was successful.",
+        "category": "Infrastructure & Deployment"
+    },
+    {
+        "question": "How do you monitor and identify an Impala query that is causing issues?",
+        "answer": "To monitor Impala queries:\n1. Check logs at `/var/log/ingestion/PRODREST/ibank/log/ibank_visible_trn_hbase_daily_upsert.log`.\n2. Use `Cloudera > Impala > Queries` to identify the query.\n3. To cancel the query, either:\n   - Click `Cancel` in Cloudera UI.\n   - Use the query monitoring URL to cancel it.\nThese steps help identify and troubleshoot problematic queries efficiently.",
+        "category": "Infrastructure & Deployment"
+    },
+    {
+        "question": "What are the key steps for debugging and fixing an 'Upsert to HBase' failure in the IBank application?",
+        "answer": "To debug and fix an 'Upsert to HBase' failure:\n1. Check the Impala query logs at `/var/log/ingestion/PRODREST/ibank/log/ibank_visible_trn_hbase_daily_upsert.log`.\n2. Identify the stalled query from `Cloudera > Impala > Queries`.\n3. Cancel the query via Cloudera UI or its monitoring URL.\n4. Restart the Impala daemon on affected nodes.\n5. Disable HBase quotas for `PROD_IBANK` before retrying the job.\n6. Ensure `set num_nodes = 1` is removed from the script `/opt/ingestion/PRODREST/common/scripts/ibank_visible_trn_hbase_daily_upsert_STABLE.sh`.\n7. Re-run the script after reverting to parallel execution.",
+        "category": "Data Management & Query Execution"
+    },
+    {
+        "question": "How do you troubleshoot performance degradation in Impala caused by concurrent client connections?",
+        "answer": "When multiple 'Impala Concurrent Client Connections' alarms appear, follow these steps:\n1. Identify the root cause by checking query logs in Cloudera.\n2. If queries are stalled, cancel them from `Cloudera > Impala > Queries`.\n3. Restart the Impala daemon on affected nodes.\n4. If the issue persists, analyze memory usage and consider redistributing workload across nodes.\nThese steps ensure that Impala recovers from heavy client loads and resumes processing efficiently.",
+        "category": "Data Management & Query Execution"
+    },
+    {
+        "question": "How does the IBank_Ingestion MergeBatch process work, and what are its key components?",
+        "answer": "The IBank_Ingestion MergeBatch process is executed using the script `/opt/ingestion/PRODREST/common/scripts/cronExecutor_MergeBatchWithLock_hdfs_STABLE.sh` on `dr1edge01.mno.gr` and `pr1edge01.mno.gr`. Each edge server submits the process to a different cluster. The process involves reading ingestion logs, running batch processing on Spark, and ensuring that the data is merged correctly in the HDFS environment.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "What troubleshooting steps should be followed when IBank_Ingestion MergeBatch fails due to a memory issue?",
+        "answer": "1. Check the script logs at `/var/log/ingestion/PRODREST/ibank/log/cronExecutor_ibankBatch_full.log`.\n2. Look at the Spark logs using Firefox on `dr1edge01.mno.gr` and `pr1edge01.mno.gr`.\n3. If there is a memory fault, modify the `colaesce` value in the script:\n   ```bash\n   vi /opt/ingestion/PRODREST/online/spark/submit/submitmnoSparkTopology_batch_cluster_mno_STABLE.sh\n   ```\n   Change `colaesce` from `6` to `12`.\n4. Inform the development team to update the Git repository accordingly.\n5. Verify that no records exist in `prod_trlog_ibank.service_audit_old` before re-running the script.",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "What steps should be followed to resolve a bad health issue in Cloudera Manager for a node?",
+        "answer": "1. Log in to Cloudera Manager and check the status of the affected host.\n2. Navigate to `https://dr1edge01.mno.gr:7183/cmf/hardware/hosts` to inspect the host.\n3. Verify disk usage using the command:\n   ```bash\n   df -h\n   ```\n4. If the `/var` partition is full, identify large directories using:\n   ```bash\n   sudo du -sh /var/*\n   ```\n5. If necessary, delete unnecessary files, such as old Graphite logs, to free up space.\n6. Re-check disk usage and confirm that the Cloudera Manager alert is resolved.",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How can you verify missing records in the IBank ingestion system?",
+        "answer": "To verify missing records in IBank ingestion, use the following Impala command to check if data exists for a specific date:\n```bash\nimpala-shell -k --ssl -i ${HOSTNAME/01/} -q \"select count(*) from prod_trlog_ibank.service_audit where par_dt='YYYYMMDD';\"\n```\nIf no records exist, re-run the ingestion script:\n```bash\n/opt/ingestion/PRODREST/historical/ibank_service_audit_insert_join_distinct.sh YYYYMMDD\n```",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "What actions should be taken if the Grafana system shows a 'Spark Waiting Batches' alert?",
+        "answer": "1. The alert is caused by queries or jobs occupying production resources on the disaster site, preventing MySQL authorization and delaying Spark topologies.\n2. A suggested action is to disable Impala Daemon and YARN Node Manager on `dr1node03.mno.gr` and `pr1node03.mno.gr` to free up resources.\n3. Monitoring shows that available memory and CPU usage will remain within safe limits even after disabling these nodes.\n4. After performing these steps, monitor Grafana and Cloudera Manager to ensure normal operation.",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "What steps should be taken when a batch job fails in Grafana for the DWH_IBank application?",
+        "answer": "1. Identify the failed job in Grafana:\n   ```\n   Application: DWH_IBank\n   Job_Name: Extract\n   Component: MAN_DATE\n   ```\n2. Investigate logs to find duplicate key errors.\n3. If duplicate records exist, use the `-f` option to truncate and reinsert records:\n   ```bash\n   /opt/ingestion/PRODUSER/datawarehouse-ibank/extract_details/sched_extract_details.sh -t manDate -f\n   ```\n4. After extraction, re-run the export script:\n   ```bash\n   /opt/ingestion/PRODUSER/datawarehouse-ibank/extract_details/sched_export_details.sh -t manDate -f\n   ```\n5. Validate the fix by checking the job status in Grafana.",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "What should be done to ensure the IBank ingestion job successfully reports to Graphite?",
+        "answer": "After running the IBank ingestion process, ensure that the results are reported to Graphite by executing:\n1. `Distinct join to Service Audit`\n2. `Report stats to Graphite`\n3. `Drop hourly partitions`\n4. `Upsert to HBase (Migration)`\n5. `Send reports to business users`\n6. `Check for duplicates between Impala and Kudu/HBase`\n\nFollow the corresponding scripts in the ingestion documentation.",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How can you remove duplicate records before running an ingestion job?",
+        "answer": "1. Check for duplicate keys in the source table before ingestion.\n2. If duplicates exist, truncate the table using:\n   ```bash\n   /opt/ingestion/PRODUSER/datawarehouse-ibank/extract_details/sched_extract_details.sh -t manDate -f\n   ```\n3. After the extract process, rerun the export process to re-populate the table:\n   ```bash\n   /opt/ingestion/PRODUSER/datawarehouse-ibank/extract_details/sched_export_details.sh -t manDate -f\n   ```\n4. Validate that the duplicate records are removed before processing new data.",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "How does the Wildfly service handle incoming user-generated events in Internet Banking?",
+        "answer": "User-generated events are sent to Wildfly instances installed at edge servers as HTTP POST requests. These requests originate from the backend servers of Internet Banking and are load-balanced by a NetScaler managed by mno's networking department. The events are then forwarded to a Kafka topic, usually with only one active site (Primary Site).",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "What are the key steps to restart a Wildfly instance in case of errors?",
+        "answer": "To restart a Wildfly instance, follow these steps:\n1. Check the application logs at `/var/log/wildfly/prodrestib/server.log` for error messages.\n2. If there are frequent errors, use the provided script in `/opt/wildfly/default/prodrestib/standalone/deployments` to restart the service.\n3. If logs do not indicate a specific issue, check for Kafka performance issues.\n4. Restarting instructions can be found [here](../procedures/manage_wildfly.md).",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "How is Kafka mirroring implemented for redundancy in the Online Banking system?",
+        "answer": "Kafka mirroring is implemented using Kafka MirrorMaker. Each site produces messages to a topic with the `-mir` suffix, which is then mirrored to the final topic without the suffix. PR and DR sites use MirrorMakers at specific nodes (e.g., `pr1node01.mno.gr` for PR and `dr1node01.mno.gr` for DR) to replicate data between sites, ensuring redundancy.",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How can I query duplicate transaction records between Impala and Kudu/HBase?",
+        "answer": "You can use the following SQL query in Impala to identify duplicates:\n```sql\nSELECT transaction_id, COUNT(*)\nFROM prod_trlog_online.service_audit\nGROUP BY transaction_id\nHAVING COUNT(*) > 1;\n```\nTo check duplicates in Kudu, run:\n```sql\nSELECT transaction_id FROM prod_trlog_online.service_audit_stream\nINTERSECT\nSELECT transaction_id FROM prod_trlog_online.service_audit;\n```",
+        "category": "Data Management & Query Execution"
+      },
+      {
+        "question": "What is the role of the `Prod_Online_IngestStream` Spark topology?",
+        "answer": "The `Prod_Online_IngestStream` topology consumes records from Kafka topics, extracts values, and writes them to a Kudu table (`prod_trlog_online.service_audit_stream`). Additionally, it stores columns that are too large for Kudu in an HBase table (`PROD_ONLINE:SERVICE_AUDIT_STREAM`).",
+        "category": "Application Functionality & Flow"
+      },
+      {
+        "question": "How can I resolve a failed batch job due to a duplicate key in MSSQL?",
+        "answer": "If a batch job fails due to a duplicate key in MSSQL (e.g., `Cannot insert duplicate key in object srcib.MandateDetails`), execute the following steps:\n1. Run the extract script with the `-f` option to truncate the table before inserting new records:\n```bash\n/opt/ingestion/PRODUSER/datawarehouse-ibank/extract_details/sched_extract_details.sh -t manDate -f\n```\n2. Run the export script to ensure the truncated data is exported correctly:\n```bash\n/opt/ingestion/PRODUSER/datawarehouse-ibank/extract_details/sched_export_details.sh -t manDate -f\n```\nThis ensures the duplicate records are removed and reinserted cleanly.",
+        "category": "Troubleshooting & Issue Resolution"
+      },
+      {
+        "question": "How do you create Kudu partitions for the next week’s data in the Online system?",
+        "answer": "To create next week's Kudu partitions in the Online system, run the following script:\n```bash\n/opt/ingestion/PRODREST/common/scripts/create_kudu_partitions_STABLE.sh\n```\nThis will pre-create partitions for the upcoming week to avoid issues during data ingestion.",
+        "category": "Infrastructure & Deployment"
+      },
+      {
+        "question": "How can I check the hourly transaction count in Impala for auditing purposes?",
+        "answer": "Use the following query in Impala to retrieve the hourly transaction count:\n```sql\nSELECT hour(transaction_time) AS hour, COUNT(*) AS transactions_count\nFROM prod_trlog_online.service_audit\nWHERE transaction_time BETWEEN '2024-03-01 00:00:00' AND '2024-03-01 23:59:59'\nGROUP BY hour(transaction_time)\nORDER BY hour(transaction_time);\n```",
+        "category": "Data Management & Query Execution"
+      }
+    ]
+  }
+  

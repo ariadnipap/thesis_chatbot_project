@@ -1,0 +1,5 @@
+{
+    "MiniLM": 3.5,
+    "MPNet": 3.5708333333333333,
+    "better_embedding_model": "MPNet"
+}
