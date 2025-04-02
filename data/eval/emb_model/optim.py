@@ -3,9 +3,9 @@ import os
 import pandas as pd
 
 # File paths for embedding model evaluation results
-emb_model_1_path = "/home/ariadnipap/thesis_chatbot_project/data/eval/emb_model/evaluation/evaluation_results_60.json"
-emb_model_2_path = "/home/ariadnipap/thesis_chatbot_project/data/eval/emb_model/evaluation/evaluation_results_mpnet.json"
-output_file = "/home/ariadnipap/thesis_chatbot_project/data/eval/emb_model/stats/optimization_comparison.json"
+emb_model_1_path = "/home/ariadnipap/thesis_chatbot_project/data/eval/emb_model/evaluation/evaluation_results_50_0.55_1000_200.json"
+emb_model_2_path = "/home/ariadnipap/thesis_chatbot_project/data/eval/emb_model/evaluation/evaluation_results_mpnet_after_grid.json"
+output_file = "/home/ariadnipap/thesis_chatbot_project/data/eval/emb_model/stats/optimization_comparison_after_grid.json"
 
 # Load JSON files
 with open(emb_model_1_path, "r", encoding="utf-8") as f:

@@ -1,13 +1,13 @@
 import json
+import os
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-import os
 
 # File paths for embedding model evaluation results
-emb_model_1_path = "/home/ariadnipap/thesis_chatbot_project/data/eval/emb_model/evaluation/evaluation_results_60.json"
-emb_model_2_path = "/home/ariadnipap/thesis_chatbot_project/data/eval/emb_model/evaluation/evaluation_results_mpnet.json"
-output_dir = "/home/ariadnipap/thesis_chatbot_project/data/eval/emb_model/stats/"
+emb_model_1_path = "/home/ariadnipap/thesis_chatbot_project/data/eval/emb_model/evaluation/evaluation_results_50_0.55_1000_200.json"
+emb_model_2_path = "/home/ariadnipap/thesis_chatbot_project/data/eval/emb_model/evaluation/evaluation_results_mpnet_after_grid.json"
+output_dir = "/home/ariadnipap/thesis_chatbot_project/data/eval/emb_model/stats_after_grid/"
 
 # Ensure output directory exists
 os.makedirs(output_dir, exist_ok=True)
@@ -24,7 +24,7 @@ df_model_1 = pd.DataFrame(data_model_1)
 df_model_2 = pd.DataFrame(data_model_2)
 
 # Add embedding model column
-df_model_1["embedding_model"] = "MiniLM"  # Adjust if needed
+df_model_1["embedding_model"] = "MiniLM"
 df_model_2["embedding_model"] = "MPNet"
 
 # Combine datasets
@@ -41,11 +41,11 @@ metrics = [
 summary_stats = df.groupby("embedding_model")[metrics].agg(["mean", "std", "min", "max"])
 summary_stats.to_csv(os.path.join(output_dir, "summary_statistics.csv"))
 
-# **Bar Plot: Mean Score Comparison**
+# ✅ Bar Plot: Mean Score Comparison
 plt.figure(figsize=(12, 7))
 mean_scores = df.groupby("embedding_model")[metrics].mean().T
 mean_scores.plot(kind="bar", figsize=(12, 7), colormap="coolwarm", edgecolor="black")
-plt.title("Comparison of Average Performance Metrics for Different Embedding Models", fontsize=14)
+plt.title("Comparison of Average Performance Metrics (Embedding Models)", fontsize=14)
 plt.ylabel("Average Score", fontsize=12)
 plt.xticks(rotation=45, fontsize=11)
 plt.legend(title="Embedding Model", fontsize=12)
@@ -54,31 +54,50 @@ plt.tight_layout()
 plt.savefig(os.path.join(output_dir, "barplot_mean_scores.png"))
 plt.close()
 
-# **Density Plots: Score Distribution**
+# ✅ Metric Distribution: Discrete Count vs Histogram
 for metric in metrics:
     plt.figure(figsize=(8, 5))
-    sns.kdeplot(df[df["embedding_model"] == "MiniLM"][metric], label="MiniLM", shade=True, color="blue", alpha=0.5)
-    sns.kdeplot(df[df["embedding_model"] == "MPNet"][metric], label="MPNet", shade=True, color="red", alpha=0.5)
-    plt.title(f"Density Distribution of {metric}", fontsize=13)
+
+    # Check if the metric is discrete (Likert scale)
+    is_discrete = (
+        df[metric].dropna().apply(lambda x: isinstance(x, (int, float)) and float(x).is_integer()).all()
+        and df[metric].nunique() <= 6
+    )
+
+    if is_discrete:
+        sns.countplot(data=df, x=metric, hue="embedding_model", palette=["blue", "red"], edgecolor="black")
+        plt.title(f"Distribution of {metric} (Count)", fontsize=13)
+        plt.ylabel("Count", fontsize=12)
+    else:
+        sns.histplot(data=df, x=metric, hue="embedding_model", bins=10, multiple="dodge",
+                     palette=["blue", "red"], edgecolor="black", kde=False)
+        plt.title(f"Histogram of {metric}", fontsize=13)
+        plt.ylabel("Frequency", fontsize=12)
+
     plt.xlabel(metric, fontsize=12)
-    plt.ylabel("Density", fontsize=12)
-    plt.legend(fontsize=12)
-    plt.grid(linestyle="--", alpha=0.6)
-    plt.savefig(os.path.join(output_dir, f"density_{metric}.png"))
+    plt.grid(axis="y", linestyle="--", alpha=0.6)
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_dir, f"distribution_{metric}.png"))
     plt.close()
 
-# **Scatter Plots: Direct Comparisons**
+# ✅ Scatter Plots: Side-by-side per metric
 fig, axes = plt.subplots(3, 3, figsize=(14, 12))
 axes = axes.flatten()
 
 for i, metric in enumerate(metrics):
-    sns.scatterplot(x=df_model_1[metric], y=df_model_2[metric], ax=axes[i], color="purple", alpha=0.7)
+    sns.scatterplot(
+        x=df_model_1[metric],
+        y=df_model_2[metric],
+        ax=axes[i],
+        color="purple",
+        alpha=0.7
+    )
     axes[i].set_title(f"{metric}: MiniLM vs. MPNet", fontsize=12)
     axes[i].set_xlabel("MiniLM", fontsize=11)
     axes[i].set_ylabel("MPNet", fontsize=11)
     axes[i].grid(linestyle="--", alpha=0.6)
 
-    # **Add diagonal reference line (y=x)**
+    # Add y=x line
     min_val = min(df_model_1[metric].min(), df_model_2[metric].min())
     max_val = max(df_model_1[metric].max(), df_model_2[metric].max())
     axes[i].plot([min_val, max_val], [min_val, max_val], "r--", lw=1)

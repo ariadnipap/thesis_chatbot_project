@@ -1,13 +1,14 @@
+# this is the final code that generates a plot for each metric we have calculated and compares each combination of the grid
 import json
 import os
 import matplotlib.pyplot as plt
 import numpy as np
 
-# ✅ Directories and Files
+# Directories and Files
 DATA_DIR = "/home/ariadnipap/thesis_chatbot_project/data/"
 CHUNKING_TYPES = ["0", "500_100", "1000_200"]
 
-# ✅ Evaluation metrics to plot
+# Evaluation metrics to plot
 metrics = [
     "faithfulness_score",
     "answer_relevance_score",
@@ -18,10 +19,10 @@ metrics = [
     "bertscore",
 ]
 
-# ✅ Store results
+# Store results
 results = {chunking: {} for chunking in CHUNKING_TYPES}
 
-# ✅ Load each file and aggregate results
+# Load each file and aggregate results
 for filename in os.listdir(DATA_DIR):
     if not filename.startswith("evaluation_results_"):
         continue
@@ -47,7 +48,7 @@ for filename in os.listdir(DATA_DIR):
 
             results[chunking][key] = metric_means
 
-# ✅ Plotting
+# Plotting
 for metric in metrics:
     labels = sorted(set.intersection(*(set(results[chunking].keys()) for chunking in CHUNKING_TYPES)))
     x = np.arange(len(labels))
@@ -55,7 +56,7 @@ for metric in metrics:
 
     fig, ax = plt.subplots(figsize=(14, 6))
 
-    # ✅ Bar values for each chunking type
+    # Bar values for each chunking type
     offsets = [-width, 0, width]
     colors = ["#1f77b4", "#2ca02c", "#d62728"]
     legends = ["No Chunking", "Chunking 500-100", "Chunking 1000-200"]

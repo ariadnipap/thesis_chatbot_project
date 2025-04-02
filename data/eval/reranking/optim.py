@@ -3,9 +3,9 @@ import os
 import pandas as pd
 
 # File paths
-reranking_path = "/home/ariadnipap/thesis_chatbot_project/data/eval/reranking/evaluation/evaluation_results_60.json"
-non_reranking_path = "/home/ariadnipap/thesis_chatbot_project/data/eval/reranking/evaluation/evaluation_results_no_reranking.json"
-output_file = "/home/ariadnipap/thesis_chatbot_project/data/eval/reranking/stats/optimization_comparison.json"
+reranking_path = "/home/ariadnipap/thesis_chatbot_project/data/eval/reranking/evaluation/evaluation_results_50_0.55_1000_200.json"
+non_reranking_path = "/home/ariadnipap/thesis_chatbot_project/data/eval/reranking/evaluation/evaluation_results_no_reranking_after_grid.json"
+output_file = "/home/ariadnipap/thesis_chatbot_project/data/eval/reranking/stats/optimization_comparison_after_grid.json"
 
 # Load JSON files
 with open(reranking_path, "r", encoding="utf-8") as f:

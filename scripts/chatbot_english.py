@@ -1,3 +1,4 @@
+# this code implements the chatbot logic and functionality. this is the heart of the project
 import json
 import os
 import faiss
@@ -17,16 +18,16 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain.chains.retrieval import create_retrieval_chain
 from langchain_huggingface import HuggingFaceEmbeddings
 
-# ✅ Import Cross-Encoder
+# Import Cross-Encoder
 from sentence_transformers import CrossEncoder
 
-# ✅ Load Configuration from JSON
+# Load Configuration from JSON
 CONFIG_PATH = "/home/ariadnipap/thesis_chatbot_project/scripts/config.json"
 
 if not os.path.exists(CONFIG_PATH):
     raise FileNotFoundError(f"⚠️ Configuration file {CONFIG_PATH} not found!")
 
-# ✅ Load the JSON file safely
+# Load the JSON file safely
 try:
     with open(CONFIG_PATH, "r") as config_file:
         config = json.load(config_file)
@@ -42,18 +43,24 @@ try:
 except json.JSONDecodeError:
     raise ValueError(f"⚠️ Error reading {CONFIG_PATH}. Please ensure it is valid JSON.")
 
-# ✅ Read paths and parameters from config.json
+# Read paths and parameters from config.json
 FAISS_INDEX_PATH = config["paths"]["faiss_index"]
 LLAMA_MODEL_PATH = config["paths"]["llama_model"]
 MODEL_PARAMS = config["model_parameters"]
 RETRIEVAL_PARAMS = config["retrieval_settings"]
 PHOENIX_PORT=8080
 
-# ✅ Load FAISS index
+# Load FAISS index
 print("📥 Loading FAISS index...")
 
-embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
-#embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2")
+#embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+#embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2") #you can use another emb model instead of minilm
+if "mpnet" in FAISS_INDEX_PATH:
+    emb_model_name = "sentence-transformers/all-mpnet-base-v2"
+else:
+    emb_model_name = "sentence-transformers/all-MiniLM-L6-v2"
+
+embedding_model = HuggingFaceEmbeddings(model_name=emb_model_name)
 
 if not os.path.exists(os.path.join(FAISS_INDEX_PATH, "index.pkl")):
     raise FileNotFoundError("⚠️ FAISS index not found! Make sure embeddings are generated.")
@@ -64,20 +71,20 @@ vector_store = FAISS.load_local(
     allow_dangerous_deserialization=True
 )
 
-# ✅ Load LLAMA model
+# Load LLAMA model
 print("🚀 Loading Llama model...")
 llm = LlamaCpp(
     model_path=LLAMA_MODEL_PATH,
     **MODEL_PARAMS
 )
 
-# ✅ Load Cross-Encoder model for re-ranking
+# Load Cross-Encoder model for re-ranking
 print("🎯 Loading Cross-Encoder model...")
 cross_encoder = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
 device = "cuda" if torch.cuda.is_available() else "cpu"
 cross_encoder.to(device).eval()
 
-# ✅ Define prompt template for LLaMA
+# Define prompt template for LLaMA
 prompt_template = PromptTemplate(
     input_variables=["context", "question"],
     template="""
@@ -147,11 +154,11 @@ def truncate_context_to_fit(documents, user_input, max_tokens, avg_chars_per_tok
         str: Truncated context string.
     """
 
-    # ✅ Step 1: Calculate estimated token usage
+    # Step 1: Calculate estimated token usage
     user_query_tokens = len(user_input) / avg_chars_per_token  # Estimate tokens in user query
     system_prompt_tokens = 150  # Approximate system prompt length
 
-    # ✅ Step 2: Determine available space for the context
+    # Step 2: Determine available space for the context
     max_context_tokens = max_tokens - (user_query_tokens + system_prompt_tokens + safety_buffer)
 
     final_context = []
@@ -164,7 +171,7 @@ def truncate_context_to_fit(documents, user_input, max_tokens, avg_chars_per_tok
 
         estimated_tokens = len(doc_text) / avg_chars_per_token
 
-        # ✅ If adding the full document exceeds the limit, truncate this one
+        # If adding the full document exceeds the limit, truncate this one
         if current_tokens + estimated_tokens > max_context_tokens:
             allowed_chars = int((max_context_tokens - current_tokens) * avg_chars_per_token)
             
@@ -177,11 +184,11 @@ def truncate_context_to_fit(documents, user_input, max_tokens, avg_chars_per_tok
             final_context.append(truncated_text)
             break  # Stop adding more documents
 
-        # ✅ If it fits, add the full document
+        # If it fits, add the full document
         final_context.append(doc_text)
         current_tokens += estimated_tokens
 
-    # ✅ If no documents fit, include at least part of the first one
+    # If no documents fit, include at least part of the first one
     if not final_context and documents:
         doc_text = documents[0].page_content
         allowed_chars = int(max_context_tokens * avg_chars_per_token)
@@ -196,12 +203,13 @@ def truncate_context_to_fit(documents, user_input, max_tokens, avg_chars_per_tok
 
     return "\n".join(final_context)  # Preserve new lines
 
+# this chatbot_response function uses reranking layer, keep this one if you want it
 def chatbot_response(user_input, rag_enabled=False, threshold=None, temperature=None, max_tokens=None, top_p=None):
     """Uses RAG pipeline with Cross-Encoder filtering before passing context to LLaMA."""
 
     start_time = time.time()  # Start measuring total latency
 
-    # ✅ Get threshold from config if not provided
+    # Get threshold from config if not provided
     if threshold is None:
         threshold = RETRIEVAL_PARAMS["threshold"]
 
@@ -213,7 +221,7 @@ def chatbot_response(user_input, rag_enabled=False, threshold=None, temperature=
 
     print("\n🔍 Query before embedding:", repr(user_input))
 
-    # ✅ Use default model parameters if not provided
+    # Use default model parameters if not provided
     temperature = temperature if temperature is not None else MODEL_PARAMS["temperature"]
     max_tokens = max_tokens if max_tokens is not None else MODEL_PARAMS["max_tokens"]
     top_p = top_p if top_p is not None else MODEL_PARAMS["top_p"]
@@ -232,7 +240,7 @@ def chatbot_response(user_input, rag_enabled=False, threshold=None, temperature=
 
         retrieval_latency = retrieval_end_time - retrieval_start_time
 
-        # ✅ Apply Cross-Encoder filtering using config threshold
+        # Apply Cross-Encoder filtering using config threshold
         reranker_start_time = time.time()  # Start reranker timing
         filtered_docs = rerank_and_filter_documents(retrieved_docs, user_input, threshold)
         reranker_end_time = time.time()  # End reranker timing
@@ -242,7 +250,7 @@ def chatbot_response(user_input, rag_enabled=False, threshold=None, temperature=
         for doc in filtered_docs:
             print(f"{doc.page_content[:200]}...\n")
 
-        # ✅ Ensure the context fits within LLaMA's context limit
+        # Ensure the context fits within LLaMA's context limit
         full_context = truncate_context_to_fit(
             filtered_docs,
             user_input,
@@ -268,7 +276,7 @@ def chatbot_response(user_input, rag_enabled=False, threshold=None, temperature=
 
     Now give me your response to the question based on the context provided:
     """
-
+    #Now give me your response to the question based on the context provided:
     print("\n📜 DEBUG: Final Prompt Sent to LLaMA:\n", final_prompt, "...")
 
     try:
@@ -280,9 +288,56 @@ def chatbot_response(user_input, rag_enabled=False, threshold=None, temperature=
         return "⚠️ Model generation failed.", full_context, retrieval_latency, reranker_latency
 
     return response, full_context, retrieval_latency, reranker_latency
-'''
 
-#use this function if you want to remove the reranking layer
+# this function is the same as the one above, but we use it in the ui to implement the streaming feature
+def chatbot_response_stream(user_input, rag_enabled=False, top_k=50, top_p=0.88,
+                            use_reranker=True, threshold=None):
+    """Streams chatbot response token by token for real-time display."""
+
+    if not isinstance(user_input, str):
+        yield "⚠️ Invalid input format.", None, None, None
+        return
+
+    temperature = MODEL_PARAMS.get("temperature", 0.7)
+    max_tokens = MODEL_PARAMS.get("max_tokens", 8192)
+    threshold = threshold if threshold is not None else RETRIEVAL_PARAMS["threshold"]
+
+    if rag_enabled:
+        try:
+            retrieved_docs = retriever.invoke(user_input)
+        except Exception as e:
+            yield "⚠️ Retrieval failed.", None, None, None
+            return
+
+        if use_reranker:
+            filtered_docs = rerank_and_filter_documents(retrieved_docs, user_input, threshold)
+        else:
+            filtered_docs = retrieved_docs
+
+        full_context = truncate_context_to_fit(filtered_docs, user_input, max_tokens=MODEL_PARAMS["n_ctx"] - 200)
+    else:
+        full_context = "No context provided."
+
+    final_prompt = f"""
+    You are an AI assistant. Use the provided context to answer the question.
+
+    Context:
+    {full_context}
+
+    Question:
+    {user_input}
+
+    Now give me your response to the question based on the context provided:
+    """
+
+    streamed_response = ""
+    for chunk in llm.stream(final_prompt, temperature=temperature, max_tokens=max_tokens, top_p=top_p):
+        streamed_response += chunk
+        yield streamed_response, full_context, None, None
+
+
+'''
+# use this chatbot_response function instead if you want to remove the reranking layer
 def chatbot_response(user_input, rag_enabled=False, threshold=None, temperature=None, max_tokens=None, top_p=None):
     """Uses RAG pipeline without reranking before passing context to LLaMA."""
     

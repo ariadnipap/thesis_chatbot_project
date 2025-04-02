@@ -51,6 +51,10 @@ A RAG-Based Chatbot Assistant for Engineering Teams: Enhancing Technical Support
     Lack of domain-specific chatbots for engineering teams.
     Need for optimized RAG pipelines for structured technical documentation.
 
+3.6 Advanced Retrieval Architectures in RAG Systems
+
+In this subsection, you can delve into the specifics of your approach, referencing relevant literature that supports the use of reranking models like cross-encoders and the optimization of retrieval parameters. 
+
 4. Methodology
 4.1 System Architecture Overview
 

@@ -1,6 +1,8 @@
+# this code generates a large config file with all the data we want to include in the external database
 import json
 import os
 
+# add your files below
 # Paths for structured issues
 abc_issues_path = "/home/ariadnipap/thesis_chatbot_project/data/processed/processed_abc_issues.json"
 bb_issues_path = "/home/ariadnipap/thesis_chatbot_project/data/processed/processed_bb_issues.json"

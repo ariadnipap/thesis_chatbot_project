@@ -1,6 +1,6 @@
 {
     "paths": {
-        "faiss_index": "data/faiss_index_chunked_1000_200/",
+        "faiss_index": "data/faiss_index/",
         "llama_model": "/home/ariadnipap/Llama-3.3-70B-Instruct-Q4_K_M.gguf"
     },
     "model_parameters": {
@@ -8,8 +8,8 @@
         "temperature": 0.1,
         "max_tokens": 1536,
         "n_ctx": 6500,
-        "top_k": 25,
-        "top_p": 0.7,
+        "top_k": 50,
+        "top_p": 0.88,
         "repeat_penalty": 1.1,
         "flash_attention": true,
         "verbose": true
