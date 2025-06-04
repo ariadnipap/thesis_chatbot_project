@@ -1,3 +1,4 @@
+# test pipeline that implemented double reranking layer using a smaller llama model as a second reranker
 import json
 import os
 import torch

@@ -1,0 +1,33 @@
+{
+  "scores": {
+    "top_k=10_top_p=0.55_chunking=1000_100": 85.56,
+    "top_k=10_top_p=0.7_chunking=2000_200": 83.19,
+    "top_k=10_top_p=0.88_chunking=2000_200": 84.81,
+    "top_k=25_top_p=0.55_chunking=2000_200": 84.31,
+    "top_k=10_top_p=0.55_chunking=no_chunking": 85.75,
+    "top_k=50_top_p=0.55_chunking=1000_100": 82.56,
+    "top_k=25_top_p=0.7_chunking=1000_100": 82.75,
+    "top_k=50_top_p=0.7_chunking=no_chunking": 84.76,
+    "top_k=25_top_p=0.55_chunking=no_chunking": 86.06,
+    "top_k=25_top_p=0.88_chunking=2000_200": 83.38,
+    "top_k=50_top_p=0.88_chunking=no_chunking": 86.25,
+    "top_k=10_top_p=0.7_chunking=no_chunking": 85.5,
+    "top_k=50_top_p=0.55_chunking=no_chunking": 82.91,
+    "top_k=50_top_p=0.88_chunking=1000_100": 83.06,
+    "top_k=10_top_p=0.55_chunking=2000_200": 81.31,
+    "top_k=10_top_p=0.88_chunking=no_chunking": 84.75,
+    "top_k=50_top_p=0.7_chunking=1000_100": 81.88,
+    "top_k=25_top_p=0.55_chunking=1000_100": 84.44,
+    "top_k=50_top_p=0.88_chunking=2000_200": 83.31,
+    "top_k=25_top_p=0.88_chunking=1000_100": 83.31,
+    "top_k=25_top_p=0.7_chunking=2000_200": 83.88,
+    "top_k=25_top_p=0.88_chunking=no_chunking": 85.31,
+    "top_k=50_top_p=0.7_chunking=2000_200": 83.94,
+    "top_k=50_top_p=0.55_chunking=2000_200": 83.56,
+    "top_k=25_top_p=0.7_chunking=no_chunking": 84.69,
+    "top_k=10_top_p=0.7_chunking=1000_100": 84.06,
+    "top_k=10_top_p=0.88_chunking=1000_100": 83.88
+  },
+  "best_setting": "top_k=50_top_p=0.88_chunking=no_chunking",
+  "best_score": 86.25
+}

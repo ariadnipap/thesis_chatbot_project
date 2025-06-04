@@ -1,15 +1,17 @@
-# this code performs chunking of the large config file of the data using a text splitter. you can set the values you like
+# This code performs chunking of the large config file of the data using a recursive text splitter.
+# It allows structured splitting based on newlines, spaces, punctuation, etc.
+
 import json
 import os
-from langchain.text_splitter import CharacterTextSplitter
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 # Configurations
-CHUNK_SIZE = 1000  # Number of characters per chunk
-OVERLAP = 200     # Overlapping characters for context retention
+CHUNK_SIZE = 2000  # Number of tokens (or characters, if using default len)
+OVERLAP = 200      # Overlapping tokens/chars for context retention
 
 # File paths (Modify these paths if needed)
-INPUT_FILE = "/home/ariadnipap/thesis_chatbot_project/data/processed/config.json"
-OUTPUT_FILE = "/home/ariadnipap/thesis_chatbot_project/data/processed/chunked_config_1000_200.json"
+INPUT_FILE = "/home/ariadnipap/thesis_chatbot_project/data/processed/config_data.json"
+OUTPUT_FILE = "/home/ariadnipap/thesis_chatbot_project/data/processed/chunked_config_2000_200.json"
 
 # Load the JSON file
 if not os.path.exists(INPUT_FILE):
@@ -18,11 +20,12 @@ if not os.path.exists(INPUT_FILE):
 with open(INPUT_FILE, "r", encoding="utf-8") as f:
     data = json.load(f)
 
-# Initialize Text Splitter
-text_splitter = CharacterTextSplitter(
+# Initialize Recursive Text Splitter
+text_splitter = RecursiveCharacterTextSplitter(
     chunk_size=CHUNK_SIZE,
     chunk_overlap=OVERLAP,
-    separator="\n"  # Ensures splitting at new lines when possible
+    separators=["\n\n", "\n", ".", " ", ""],  # Best-effort split order
+    keep_separator=True  # Optional: keep the delimiter in the chunk
 )
 
 # Process and Chunk Documents
@@ -32,9 +35,9 @@ for category, clients in data.get("bigstreamer_docs", {}).items():
     chunked_docs["bigstreamer_docs"][category] = {}
 
     for client, documents in clients.items():
-        # Skip "issues" category and copy it as is
+        # Skip "issues" category and copy it as-is
         if category == "issues":
-            chunked_docs["bigstreamer_docs"][category][client] = documents  # No chunking for issues
+            chunked_docs["bigstreamer_docs"][category][client] = documents
             continue
 
         chunked_docs["bigstreamer_docs"][category][client] = []

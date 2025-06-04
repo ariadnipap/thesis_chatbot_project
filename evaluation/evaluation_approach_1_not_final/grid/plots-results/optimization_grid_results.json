@@ -1,0 +1,33 @@
+{
+    "scores": {
+        "top_k=10_top_p=0.55_chunking=500_100": 3.379166666666667,
+        "top_k=50_top_p=0.88_chunking=500_100": 3.44375,
+        "top_k=10_top_p=0.7_chunking=500_100": 3.5,
+        "top_k=10_top_p=0.88_chunking=0": 3.5,
+        "top_k=10_top_p=0.55_chunking=1000_200": 3.6666666666666665,
+        "top_k=50_top_p=0.88_chunking=0": 3.39375,
+        "top_k=10_top_p=0.88_chunking=1000_200": 3.6333333333333333,
+        "top_k=25_top_p=0.7_chunking=0": 3.4791666666666665,
+        "top_k=25_top_p=0.88_chunking=0": 3.49375,
+        "top_k=50_top_p=0.88_chunking=1000_200": 3.6458333333333335,
+        "top_k=50_top_p=0.55_chunking=1000_200": 3.685416666666667,
+        "top_k=10_top_p=0.7_chunking=0": 3.5,
+        "top_k=50_top_p=0.7_chunking=500_100": 3.370833333333333,
+        "top_k=25_top_p=0.55_chunking=500_100": 3.5083333333333333,
+        "top_k=50_top_p=0.7_chunking=1000_200": 3.65,
+        "top_k=25_top_p=0.7_chunking=1000_200": 3.6645833333333333,
+        "top_k=25_top_p=0.55_chunking=1000_200": 3.63125,
+        "top_k=25_top_p=0.88_chunking=500_100": 3.439583333333333,
+        "top_k=50_top_p=0.7_chunking=0": 3.5791666666666666,
+        "top_k=25_top_p=0.7_chunking=500_100": 3.36875,
+        "top_k=25_top_p=0.55_chunking=0": 3.439583333333333,
+        "top_k=10_top_p=0.88_chunking=500_100": 3.425,
+        "top_k=50_top_p=0.55_chunking=0": 3.4458333333333333,
+        "top_k=25_top_p=0.88_chunking=1000_200": 3.6729166666666666,
+        "top_k=50_top_p=0.55_chunking=500_100": 3.41875,
+        "top_k=10_top_p=0.7_chunking=1000_200": 3.685416666666667,
+        "top_k=10_top_p=0.55_chunking=0": 3.495833333333333
+    },
+    "best_setting": "top_k=50_top_p=0.55_chunking=1000_200",
+    "best_score": 3.685416666666667
+}

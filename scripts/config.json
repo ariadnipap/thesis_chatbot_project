@@ -1,6 +1,6 @@
 {
     "paths": {
-        "faiss_index": "data/faiss_index/",
+        "faiss_index": "data/faiss_index_new/",
         "llama_model": "/home/ariadnipap/Llama-3.3-70B-Instruct-Q4_K_M.gguf"
     },
     "model_parameters": {

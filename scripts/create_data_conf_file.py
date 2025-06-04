@@ -2,21 +2,14 @@
 import json
 import os
 
-# add your files below
-# Paths for structured issues
-abc_issues_path = "/home/ariadnipap/thesis_chatbot_project/data/processed/processed_abc_issues.json"
-bb_issues_path = "/home/ariadnipap/thesis_chatbot_project/data/processed/processed_bb_issues.json"
+# Directories containing markdown files
+abc_app_flows_dir = "/home/ariadnipap/thesis_chatbot_project/data/raw/abc/applicationFlows"
+abc_procedures_dir = "/home/ariadnipap/thesis_chatbot_project/data/raw/abc/procedures"
+abc_issues_dir = "/home/ariadnipap/thesis_chatbot_project/data/raw/abc/issues"
 
-# Directories containing unstructured markdown files
-abc_app_flows_dir = "/home/ariadnipap/thesis_chatbot_project/data/raw/abc_aa/applicationFlows"
-abc_procedures_dir = "/home/ariadnipap/thesis_chatbot_project/data/raw/abc_aa/procedures"
-bb_app_flows_dir = "/home/ariadnipap/thesis_chatbot_project/data/raw/bb/applicationFlows"
-bb_procedures_dir = "/home/ariadnipap/thesis_chatbot_project/data/raw/bb/procedures"
-
-# Load structured issues JSON files
-def load_json(file_path):
-    with open(file_path, "r", encoding="utf-8") as f:
-        return json.load(f)
+mno_app_flows_dir = "/home/ariadnipap/thesis_chatbot_project/data/raw/mno/applicationFlows"
+mno_procedures_dir = "/home/ariadnipap/thesis_chatbot_project/data/raw/mno/procedures"
+mno_issues_dir = "/home/ariadnipap/thesis_chatbot_project/data/raw/mno/issues"
 
 # Read markdown files from a given directory
 def load_markdown_files(directory):
@@ -29,29 +22,29 @@ def load_markdown_files(directory):
             markdown_files.append({"name": file_name, "content": content})
     return markdown_files
 
-# Load all data
-abc_issues = load_json(abc_issues_path)
-bb_issues = load_json(bb_issues_path)
-
+# Load all markdown data
 abc_application_flows = load_markdown_files(abc_app_flows_dir)
 abc_procedures = load_markdown_files(abc_procedures_dir)
-bb_application_flows = load_markdown_files(bb_app_flows_dir)
-bb_procedures = load_markdown_files(bb_procedures_dir)
+abc_issues = load_markdown_files(abc_issues_dir)
+
+mno_application_flows = load_markdown_files(mno_app_flows_dir)
+mno_procedures = load_markdown_files(mno_procedures_dir)
+mno_issues = load_markdown_files(mno_issues_dir)
 
 # Construct the final JSON structure
 config_data = {
     "bigstreamer_docs": {
         "applicationFlows": {
-            "ClientA": abc_application_flows,
-            "ClientB": bb_application_flows
+            "Client_abc": abc_application_flows,
+            "Client_mno": mno_application_flows
         },
         "procedures": {
-            "ClientA": abc_procedures,
-            "ClientB": bb_procedures
+            "Client_abc": abc_procedures,
+            "Client_mno": mno_procedures
         },
         "issues": {
-            "ClientA": abc_issues,
-            "ClientB": bb_issues
+            "Client_abc": abc_issues,
+            "Client_mno": mno_issues
         }
     }
 }

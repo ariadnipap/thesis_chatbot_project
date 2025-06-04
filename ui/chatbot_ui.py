@@ -10,7 +10,7 @@ from scripts.chatbot_english import chatbot_response
 
 CONFIG_PATH = "/home/ariadnipap/thesis_chatbot_project/scripts/config.json"
 
-def update_config(top_k, top_p, chunking_type, embedding_model):
+def update_config(top_k, top_p, chunking_type):
     with open(CONFIG_PATH, "r") as f:
         config = json.load(f)
 
@@ -18,34 +18,27 @@ def update_config(top_k, top_p, chunking_type, embedding_model):
     config["model_parameters"]["top_p"] = float(top_p)
 
     chunk_key_map = {
-        "No Chunking (0)": "faiss_index",
-        "Chunking 500-100": "faiss_index_chunked_500_100",
-        "Chunking 1000-200": "faiss_index_chunked_1000_200"
+        "No Chunking (0)": "faiss_index_new",
+        "Chunking 1000-100": "faiss_index_chunked_1000_100",
+        "Chunking 2000-200": "faiss_index_chunked_2000_200"
     }
 
-    chunk_key = chunk_key_map[chunking_type]
-    emb_suffix = "_mpnet" if embedding_model == "MPNet" else ""
-
-    faiss_dir = f"data/{chunk_key}{emb_suffix}/"
+    faiss_dir = f"data/{chunk_key_map[chunking_type]}/"
     config["paths"]["faiss_index"] = faiss_dir
 
     with open(CONFIG_PATH, "w") as f:
         json.dump(config, f, indent=4)
 
 def chat_interface(user_input, history=[], rag_enabled=False, top_k=50, top_p=0.88,
-                   chunking_type="No Chunking (0)", embedding_model="MiniLM",
-                   use_reranker=True, threshold=-8.0):
+                   chunking_type="No Chunking (0)", use_reranker=True, threshold=-8.0):
     if not history:
         history = []
 
-    update_config(top_k, top_p, chunking_type, embedding_model)
+    update_config(top_k, top_p, chunking_type)
 
-    # Step 1: Show user message immediately with empty bot response
     history.append((user_input, ""))
-    # First return to update the UI with user's question
     yield history, ""
 
-    # Step 2: Generate bot response
     bot_response, *_ = chatbot_response(
         user_input,
         rag_enabled=rag_enabled,
@@ -53,7 +46,6 @@ def chat_interface(user_input, history=[], rag_enabled=False, top_k=50, top_p=0.
         top_p=top_p
     )
 
-    # Update bot response
     if not isinstance(bot_response, str):
         bot_response = str(bot_response)
 
@@ -77,15 +69,9 @@ with gr.Blocks(css="custom-css") as chatbot_ui:
             top_p_dropdown = gr.Dropdown(choices=[0.55, 0.7, 0.88], value=0.88, label="Top P")
 
             chunking_dropdown = gr.Dropdown(
-                choices=["No Chunking (0)", "Chunking 500-100", "Chunking 1000-200"],
+                choices=["No Chunking (0)", "Chunking 1000-100", "Chunking 2000-200"],
                 value="No Chunking (0)",
                 label="Chunking Strategy"
-            )
-
-            embedding_dropdown = gr.Dropdown(
-                choices=["MiniLM", "MPNet"],
-                value="MiniLM",
-                label="Embedding Model"
             )
 
             use_reranker_checkbox = gr.Checkbox(label="Use Reranker", value=True)
@@ -105,7 +91,7 @@ with gr.Blocks(css="custom-css") as chatbot_ui:
                 inputs=[
                     user_input, chatbot, rag_toggle,
                     top_k_dropdown, top_p_dropdown,
-                    chunking_dropdown, embedding_dropdown,
+                    chunking_dropdown,
                     use_reranker_checkbox, threshold_slider
                 ],
                 outputs=[chatbot, user_input]
@@ -113,7 +99,6 @@ with gr.Blocks(css="custom-css") as chatbot_ui:
 
             clear_button.click(lambda: ([], ""), inputs=None, outputs=[chatbot, user_input])
 
-    # Footer section
     gr.Markdown(
         """
         ---
@@ -126,6 +111,7 @@ with gr.Blocks(css="custom-css") as chatbot_ui:
 # Launch app
 if __name__ == "__main__":
     chatbot_ui.launch(server_name="0.0.0.0", server_port=7860)
+
 
 '''
 # use this code if you want streaming, however, note that it messes with the answers

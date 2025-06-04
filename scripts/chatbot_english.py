@@ -135,7 +135,7 @@ def rerank_and_filter_documents(docs, user_query, threshold=None):
     return filtered_docs
 
 
-def truncate_context_to_fit(documents, user_input, max_tokens, avg_chars_per_token=3.5, safety_buffer=200):
+def truncate_context_to_fit(documents, user_input, max_tokens, avg_chars_per_token=3.5, safety_buffer=500):
     """
     Truncates the document context to fit within the model's context size limit.
 
@@ -254,7 +254,7 @@ def chatbot_response(user_input, rag_enabled=False, threshold=None, temperature=
         full_context = truncate_context_to_fit(
             filtered_docs,
             user_input,
-            max_tokens=MODEL_PARAMS["n_ctx"] - 200,  # Apply 200-token safety buffer
+            max_tokens=MODEL_PARAMS["n_ctx"] - 500,  # Apply 500-token safety buffer
             avg_chars_per_token=3.5
         )
 
@@ -266,17 +266,15 @@ def chatbot_response(user_input, rag_enabled=False, threshold=None, temperature=
         reranker_latency = None
 
     final_prompt = f"""
-    You are an AI assistant. Use the provided context to answer the question.
+    You are a highly factual and grounded AI assistant. Answer only using the information provided in the context below. Do not use prior knowledge, external assumptions, or fabricate details.
 
     Context:
     {full_context}
-
     Question:
     {user_input}
 
     Now give me your response to the question based on the context provided:
     """
-    #Now give me your response to the question based on the context provided:
     print("\n📜 DEBUG: Final Prompt Sent to LLaMA:\n", final_prompt, "...")
 
     try:
@@ -314,12 +312,12 @@ def chatbot_response_stream(user_input, rag_enabled=False, top_k=50, top_p=0.88,
         else:
             filtered_docs = retrieved_docs
 
-        full_context = truncate_context_to_fit(filtered_docs, user_input, max_tokens=MODEL_PARAMS["n_ctx"] - 200)
+        full_context = truncate_context_to_fit(filtered_docs, user_input, max_tokens=MODEL_PARAMS["n_ctx"] - 500)
     else:
         full_context = "No context provided."
 
     final_prompt = f"""
-    You are an AI assistant. Use the provided context to answer the question.
+    You are a highly factual and grounded AI assistant. Answer only using the information provided in the context below. Do not use prior knowledge, external assumptions, or fabricate details.
 
     Context:
     {full_context}
@@ -334,7 +332,6 @@ def chatbot_response_stream(user_input, rag_enabled=False, top_k=50, top_p=0.88,
     for chunk in llm.stream(final_prompt, temperature=temperature, max_tokens=max_tokens, top_p=top_p):
         streamed_response += chunk
         yield streamed_response, full_context, None, None
-
 
 '''
 # use this chatbot_response function instead if you want to remove the reranking layer
@@ -380,7 +377,7 @@ def chatbot_response(user_input, rag_enabled=False, threshold=None, temperature=
         full_context = truncate_context_to_fit(
             filtered_docs,
             user_input,
-            max_tokens=MODEL_PARAMS["n_ctx"] - 200,  # Apply 200-token safety buffer
+            max_tokens=MODEL_PARAMS["n_ctx"] - 500,  # Apply 500-token safety buffer
             avg_chars_per_token=3.5
         )
 
@@ -414,8 +411,8 @@ def chatbot_response(user_input, rag_enabled=False, threshold=None, temperature=
         return "⚠️ Model generation failed.", full_context, retrieval_latency, reranker_latency
 
     return response, full_context, retrieval_latency, reranker_latency  # ✅ Reranker latency will now be `None`
+    
 '''
-
 if __name__ == "__main__":
     while True:
         user_input = input("\n🔍 Enter query (or type 'exit' to quit): ")

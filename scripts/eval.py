@@ -1,3 +1,4 @@
+# evaluation code for the first evaluation approach
 # this code evaluates the answers of the chatbot given in json format
 # scroll to see the statistics it includes
 import json
@@ -225,9 +226,9 @@ def evaluate_with_llama(prompt_template, instruction, response=None, retrieved_c
     # Store **full raw response** in the feedback fields for manual review
     return eval_result, score, eval_result
 
-
+'''
 # Load answers dataset
-QA_DATASET_PATH = "/home/ariadnipap/thesis_chatbot_project/data/answers_stats_no_reranking.json"
+QA_DATASET_PATH = "/home/ariadnipap/thesis_chatbot_project/data/eval_after_filter/reranking/answers/answers_stats_10_0.7_1000_200_no_reranking.json"
 with open(QA_DATASET_PATH, "r") as f:
     qa_data = json.load(f)
 
@@ -300,7 +301,7 @@ for i, row in tqdm(qa_df.iterrows(), total=len(qa_df)):
 
 
 # Save results
-RESULTS_PATH = "/home/ariadnipap/thesis_chatbot_project/data/evaluation_results_no_reranking.json"
+RESULTS_PATH = "/home/ariadnipap/thesis_chatbot_project/data/eval_after_filter/reranking/evaluation/evaluation_results_10_0.7_1000_200_no_reranking.json"
 with open(RESULTS_PATH, "w") as f:
     json.dump(results, f, indent=4)
 
@@ -390,15 +391,14 @@ def run_evaluation(input_file, output_file):
 
 # List of files to evaluate
 eval_files = [
-    ("answers_stats_10_0.88_chunked_1000_200.json", "evaluation_results_10_0.88_1000_200.json"),
-    ("answers_stats_10_0.7_chunked_1000_200.json", "evaluation_results_10_0.7_1000_200.json"),
-    ("answers_stats_10_0.55_chunked_1000_200.json", "evaluation_results_10_0.55_1000_200.json"),
-    ("answers_stats_25_0.55_chunked_1000_200.json", "evaluation_results_25_0.88_1000_200.json")
+    ("answers_stats_50_0.88_chunked_2000_200.json", "evaluation_results_50_0.88_2000_200.json"),
+    ("answers_stats_50_0.88_no_chunking.json", "evaluation_results_50_0.88_no_chunking.json")
 ]
 
+
 for input_filename, output_filename in eval_files:
-    INPUT_PATH = f"/home/ariadnipap/thesis_chatbot_project/data/{input_filename}"
-    OUTPUT_PATH = f"/home/ariadnipap/thesis_chatbot_project/data/{output_filename}"
+    INPUT_PATH = f"/home/ariadnipap/thesis_chatbot_project/data/eval_new/answers2/{input_filename}"
+    OUTPUT_PATH = f"/home/ariadnipap/thesis_chatbot_project/data/eval_after_filter/evaluation2/{output_filename}"
 
     run_evaluation(INPUT_PATH, OUTPUT_PATH)
 
@@ -408,4 +408,3 @@ for input_filename, output_filename in eval_files:
 
     # Reload model
     llm = LlamaCpp(model_path=LLAMA_MODEL_PATH, **MODEL_PARAMS)
-'''

@@ -11,16 +11,16 @@ from langchain.schema import Document
 import os
 
 # Define FAISS index path
-faiss_index_path = "/home/ariadnipap/thesis_chatbot_project/data/faiss_index_mpnet_chunked_500_100"
+faiss_index_path = "/home/ariadnipap/thesis_chatbot_project/data/faiss_index_chunked_2000_200"
 
 # Load JSON configuration file
-config_path = "/home/ariadnipap/thesis_chatbot_project/data/processed/chunked_config_500_100.json"
+config_path = "/home/ariadnipap/thesis_chatbot_project/data/processed/chunked_config_2000_200.json"
 with open(config_path, "r", encoding="utf-8") as f:
     config_data = json.load(f)
 
 # Initialize Sentence Transformer model
-#embedding_model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
-embedding_model = SentenceTransformer("sentence-transformers/all-mpnet-base-v2")
+embedding_model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+#embedding_model = SentenceTransformer("sentence-transformers/all-mpnet-base-v2")
 
 # Function to extract text content from JSON
 def extract_text_from_config(config):
@@ -54,8 +54,8 @@ faiss_index.add(embeddings)
 
 # Store metadata with LangChain FAISS wrapper
 vector_store = FAISS(
-    #embedding_function=HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2"),
-    embedding_function=HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2"),
+    embedding_function=HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2"),
+    #embedding_function=HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2"),
     index=faiss_index,
     docstore=InMemoryDocstore(metadata_dict),  # Ensure metadata is stored
     index_to_docstore_id={i: i for i in range(len(documents))}
@@ -68,10 +68,10 @@ os.makedirs(faiss_index_path, exist_ok=True)
 vector_store.save_local(faiss_index_path)
 
 # Manually save docstore and index-to-docstore mapping
-with open(os.path.join(faiss_index_path, "docstore_chunked.json"), "w", encoding="utf-8") as f:
+with open(os.path.join(faiss_index_path, "docstore.json"), "w", encoding="utf-8") as f:
     json.dump({k: {"page_content": v.page_content, "metadata": v.metadata} for k, v in metadata_dict.items()}, f, indent=4)
 
-with open(os.path.join(faiss_index_path, "index_to_docstore_id_chunked.json"), "w", encoding="utf-8") as f:
+with open(os.path.join(faiss_index_path, "index_to_docstore_id.json"), "w", encoding="utf-8") as f:
     json.dump({i: i for i in range(len(documents))}, f, indent=4)
 
 print(f"FAISS index successfully created and saved at: {faiss_index_path}")

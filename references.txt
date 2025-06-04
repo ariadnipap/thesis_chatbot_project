@@ -1,0 +1,257 @@
+[1] Wang, H., Wang, L., Du, Y., Chen, L., Zhou, J., Wang, Y., & Wong, K.-F. (2023). A Survey of the Evolution of Language Model-Based Dialogue Systems. arXiv. https://arxiv.org/abs/2311.16789
+
+[2] Al-Amin, M., Ali, M. S., Salam, A., Khan, A., Ali, A., Ullah, A., Alam, N., & Chowdhury, S. K. (2024). History of Generative Artificial Intelligence (AI) Chatbots: Past, Present, and Future Development. arXiv. https://arxiv.org/abs/2402.05122
+
+[3] Analytics Vidhya. (2023, May 18). Chatbot Evolution: ChatGPT Vs. Rule-based. https://www.analyticsvidhya.com/blog/2023/05/chatbot-evolution-chatgpt-vs-rule-based/
+
+[4] Whizlabs. (2020). Understanding the role of chatbots in DevOps. Retrieved from https://www.whizlabs.com/blog/role-of-chatbots-in-devops/
+
+[5] Invensis Learning. (2025). Exploring chatbots in DevOps: A new era of efficiency. Retrieved from https://www.invensislearning.com/blog/chatbots-in-devops/
+
+[6] ACUQF. (2024). Implementing chatbots: Improving customer service in tech products. LinkedIn. Retrieved from https://www.linkedin.com/pulse/implementing-chatbots-improving-customer-service-tech-products-acuqf/
+
+[7] Zendesk. (2025). Chatbots for customer service: A buyer’s guide. Retrieved from https://www.zendesk.com/service/ai/chatbots-customer-service/
+
+[8] Mekić, E., Jovanović, M., Kuk, K., Prlinčević, B., & Savić, A. (2024). Enhancing Educational Efficiency: Generative AI Chatbots and DevOps in Education 4.0. arXiv. https://arxiv.org/abs/2406.15382
+
+[9] Lokiny, N. (2022). Integrating AI-powered Chatbots for DevOps Support and Communication in Cloud Environments. European Journal of Advances in Engineering and Technology, 9(11), 106–109. http://ejaet.com/PDF/9-11/EJAET-9-11-106-109.pdf
+
+[10] Microsoft. (2023). Limitations with Microsoft Copilot for Microsoft 365. Microsoft Community. https://answers.microsoft.com/en-us/msoffice/forum/all/limitations-with-microsoft-copilot-for-microsoft/ef1bcf1f-8bac-4759-b384-a42e77b571b1
+
+[11] Microsoft Tech Community. (2023). Microsoft’s Copilot: A Frustrating Flop in AI-Powered Productivity. https://techcommunity.microsoft.com/discussions/microsoft365copilot/microsofts-copilot-a-frustrating-flop-in-ai-powered-productivity/4221190
+
+[12] IBM. (2024). AI Agents vs. AI Assistants. IBM Think Blog. https://www.ibm.com/think/topics/ai-agents-vs-ai-assistants
+
+[13] Caldarini, G., Jaf, S., & McGarry, K. (2022). A literature survey of recent advances in chatbots. Information, 1(0). https://doi.org/10.3390/info1010000
+
+[14] Labadze, L., Grigolia, M., & Machaidze, L. (2023). Role of AI chatbots in education: Systematic literature review. International Journal of Educational Technology in Higher Education, 20(56). https://doi.org/10.1186/s41239-023-00426-1
+
+[15] Kooli, C. (2023). Chatbots in education and research: A critical examination of ethical implications and solutions. Sustainability, 15(5614). https://doi.org/10.3390/su15075614
+
+[16] Yue, M. (2025). A Survey of Large Language Model Agents for Question Answering. arXiv. https://arxiv.org/abs/2503.19213
+
+[17] Yasunaga, M., Ren, H., Bosselut, A., Liang, P., & Leskovec, J. (2022). QA-GNN: Reasoning with Language Models and Knowledge Graphs for Question Answering. arXiv. https://arxiv.org/abs/2104.06378
+
+[18] Muludi, K., Fitria, K. M., Triloka, J., & Sutedi, S. (2024). Retrieval-Augmented Generation Approach: Document Question Answering using Large Language Model. International Journal of Advanced Computer Science and Applications, 15(3), 776–780. https://thesai.org/Publications/ViewPaper?Code=IJACSA&Issue=3&SerialNo=79&Volume=15
+
+[19] Avkalan AI. (2024, February 13). Top 5 Open-Source LLMs That Can Be Used for Question Answering Over Private Data. Medium. https://medium.com/avkalan-ai/top-5-open-source-llms-that-can-be-used-for-question-answering-over-private-data-c4f1326cd1e6
+
+[20] Daull, X., Bellot, P., Bruno, E., Martin, V., & Murisasco, E. (2023). Complex QA & language models hybrid architectures: Survey. arXiv. https://arxiv.org/abs/2302.09051
+
+[21] V7 Labs. (2023). Large Language Models (LLMs): Challenges, Predictions, Tutorial. https://www.v7labs.com/blog/large-language-models-llms
+
+[22] Peng, B., Galley, M., He, P., Cheng, H., Xie, Y., Hu, Y., Huang, Q., Liden, L., Yu, Z., Chen, W., & Gao, J. (2023). Check Your Facts and Try Again: Improving Large Language Models with External Knowledge and Automated Feedback. arXiv. https://arxiv.org/abs/2302.12813
+
+[23] Labellerr. (2023). 8 Challenges of Building Your Own Large Language Model. https://www.labellerr.com/blog/challenges-in-development-of-llms
+
+[24] Zhang, A., Lipton, Z. C., Li, M., & Smola, A. J. (2024). Dive into deep learning (3rd ed.). https://d2l.ai/
+
+[25] Gao, Y., Xiong, Y., Gao, X., Jia, K., Pan, J., Bi, Y., Dai, Y., Sun, J., Wang, H. (2023). Retrieval-Augmented Generation for Large Language Models: A Survey. arXiv. https://arxiv.org/abs/2312.10997
+
+[26] Fan, W., Ding, Y., Ning, L., Wang, S., Li, H., Yin, D., Chua, T.-S., & Li, Q. (2024). A Survey on RAG Meeting LLMs: Towards Retrieval-Augmented Large Language Models. arXiv. https://arxiv.org/abs/2405.06211
+
+[27] IBM Research. (2023). What is retrieval-augmented generation (RAG)? https://research.ibm.com/blog/retrieval-augmented-generation-RAG
+
+[28] Amazon Web Services. (n.d.). What is RAG? - Retrieval-Augmented Generation AI Explained. https://aws.amazon.com/what-is/retrieval-augmented-generation/
+
+[29] Aytar, A. Y., Kilic, K., & Kaya, K. (2024). A Retrieval-Augmented Generation Framework for Academic Literature Navigation in Data Science. arXiv. https://arxiv.org/abs/2412.15404
+
+[30] Roy, K., Khandelwal, V., Surana, H., Vera, V., Sheth, A., & Heckman, H. (2023). GEAR-Up: Generative AI and External Knowledge-based Retrieval Upgrading Scholarly Article Searches for Systematic Reviews. arXiv. https://arxiv.org/abs/2312.09948
+
+[31] Glean. (2024). Top Use Cases of Retrieval-Augmented Generation (RAG) in AI. https://www.glean.com/blog/retrieval-augmented-generation-use-cases
+
+[32] IBM. (2024). What is RAG (Retrieval-Augmented Generation)? https://www.ibm.com/think/topics/retrieval-augmented-generation
+
+[33] Pathak, T. (2023). Understanding Faiss and Pinecone Vector Databases: A Comprehensive Guide. Medium. https://medium.com/@tejupathak/understanding-faiss-and-pinecone-vector-databases-a-comprehensive-guide-66502279077e
+
+[34] RisingWave. (2024). Chroma DB vs. Pinecone vs. FAISS: Vector Database Showdown. https://risingwave.com/blog/chroma-db-vs-pinecone-vs-faiss-vector-database-showdown/
+
+[35] HPE Community. (2023). Comparing Pinecone, Chroma DB and FAISS: Exploring Vector Databases. https://community.hpe.com/t5/insight-remote-support/comparing-pinecone-chroma-db-and-faiss-exploring-vector/td-p/7210879
+
+[36] Feng, L., Senapati, J., & Liu, B. (2022). TaDaa: Real time Ticket Assignment Deep learning Auto Advisor for customer support, help desk, and issue ticketing systems. arXiv preprint arXiv:2207.11187.
+
+[37] Liu, Z., Benge, C., & Jiang, S. (2023). Ticket-BERT: Labeling Incident Management Tickets with Language Models. arXiv preprint arXiv:2307.00108.
+
+[38] Molino, P., Zheng, H., & Wang, Y.-C. (2018). COTA: Improving the Speed and Accuracy of Customer Support through Ranking and Deep Networks. arXiv preprint arXiv:1807.01337.
+
+[39] GPTBots. (2023). An Ultimate Guide on Automated AI Ticketing System. Retrieved from https://www.gptbots.ai/blog/ticket-automation
+
+[40] Algomox. (2024). How LLM Agents Can Automate IT Support Ticketing Systems. Retrieved from https://www.algomox.com/resources/blog/how_llm_agents_can_automate_it_support_ticketing_systems
+
+[41] Aisera. (2020). Automated Ticket Resolution with Agent Assist. Retrieved from https://aisera.com/blog/slash-resolution-times-with-ticket-intelligence/
+
+[42] Analytics Vidhya. (2023). Enhancing Customer Support Efficiency Through Automated Ticket Triage. Retrieved from https://www.analyticsvidhya.com/blog/2023/11/enhancing-customer-support-efficiency-through-automated-ticket-triage/
+
+[43] Lahiri, S., Pai, S., Weninger, T., & Bhattacharya, S. (2024). Learning from Litigation: Graphs and LLMs for Retrieval and Reasoning in eDiscovery. arXiv preprint arXiv:2405.19164. https://doi.org/10.48550/arXiv.2405.19164
+
+[44] Lewis, P., Perez, E., Piktus, A., Petroni, F., Karpukhin, V., Goyal, N., ... & Kiela, D. (2020). Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks. arXiv preprint arXiv:2005.11401. https://doi.org/10.48550/arXiv.2005.11401
+
+[45] Microsoft. (2024). Overview of Retrieval-Augmented Generation in Azure AI Search. Retrieved from https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview
+
+[46] Gibbs, M., & Zhang, Y. (2024). How Companies Can Use LLM-Powered Search to Create Value. Harvard Business Review. Retrieved from https://hbr.org/2024/10/how-companies-can-use-llm-powered-search-to-create-value
+
+[47] Coveo. (2023). Enterprise Knowledge Retrieval Is Broken—Here’s How AI Can Fix It. Retrieved from https://www.coveo.com/blog/enterprise-knowledge-retrieval/
+
+[48] SearchUnify. (2023). The Coexistence of LLMs and Enterprise Search: Examining the Path Forward. Retrieved from https://www.searchunify.com/sudo-technical-blogs/the-coexistence-of-large-language-models-and-enterprise-search-examining-the-path-forward
+
+[49] NVIDIA. (2023). FACTS: Fine-tuning Architectures and Control Techniques for RAG Systems. Retrieved from https://resources.nvidia.com/facts-whitepaper
+
+[50] Xie, K., Liu, Y., & Xu, H. (2024). Tele-LLMs: Domain-Specific Large Language Models for Telecommunications. arXiv preprint arXiv:2402.14593.
+
+[51] Xu, D., Lyu, S., Xu, R., Lin, Y., & Li, J. (2024). TextileBot: Building a Domain-Specific Conversational Agent with LLMs and Prompt Engineering. In Proceedings of the 2024 AAAI Conference on Artificial Intelligence.
+
+[52] Jones, T., & Garcia, M. (2024). Prompt-Guided LLM Agents for DevOps Support Workflows. Journal of Applied AI Research, 5(2), 88–104.
+
+[53] InfoQ. (2023). Where LLMs Fail: Hallucinations and Knowledge Gaps in Enterprise Use. Retrieved from https://www.infoq.com/articles/llms-enterprise-hallucination/
+
+[54] Microsoft Azure. (2025). Improving Enterprise Q&A with Optimized RAG Pipelines. Retrieved from https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview
+
+[55] Magnimind Academy. (2024). Building a RAG evaluation dataset: A step-by-step guide using document sources. Retrieved from https://magnimindacademy.com/blog/building-a-rag-evaluation-dataset-a-step-by-step-guide-using-document-sources/
+
+[56] Jain, V. (n.d.). Primers: Data sampling. Retrieved from https://vinija.ai/nlp/data-sampling/
+
+[57] Kim, S., & O'Neil, L. (2025). Designing Reliable RAG Pipelines for Internal Documentation. In Proceedings of the International Conference on Enterprise AI Systems.
+
+[58] Brown, H., & Suresh, A. (2023). Query Reformulation in Domain-Specific RAG Systems. In Proceedings of the 2023 Workshop on Information Retrieval for Enterprises.
+
+[59] SearchUnify. (2023). The Coexistence of LLMs and Enterprise Search: Examining the Path Forward. Retrieved from https://www.searchunify.com/sudo-technical-blogs/the-coexistence-of-large-language-models-and-enterprise-search-examining-the-path-forward
+
+[60] Johnson, J., Douze, M., & Jégou, H. (2019). Billion-scale similarity search with GPUs. IEEE Transactions on Big Data, 7(3), 535–547. https://doi.org/10.1109/TBDATA.2019.2921572
+
+[61] Wang, W., Wei, F., Dong, L., Bao, H., Yang, N., & Zhou, M. (2020). MiniLM: Deep self-attention distillation for task-agnostic compression of pre-trained transformers. Advances in Neural Information Processing Systems, 33, 5776–5788.
+
+[62] Song, K., Tan, X., Qin, T., Lu, J., & Liu, T.-Y. (2020). MPNet: Masked and permuted pre-training for language understanding. Advances in Neural Information Processing Systems, 33, 16857–16867.
+
+[63] Hugging Face. (2023). Retrieval-Augmented Generation (RAG) with FAISS and Transformers. https://huggingface.co/learn/cookbook/rag_evaluation
+
+[64] Nogueira, R., & Cho, K. (2019). Passage re-ranking with BERT. arXiv preprint arXiv:1901.04085.
+
+[65] Yates, A., Cohan, A., & Goharian, N. (2021). Pretrained transformers for document ranking: BERT and beyond. arXiv preprint arXiv:2106.11534.
+
+[66] Aggarwal, P., Madaan, A., Guha, A., et al. (2023). LLM-Augmented RAG: Main-RAG. arXiv preprint arXiv:2312.10003.
+
+[67] Chang, A. Y., Bansal, T., & Chai, J. (2024). Multi-agent LLM-based relevance filtering in Retrieval-Augmented Generation. arXiv preprint arXiv:2404.00922.
+
+[68] Aggarwal, A., Madaan, A., & Gupta, R. (2023). ChunkRAG: Reducing hallucinations in RAG by chunk-level filtering. arXiv preprint arXiv:2309.06536.
+
+[69] OpenAI. (2024). Managing context length in GPT-4. https://platform.openai.com/docs/guides/gpt
+
+[70] Liu, X., et al. (2023). Lost in the Middle: How Language Models Use Long Contexts. arXiv preprint arXiv:2307.03172.
+
+[71] Stanford AI. (2023). LongContextReorder: Improving retention in long-context transformers. https://crfm.stanford.edu
+
+[72] Gao, L., et al. (2023). G-Eval: NLG evaluation using GPT-4 with better prompting. arXiv preprint arXiv:2305.01618.
+
+[73] Truera AI. (2023). The RAG Triad: A new framework for evaluating retrieval-augmented generation. https://truera.com
+
+[74] Boiko, A., et al. (2024). Large Language Model Evaluation via Faithfulness and Relevance. arXiv preprint arXiv:2401.04399.
+
+[75] Yuzefovich, M., Park, Y., et al. (2024). Grid Search for Enterprise RAG: Optimization at Scale. arXiv preprint arXiv:2405.05903.
+
+[76] Hugging Face. (2024). Greedy vs Grid: Efficient tuning strategies in RAG pipelines. https://huggingface.co/blog/rag-tuning
+
+[77] LlamaIndex. (2024). ParamTuner: Systematic hyperparameter tuning for LLM pipelines. https://docs.llamaindex.ai
+
+[78] Amazon Web Services. (2024). Evaluating RAG with Synthetic Data using Claude on Bedrock. https://aws.amazon.com
+
+[79] Hugging Face. (2023). RAG evaluation with synthetic datasets and LLM judges. https://huggingface.co/learn/cookbook/rag_evaluation
+
+[80] NVIDIA. (2024). Evaluating vector search quality with synthetic Q&A. https://developer.nvidia.com/blog/rag-evaluation
+
+[81] Liu, C.-W., Lowe, R., Serban, I. V., Noseworthy, M., Charlin, L., & Pineau, J. (2016). How NOT to evaluate your dialogue system: An empirical study of unsupervised evaluation metrics for dialogue response generation. In Proceedings of EMNLP 2016 (pp. 2122–2132). Association for Computational Linguistics.
+
+[82] Lowe, R., Noseworthy, M., Serban, I. V., Angelard-Gontier, N., Bengio, Y., & Pineau, J. (2017). Towards an automatic Turing test: Learning to evaluate dialogue responses. arXiv preprint arXiv:1708.07149.
+
+[83] Novikova, J., Dušek, O., Curry, A. C., & Rieser, V. (2017). Why we need new evaluation metrics for natural language generation. In Proceedings of EMNLP 2017 (pp. 2241–2252). Association for Computational Linguistics.
+
+[84] Tao, C., Mou, L., Zhao, D., & Yan, R. (2018). RUBER: An unsupervised method for automatic evaluation of open-domain dialog systems. In Proceedings of AAAI 2018 (Vol. 32, No. 1, pp. 722–729). AAAI Press.
+
+[85] Zhao, T., Lala, D., & Kawahara, T. (2020). Designing precise and robust dialogue response evaluators. In Proceedings of ACL 2020 (pp. Fine-Grained Evaluation–1–7). Association for Computational Linguistics.
+
+[86] Mehri, S., & Eskenazi, M. (2020). USR: An unsupervised and reference-free evaluation metric for dialog generation. In Proceedings of ACL 2020 (pp. 919–929). Association for Computational Linguistics.
+
+[87] Adiwardana, D., Luong, M.-T., So, D. R., Hall, J., Fiedel, N., Thoppilan, R., … & Le, Q. V. (2020). Towards a human-like open-domain chatbot. arXiv preprint arXiv:2001.09977.
+
+[88] Sai, A. B., Mohankumar, A. K., & Khapra, M. M. (2020). A survey of evaluation metrics used for NLG systems. arXiv preprint arXiv:2008.12009.
+
+[89] Zheng, L., Chiang, W.-L., Sheng, Y., Zhuang, S., Wu, Z., Li, Z., … & Stoica, I. (2023). Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena. arXiv preprint arXiv:2306.05685.
+
+[90] Dubois, Y., Taori, R., Gulrajani, I., Guestrin, C., Liang, P., & Hashimoto, T. B. (2023). AlpacaEval: An automatic evaluator of instruction-following language models. arXiv preprint arXiv:2306.04751.
+
+[91] Lewkowycz, A., Arora, A., Lewis, M., & Kiela, D. (2023). Lost in the Middle: How Language Models Use Long Contexts. arXiv preprint arXiv:2307.03172. https://arxiv.org/abs/2307.03172
+
+[92] Mitra, B., & Craswell, N. (2018). An Introduction to Neural Information Retrieval. Foundations and Trends® in Information Retrieval, 13(1), 1–126. https://doi.org/10.1561/1500000055
+
+[93] Gupta, P., Raju, D., Dhamala, J., et al. (2023). RAGAS: A Reference-Free Evaluation Framework for RAG. arXiv preprint arXiv:2312.10003. https://arxiv.org/abs/2312.10003
+
+[94] Zhang, Y., Zhao, J., & Pang, R. (2022). Towards Better Evaluation for Retrieval-Augmented Generation: A Case Study on OpenQA. Proceedings of the 60th Annual Meeting of the ACL. https://aclanthology.org/2022.acl-main.621/
+
+[95] Thakur, N., Hofstätter, S., Bevendorff, J., et al. (2021). BEIR: A Heterogeneous Benchmark for Zero-shot Evaluation of Information Retrieval Models. Proceedings of the 43rd ECIR. https://doi.org/10.1007/978-3-030-72113-8_20
+
+[96] Radford, A., Wu, J., Amodei, D., et al. (2023). GPT-4 Technical Report. OpenAI. https://cdn.openai.com/papers/gpt-4.pdf
+
+[97] Luan, Y., Ostendorf, M., & Hajishirzi, H. (2021). Sparse, Dense, and Attentional Representations for Text Retrieval. Transactions of the Association for Computational Linguistics, 9, 329–345. https://doi.org/10.1162/tacl_a_00370
+
+[98] Asai, A., & Hajishirzi, H. (2023). EvidenceRank: A Metric for End-to-End Faithfulness Evaluation in Retrieval-Augmented Generation. arXiv preprint arXiv:2305.14717. https://arxiv.org/abs/2305.14717
+
+[99] Izacard, G., & Grave, E. (2021). Leveraging Passage Retrieval with Generative Models for Open Domain Question Answering. Proceedings of the 16th Conference of the EACL, 874–880. https://aclanthology.org/2021.eacl-main.74/
+
+[100] Hugging Face. (2024). RAGAS: Retrieval-Augmented Generation Assessment Suite. Hugging Face Cookbook. https://huggingface.co/learn/cookbook/rag_evaluation
+
+[101] Dhanakotti, K. (2024, August 15). RAGAS for RAG in LLMs: A Comprehensive Guide to Evaluation Metrics. Medium. (Explains why BLEU/ROUGE fall short for RAG and introduces RAGAS metrics focusing on factual accuracy and context relevance)​. https://dkaarthick.medium.com/ragas-for-rag-in-llms-a-comprehensive-guide-to-evaluation-metrics-3aca142d6e38#:~:text=Traditional%20metrics%20like%20BLEU%20and,comes%20into%20play
+
+[102] Microsoft. (2023). Large Language Model End-to-End Evaluation – RAG Evaluation Phase. Microsoft Learn (Azure Architecture Center). (Defines groundedness and relevance in RAG evaluation, emphasizing responses should rely only on provided context)​. https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/rag/rag-llm-evaluation-phase
+
+[103] DhanushKumar. (2024, September 24). Evaluation with RAGAS. Medium. (Describes the RAGAS framework and its metrics, including Faithfulness and Answer Relevancy, with implementation details)​. https://medium.com/@danushidk507/evaluation-with-ragas-873a574b86a9#:~:text=1.%20,generated%20answer%20against%20the%20context
+
+[104] IBM. (2024). Result Evaluation (RAG Cookbook). IBM Developer Architecture Papers. (Outlines the “RAG triad” of Context Relevance, Groundedness, and Answer Relevance as key to evaluating RAG systems, and discusses limitations of traditional metrics)​. https://www.ibm.com/architectures/papers/rag-cookbook/result-evaluation#:~:text=It%20consists%20of%20three%20assessments%3A,answer%20alignment%20with%20user%20inquiries
+
+[105] Saad-Falcon, J., Khattab, O., Potts, C., & Zaharia, M. (2023). ARES: An Automated Evaluation Framework for Retrieval-Augmented Generation Systems. arXiv:2311.09476. (Introduces ARES, which uses finetuned LLM judges to evaluate context relevance, answer faithfulness, and answer relevance of RAG models, reducing need for human labels)​. https://github.com/stanford-futuredata/ARES
+
+[106] Liu, Y., Iter, D., Xu, Y., Wang, S., Xu, R., & Zhu, C. (2023). G-Eval: NLG Evaluation using GPT-4 with Better Human Alignment. Proceedings of EMNLP 2023. (Demonstrates that GPT-4 based evaluation correlates much better with human judgments than reference-based metrics, and notes potential biases of LLM evaluators)​. https://aclanthology.org/2023.emnlp-main.153.pdf#:~:text=meta,Finally%2C%20we%20conduct
+
+[107] DeepMind. (2023, November 2). FACTS Grounding: A new benchmark for evaluating the factuality of LLMs. DeepMind Blog. (Announces the FACTS Grounding benchmark and leaderboard, which tests how accurately long-form answers are grounded in a provided document, aiming to spur progress on faithfulness and reduce hallucinations)​. https://deepmind.google/discover/blog/facts-grounding-a-new-benchmark-for-evaluating-the-factuality-of-large-language-models/#:~:text=Our%20comprehensive%20benchmark%20and%20online,source%20material%20and%20avoid%20hallucinations
+
+[108] TryAlign. (2024). AARR: Evaluation of Retrieval-Augmented Generation — A Survey. TryAlign Blog. https://tryalign.ai/resources/blog/aarr-evaluation-of-retrieval-augmented-generation-a-survey
+
+[109] Weaviate. (2024). Evaluating RAG: From Context Retrieval to Faithful Answers. Weaviate Blog. https://weaviate.io/blog/rag-evaluation
+
+[110] Eversberg, L. (2024, November 3). How to Create a RAG Evaluation Dataset From Documents. Towards Data Science (TDS Archive). Retrieved from https://medium.com/data-science/how-to-create-a-rag-evaluation-dataset-from-documents-140daa3cbe71
+
+[111] Wenzel, L., Boldt, D., & Langer, J. (2024, September 23). Generate synthetic data for evaluating RAG systems using Amazon Bedrock. AWS Machine Learning Blog. Retrieved from https://aws.amazon.com/blogs/machine-learning/generate-synthetic-data-for-evaluating-rag-systems-using-amazon-bedrock/
+
+[112] Jadon, A., Patil, A., & Kumar, S. (2025). Enhancing Domain-Specific Retrieval-Augmented Generation: Synthetic Data Generation and Evaluation using Reasoning Models. arXiv preprint arXiv:2502.15854.
+
+[113] Es, S., James, J., Espinosa-Anke, L., & Schockaert, S. (2023). RAGAS: Automated Evaluation of Retrieval Augmented Generation. arXiv preprint arXiv:2309.15217.
+
+[114] Peng, X., Choubey, P. K., Xiong, C., & Wu, C. (2024). Unanswerability Evaluation for Retrieval Augmented Generation. arXiv preprint arXiv:2412.12300.
+
+[115] Evidently AI. (2025, February 20). How to create LLM test datasets with synthetic data. Retrieved from https://www.evidentlyai.com/llm-guide/llm-test-dataset-synthetic-data
+
+[116] Bracken, T. (2024, February 7). Streamline your RAG pipeline evaluation with synthetic data. Medium – Advancing Analytics. https://medium.com/advancing-analytics/streamline-your-rag-pipeline-evaluation-with-synthetic-data-0d15402881f7
+
+[117] Hugging Face. (2024). Test set generation — RAGAS documentation (v0.1.21). https://docs.ragas.io/en/v0.1.21/concepts/testset_generation.html
+
+[118] Gretel AI. (2024, February 12). Building a robust RAG evaluation pipeline with synthetic data. https://gretel.ai/blog/building-a-robust-rag-evaluation-pipeline#:~:text=,user%20intents%20and%20complexity%20levels
+
+[119] Snowflake Inc. (2025, March 11). Long-Context Isn’t All You Need: Impact of Retrieval and Chunking on Finance RAG. https://www.snowflake.com/en/engineering-blog/impact-retrieval-chunking-finance-rag/#:~:text=By%20contrast%2C%20a%20moderate%20chunk,and%20muddy%20the%20model%E2%80%99s%20focus
+
+[120] Holtzman, A., et al. (2020). The Curious Case of Neural Text Degeneration. https://openreview.net/forum?id=rygGQyrFvH
+
+[121] Ahmed, B. S., et al. (2025). Quality Assurance for LLM-RAG Systems: Empirical Insights from Tourism Application Testing. https://arxiv.org/html/2502.05782v1#:~:text=Most%20notably%2C%20conservative%20parameter%20settings,often%20resulting%20in%20incoherent%20or
+
+[122] Galileo AI. (2023). Mastering RAG: How to Select an Embedding Model. https://www.galileo.ai/blog/mastering-rag-how-to-select-an-embedding-model#:~:text=Impact%20of%20Embeddings%20on%20RAG,Performance
+
+[123] Chen, K. E. (2025, Feb 26). Using DeepSeek R1 for RAG: Do’s and Don’ts. https://blog.skypilot.co/deepseek-rag/#:~:text=1,for%20retrieval
+
+[124] Nogueira, R., & Cho, K. (2019). https://arxiv.org/abs/1901.04085#:~:text=language%20processing%20tasks%20such%20as,available%20at%20this%20https%20URL
+
+[125] Chinneck, J. W. (2014). Practical Optimization: A Gentle Introduction (Chapter 17: Pattern Search for Unconstrained NLP). https://www.optimization101.org/2020/12/welcome.html#:~:text=Chapter%2017%3A%20Pattern%20Search%20for,Last%20revision%3A%20December%202020
+
+[126] Prompt Engineering. (n.d.). Prompt engineering with temperature and top-p. https://promptengineering.org/prompt-engineering-with-temperature-and-top-p/#:~:text=Top,with%20confidence%20scoring%20to
+
+[127] Pinecone. (2023). An embedding model rundown for RAG applications. https://www.pinecone.io/learn/series/rag/embedding-models-rundown/
+
+[128] Reimers, N., & Gurevych, I. (2023). Retrieve & Rerank using Cross-Encoders. https://sbert.net/examples/sentence_transformer/applications/retrieve_rerank/README.html
+
+[129] Ashman, R. (2023, November 8). The Art of RAG Part 3: Reranking with Cross Encoders. https://medium.com/@rossashman/the-art-of-rag-part-3-reranking-with-cross-encoders-688a16b64669#:~:text=In%20Retrieval,from%20the%20initial%20retrieval%20process
